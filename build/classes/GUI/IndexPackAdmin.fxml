@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.IndexPackAdminController">
+   <children>
+      <TableView fx:id="packTable" editable="true" layoutX="41.0" layoutY="64.0" onSort="#Load" prefHeight="216.0" prefWidth="527.0">
+        <columns>
+            <TableColumn fx:id="id" prefWidth="75.0" text="id" />
+            <TableColumn fx:id="type_pack" prefWidth="75.0" text="type pack" />
+            <TableColumn fx:id="montantPack" prefWidth="75.0" text="montant" />
+            <TableColumn fx:id="dureePack" prefWidth="75.0" text="durée" />
+            <TableColumn fx:id="descriptionPack" prefWidth="75.0" text="description" />
+          <TableColumn fx:id="placesPack" prefWidth="75.0" text="places" />
+          <TableColumn fx:id="disponibilitePack" prefWidth="75.0" text="disponibilité" />
+            <TableColumn fx:id="action" prefWidth="75.0" text="action" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" stylesheets="@backAbonnement.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.IndexPromotionControllerController">
+   <children>
+      <TableView fx:id="promotionTable" editable="true" layoutX="139.0" layoutY="78.0" onSort="#Load" prefHeight="226.0" prefWidth="370.0" style="-fx-border-color: #720000;" stylesheets="@backAbonnement.css">
+        <columns>
+            <TableColumn fx:id="id" prefWidth="75.0" text="id" />
+            <TableColumn fx:id="code_promotion" prefWidth="75.0" text="code_promotion" />
+          <TableColumn fx:id="reduction_promotion" prefWidth="75.0" text="reduction_promotion" />
+          <TableColumn fx:id="date_expiration" prefWidth="75.0" text="date_expiration" />
+            <TableColumn fx:id="action" prefWidth="75.0" text="action" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

@@ -1,0 +1,12 @@
+
+.bt{    -fx-background-color: #720000;
+ 
+    -fx-background-radius : 20;
+}
+.cart{
+    -fx-background-color: #fff;
+    -fx-background-radius : 20;
+}
+.pag {
+    -fx-color: #720000;
+}

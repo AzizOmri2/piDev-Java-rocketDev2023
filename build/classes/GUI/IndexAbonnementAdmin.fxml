@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.IndexAbonnementAdminController">
+   <children>
+      <TableView fx:id="AbonnementTable" editable="true" layoutX="8.0" layoutY="80.0" onSort="#Load" prefHeight="233.0" prefWidth="583.0">
+        <columns>
+            <TableColumn fx:id="id" prefWidth="75.0" text="id" />
+            <TableColumn fx:id="pack" prefWidth="75.0" text="Pack" />
+            <TableColumn fx:id="user" prefWidth="75.0" text="User" />
+            <TableColumn fx:id="dateAchat" prefWidth="75.0" text="Date Achat" />
+          <TableColumn fx:id="dateFin" prefWidth="75.0" text="Date Fin" />
+          <TableColumn fx:id="etatAbonnement" prefWidth="75.0" text="Etat" />
+            <TableColumn fx:id="codePromo" prefWidth="75.0" text="Code Promo" />
+            <TableColumn fx:id="montantAbonnement" prefWidth="75.0" text="Montant" />
+            <TableColumn fx:id="action" prefWidth="75.0" text="Action" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="671.0" prefWidth="1164.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.FXML_PlatController">
+    <children>
+      <VBox prefHeight="671.0" prefWidth="254.0" style="-fx-background-color: #720000;">
+         <children>
+            <ImageView fitHeight="114.0" fitWidth="176.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/LogoGymWhite.png" />
+               </image>
+               <VBox.margin>
+                  <Insets bottom="75.0" left="35.0" top="30.0" />
+               </VBox.margin>
+            </ImageView>
+            <Button fx:id="btnHome" alignment="BASELINE_LEFT" graphicTextGap="12.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="262.0" stylesheets="@style.css" text="Home" textFill="WHITE">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/icons8_home_512px.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <padding>
+                  <Insets left="70.0" />
+               </padding>
+            </Button>
+            <Button fx:id="btnMenus" alignment="BASELINE_LEFT" graphicTextGap="12.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="262.0" stylesheets="@style.css" text="Menus" textFill="WHITE">
+               <graphic>
+                  <ImageView fitHeight="32.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/icons8-menu-64.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <padding>
+                  <Insets left="70.0" />
+               </padding>
+            </Button>
+            <Button fx:id="btnPlats" alignment="BASELINE_LEFT" graphicTextGap="12.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="262.0" stylesheets="@style.css" text="Plats" textFill="WHITE">
+               <graphic>
+                  <ImageView fitHeight="29.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/icons8-plate-64.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <padding>
+                  <Insets left="70.0" />
+               </padding>
+            </Button>
+            <Button fx:id="btnReservations" alignment="BASELINE_LEFT" graphicTextGap="12.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="262.0" stylesheets="@style.css" text="Réservations" textFill="WHITE">
+               <graphic>
+                  <ImageView fitHeight="28.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/icons8-reservation-100.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <padding>
+                  <Insets left="70.0" />
+               </padding>
+            </Button>
+         </children>
+      </VBox>
+      <StackPane layoutX="285.0" layoutY="33.0">
+         <children>
+            <Pane fx:id="panePlats">
+               <children>
+                  <Label layoutX="12.0" prefHeight="39.0" prefWidth="195.0" text="Liste des Plats" textAlignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="22.0" />
+                     </font>
+                  </Label>
+                  <TextField layoutX="603.0" layoutY="6.0" prefHeight="26.0" prefWidth="235.0" promptText="Search ..." style="-fx-background-color: #fff; -fx-border-color: #720000; -fx-border-radius: 2em;" />
+                  <ImageView fitHeight="18.0" fitWidth="19.0" layoutX="811.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/icons8_search_500px.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+         </children>
+      </StackPane>
+      <Button fx:id="Afficher" layoutX="1037.0" layoutY="100.0" mnemonicParsing="false" stylesheets="@design.css" text="Afficher la liste" />
+      <Button fx:id="Ajout" layoutX="877.0" layoutY="100.0" mnemonicParsing="false" stylesheets="@design.css" text="Ajouter" />
+      <TableView fx:id="tvPlat" layoutX="259.0" layoutY="143.0" prefHeight="519.0" prefWidth="896.0">
+        <columns>
+          <TableColumn fx:id="nom" prefWidth="72.0" text="Nom" />
+          <TableColumn fx:id="prix" prefWidth="36.0" text="Prix" />
+            <TableColumn fx:id="description" prefWidth="256.0" text="Description" />
+            <TableColumn fx:id="calories" minWidth="0.0" prefWidth="63.0" text="Calories" />
+            <TableColumn fx:id="etat" minWidth="0.0" prefWidth="38.0" text="Etat" />
+            <TableColumn fx:id="nbp" minWidth="0.0" prefWidth="30.0" text="NB" />
+            <TableColumn fx:id="image" prefWidth="139.0" text="Image" />
+            <TableColumn fx:id="categories" minWidth="0.0" prefWidth="84.0" text="Categories" />
+        </columns>
+      </TableView>
+      <Button fx:id="Refresh" layoutX="959.0" layoutY="100.0" mnemonicParsing="false" stylesheets="@design.css" text="Refresh" />
+    </children>
+</AnchorPane>

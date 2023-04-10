@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" fx:id="addActivitePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="760.0" prefWidth="1233.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.AjoutActiviteController">
+    <stylesheets>
+        <URL value="@ajoutactivite.css" />
+    </stylesheets>
+   <children>
+      <Label layoutX="171.0" layoutY="260.0" prefHeight="17.0" prefWidth="57.0" styleClass="label-ajout" stylesheets="@ajoutactivite.css" text="Nom :" />
+      <Label layoutX="171.0" layoutY="302.0" prefHeight="17.0" prefWidth="57.0" styleClass="label-ajout" stylesheets="@ajoutactivite.css" text="Durée :" />
+      <Label layoutX="171.0" layoutY="343.0" prefHeight="17.0" prefWidth="57.0" styleClass="label-ajout" stylesheets="@ajoutactivite.css" text="Tenue :" />
+      <Label layoutX="171.0" layoutY="383.0" prefHeight="18.0" prefWidth="86.0" styleClass="label-ajout" stylesheets="@ajoutactivite.css" text="Difficulté :" />
+      <TextField fx:id="textNomAct" layoutX="273.0" layoutY="256.0" prefHeight="26.0" prefWidth="216.0" promptText="Nom Activité" styleClass="textfield" stylesheets="@ajoutactivite.css" />
+      <TextField fx:id="textDureeAct" layoutX="273.0" layoutY="298.0" prefHeight="26.0" prefWidth="216.0" promptText="Durée Activité" styleClass="textfield" stylesheets="@ajoutactivite.css" />
+      <TextField fx:id="textTenueAct" layoutX="273.0" layoutY="339.0" prefHeight="26.0" prefWidth="216.0" promptText="Tenue Activité" styleClass="textfield" stylesheets="@ajoutactivite.css" />
+      <Label layoutX="171.0" layoutY="459.0" prefHeight="18.0" prefWidth="86.0" styleClass="label-ajout" stylesheets="@ajoutactivite.css" text="Description :" />
+      <TextArea fx:id="textDescriptionAct" layoutX="272.0" layoutY="459.0" prefHeight="60.0" prefWidth="216.0" promptText="Description Activité" styleClass="textarea" stylesheets="@ajoutactivite.css" />
+      <Button fx:id="btnAddAct" layoutX="420.0" layoutY="578.0" mnemonicParsing="false" onAction="#AjoutActivite" prefHeight="34.0" prefWidth="66.0" styleClass="btn" stylesheets="@ajoutactivite.css" text="Add" />
+      <Button fx:id="btnClearAct" layoutX="328.0" layoutY="579.0" mnemonicParsing="false" onAction="#clearFieldsActivite" prefHeight="34.0" prefWidth="77.0" styleClass="btn" stylesheets="@ajoutactivite.css" text="Clear" />
+      <Label layoutX="171.0" layoutY="422.0" prefHeight="18.0" prefWidth="86.0" styleClass="label-ajout" stylesheets="@ajoutactivite.css" text="Image :" />
+      <TextField fx:id="textImageAct" layoutX="272.0" layoutY="419.0" prefHeight="26.0" prefWidth="216.0" promptText="Image Activité" styleClass="textfield" stylesheets="@ajoutactivite.css" />
+      <Label layoutX="191.0" layoutY="102.0" prefHeight="52.0" prefWidth="216.0" text="Ajouter une Activité" textFill="#720000">
+         <font>
+            <Font name="System Bold" size="21.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnReturnAct" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#return_ListActivite" prefHeight="34.0" prefWidth="66.0" styleClass="btn" stylesheets="@ajoutactivite.css" text="Back" />
+      <ImageView fitHeight="582.0" fitWidth="600.0" layoutX="772.0" layoutY="179.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true" translateX="-100.0">
+         <image>
+            <Image url="@../images/abonnee_low.png" />
+         </image>
+      </ImageView>
+      <ComboBox fx:id="textDiffAct" layoutX="273.0" layoutY="379.0" prefHeight="26.0" prefWidth="216.0" styleClass="comboBox" stylesheets="@ajoutactivite.css" />
+   </children>
+</AnchorPane>

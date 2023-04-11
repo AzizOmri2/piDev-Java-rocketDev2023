@@ -35,7 +35,7 @@ public class Post {
  public Post(String title, String details, String image, String date_post, int rate) {
         this.title = title;
         this.details = details;
-        this.image = " ";
+        this.image = image;
         this.date_post = LocalDate.now().toString();
         this.rate = rate;
         
@@ -57,10 +57,10 @@ public class Post {
     public void setNbrRate(int nbrRate) {
         this.nbrRate = nbrRate;
     }
-    public Post(String title, String details) {
+    public Post(String title, String details,String image) {
         this.title = title;
         this.details = details;
-        this.image = " ";
+        this.image = image;
         this.date_post = LocalDate.now().toString();
         this.rate = 0;
         this.nbrRate=0;
@@ -119,11 +119,7 @@ public class Post {
         return "Post{" + "id=" + id + ", title=" + title + ", details=" + details + ", image=" + image + ", date_post=" + date_post + ", rate=" + rate + '}';
     }
 
-    public Post(String title, String details, String image) {
-        this.title = title;
-        this.details = details;
-        this.image = image;
-    }
+    
     
     
     

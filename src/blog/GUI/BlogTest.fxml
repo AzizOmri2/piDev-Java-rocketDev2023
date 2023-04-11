@@ -110,11 +110,11 @@
                   </Pane>
                </top>
                <center>
-                  <AnchorPane prefHeight="656.0" prefWidth="434.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
+                  <AnchorPane fx:id="AA" prefHeight="656.0" prefWidth="434.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
                      <children>
-                        <VBox layoutX="14.0" spacing="10.0">
+                        <VBox fx:id="VV" layoutX="14.0" prefHeight="539.0" prefWidth="447.0" spacing="10.0" AnchorPane.bottomAnchor="117.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="502.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <BorderPane prefHeight="481.0" prefWidth="378.0" style="-fx-border-color: #DCDCDC; -fx-border-radius: 10; -fx-background-color: white; -fx-background-radius: 10;">
+                              <BorderPane fx:id="PP" prefHeight="481.0" prefWidth="378.0" style="-fx-border-color: #DCDCDC; -fx-border-radius: 10; -fx-background-color: white; -fx-background-radius: 10;">
                                  <top>
                                     <Pane prefHeight="92.0" prefWidth="659.0" style="-fx-border-color: #720000; -fx-background-color: #720000;" BorderPane.alignment="CENTER">
                                        <children>
@@ -178,7 +178,7 @@
                                     </DropShadow>
                                  </effect>
                                  <left>
-                                    <ImageView fitHeight="368.0" fitWidth="445.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+                                    <ImageView fx:id="PicP" fitHeight="368.0" fitWidth="445.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
                                        <image>
                                           <Image url="@../Image/32d58670c3f402e464f334fd9c77277b.jpg" />
                                        </image>
@@ -187,7 +187,7 @@
                               </BorderPane>
                            </children>
                         </VBox>
-                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="500.0" AnchorPane.topAnchor="556.0">
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="500.0" AnchorPane.topAnchor="556.0">
                            <children>
                               <Button fx:id="clear" mnemonicParsing="false" onAction="#clearValue" prefHeight="44.0" prefWidth="29.0" styleClass="buttonNext">
                                  <graphic>
@@ -201,7 +201,7 @@
                                     <Font name="Calibri Bold Italic" size="15.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="val1" mnemonicParsing="false" onAction="#val1" prefHeight="25.0" prefWidth="26.0" styleClass="buttonNext" text="1">
+                              <Button fx:id="val1" mnemonicParsing="false" onAction="#val1" prefHeight="25.0" prefWidth="26.0" styleClass="star" text="1">
                                  <graphic>
                                     <ImageView fitHeight="34.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -213,7 +213,7 @@
                                     <Font name="Calibri Bold Italic" size="15.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="val2" layoutX="10.0" layoutY="38.0" mnemonicParsing="false" onAction="#val2" prefHeight="25.0" prefWidth="26.0" styleClass="buttonNext" text="2">
+                              <Button fx:id="val2" layoutX="10.0" layoutY="38.0" mnemonicParsing="false" onAction="#val2" prefHeight="25.0" prefWidth="26.0" styleClass="star" text="2">
                                  <graphic>
                                     <ImageView fitHeight="34.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -225,7 +225,7 @@
                                     <Font name="Calibri Bold Italic" size="15.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="val3" layoutX="76.0" layoutY="38.0" mnemonicParsing="false" onAction="#val3" prefHeight="25.0" prefWidth="26.0" styleClass="buttonNext" text="3">
+                              <Button fx:id="val3" layoutX="76.0" layoutY="38.0" mnemonicParsing="false" onAction="#val3" prefHeight="25.0" prefWidth="26.0" styleClass="star" text="3">
                                  <graphic>
                                     <ImageView fitHeight="34.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -237,7 +237,7 @@
                                     <Font name="Calibri Bold Italic" size="15.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="val4" layoutX="142.0" layoutY="38.0" mnemonicParsing="false" onAction="#val4" prefHeight="25.0" prefWidth="26.0" styleClass="buttonNext" text="4">
+                              <Button fx:id="val4" layoutX="142.0" layoutY="38.0" mnemonicParsing="false" onAction="#val4" prefHeight="25.0" prefWidth="26.0" styleClass="star" text="4">
                                  <graphic>
                                     <ImageView fitHeight="34.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -249,7 +249,7 @@
                                     <Font name="Calibri Bold Italic" size="15.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="val5" layoutX="208.0" layoutY="38.0" mnemonicParsing="false" onAction="#val5" prefHeight="25.0" prefWidth="26.0" styleClass="buttonNext" text="5">
+                              <Button fx:id="val5" layoutX="208.0" layoutY="38.0" mnemonicParsing="false" onAction="#val5" prefHeight="25.0" prefWidth="26.0" styleClass="star" text="5">
                                  <graphic>
                                     <ImageView fitHeight="34.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -270,6 +270,9 @@
                                  </padding>
                               </Label>
                            </children>
+                           <padding>
+                              <Insets top="20.0" />
+                           </padding>
                         </HBox>
                         <VBox fx:id="ContainerVBox" prefHeight="656.0" prefWidth="478.0" style="-fx-background-color: white; -fx-border-radius: 10; -fx-background-radius: 10; -fx-border-color: #DCDCDC;" AnchorPane.leftAnchor="480.0" AnchorPane.topAnchor="0.0">
                            <effect>

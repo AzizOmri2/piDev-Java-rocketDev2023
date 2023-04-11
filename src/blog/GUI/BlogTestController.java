@@ -37,6 +37,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -63,9 +64,14 @@ private static Comment commentaire=new Comment();
 
     @FXML
     private Label dateP;
+     @FXML
+    private ImageView PicP;
 
     @FXML
     private Button titleeP;
+    
+    @FXML 
+    private VBox VV;
 
     public static Post getPostt() {
         return postt;
@@ -84,6 +90,18 @@ private static Comment commentaire=new Comment();
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+//         String path = "C:\\Users\\Ahmed Ben Abid\\Desktop\\PI JAVA\\Blog +Ressources\\src\\blog\\Image\\abstract-red-grey-lines-wallpaper-thumb.jpg";
+//path = path.replaceAll("\\\\", "/");
+//        File file = new File(path);
+//        System.out.println(file.toURI().toString());
+
+//        PicP.setPreserveRatio(true);
+//PicP.fitWidthProperty().bind(PP.widthProperty());
+//PicP.fitHeightProperty().bind(PP.heightProperty());
+
+    
+//System.out.println(path);
+
          tfCom.setPromptText("Add your comment..");
        BlogTestController.i=0;
         try {
@@ -102,7 +120,8 @@ private static Comment commentaire=new Comment();
         // Fermez la fenêtre
         stage.close();
     }
-
+@FXML 
+private BorderPane PP;
     @FXML
     public void setFournisseur(Post fournisseur) {
 
@@ -110,7 +129,11 @@ private static Comment commentaire=new Comment();
         descP.setText(fournisseur.getDetails());
         dateP.setText(fournisseur.getDate_post());
         rateP.setText(String.valueOf(fournisseur.getRate()) + "/5");
-        
+        System.out.println(fournisseur.getImage());
+        Image image = new Image(fournisseur.getImage());
+      
+       PicP.setImage(image);
+    
     }
 
     public static int getIdP() {
@@ -132,18 +155,13 @@ private static Comment commentaire=new Comment();
     @FXML
     private void val1() throws SQLException {
         
-        PostService ps = new PostService();
+       PostService ps = new PostService();
 
         Post post = ps.getOneById(idP);
-        System.out.println( post.getNbrRate());
-       int nbr = post.getNbrRate()+1;
-       int val = post.getRate();
-       double newVal = (val+1)/nbr;
-        post.setRate((int) newVal);
-        post.setNbrRate(nbr);
+        post.setRate(1);
         ps.update(post, idP);
         rateP.setText(String.valueOf(post.getRate()) + "/5");
-System.out.println(post.getNbrRate());
+
     }
 
     @FXML
@@ -248,8 +266,10 @@ System.out.println(controller.getPostt().toString());
 
         // If the user clicks "OK", delete the fournisseur
         if (result.get() == ButtonType.OK) {
+           
             PostService fs = new PostService();
             fs.delete(postt.getId());
+             ShowPostsController.i=0;
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../GUI/ShowPosts.fxml"));
             Parent root = loader.load();
             suppPost.getScene().setRoot(root);
@@ -347,9 +367,15 @@ pane.setPrefWidth(458.0);
 pane.setStyle("-fx-border-color: #ffffff;");
 
 Label label2 = new Label("No comments found for this post");
+label2.setAlignment(Pos.CENTER);
+label2.setLayoutY(10.0);
+label2.setPrefHeight(93.0);
+label2.setPrefWidth(458.0);
+label2.setStyle("-fx-border-color: #ffffff; -fx-border-width: 0 0 0 0;");
+label2.setFont(Font.font("Calibri Italic", 30));
+label2.setPadding(new Insets(10.0, 0.0, 0.0, 10.0));
 
-
-
+pane.getChildren().addAll(label2);
 VBoxCom.getChildren().add(pane);
 scrollCom.setContent(VBoxCom);
 }else{

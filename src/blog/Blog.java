@@ -53,8 +53,8 @@ public class Blog extends Application {
     public void start(Stage primaryStage) throws Exception {
         
         
-        //FXMLLoader loader = new FXMLLoader(getClass().getResource("GUI/backOfficeHome.fxml"));
-         FXMLLoader loader = new FXMLLoader(getClass().getResource("GUI/ShowPosts.fxml"));
+      //  FXMLLoader loader = new FXMLLoader(getClass().getResource("GUI/backOfficeHome.fxml"));
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("GUI/ShowPosts.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("GUI/navsidebar.css").toExternalForm());
@@ -65,9 +65,9 @@ public class Blog extends Application {
         primaryStage.setFullScreen(false);
          
         primaryStage.show();
-       String fileNamee = "../Sound/hmf.mp3";
- BackOfficeHomeController boc = new BackOfficeHomeController();
-boc.playSound(fileNamee);
+//       String fileNamee = "../Sound/hmf.mp3";
+// BackOfficeHomeController boc = new BackOfficeHomeController();
+//boc.playSound(fileNamee);
     }
 
 }

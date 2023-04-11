@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,13 +27,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import javax.swing.JOptionPane;
+import javafx.util.Duration;
 
 /**
  * FXML Controller class
@@ -39,7 +42,7 @@ import javax.swing.JOptionPane;
  * @author Ahmed Ben Abid
  */
 public class ShowPostsController implements Initializable {
-private static int i =0;
+public static int i=0 ;
     /**
      * Initializes the controller class.
      */
@@ -49,6 +52,9 @@ private static int i =0;
 private BorderPane borderPost;
  @FXML
     private Label rateP;
+ @FXML
+    private Label postNbr;
+ 
    @FXML
     private Label commentP;
    
@@ -76,21 +82,49 @@ private BorderPane borderPost;
     private Button PreviousP;
       @FXML
     private Button returnP;
+      private static   List<Post>   posts; 
+      
+       
     public void initialize(URL url, ResourceBundle rb) {
-      showPost();
+    try {
+        ShowPostsController.posts=new PostService().getAll();
+        Collections.reverse(ShowPostsController.posts);
+    } catch (SQLException ex) {
+        Logger.getLogger(ShowPostsController.class.getName()).log(Level.SEVERE, null, ex);
+    } 
+
+ showPost();
+ 
+timeline.setCycleCount(Timeline.INDEFINITE);
+timeline.play();
   
     }   
     
     PostService ps = new PostService();
-    
+           Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(2), event -> {
+   
+ 
+    i++;
+    if( ShowPostsController.posts.size()==i){
+        i=0;
+        
+        showPost();
+        
+    }else{
+        showPost();
+        
+        
+    }
+   
+}));
  public void showPost(){   
-      i=0;
-        List<Post> posts;
+      
+       
         
         try {
           
-            posts = new PostService().getAll();
-            if(posts.size()==0){
+           
+            if( ShowPostsController.posts.size()==0){
             Empty.getChildren().clear();
             Pane pane = new Pane();
             Label label2 = new Label("Sorry, no Post for today.");
@@ -104,17 +138,22 @@ label2.setPadding(new Insets(10.0, 0.0, 0.0, 10.0));
 pane.getChildren().addAll(label2,ajoutPP);
 Empty.getChildren().add(pane);
             }else{
-            Collections.reverse(posts);
-            Post post = posts.get(i);
-            int NbrComments =  ps.showComments(posts.get(i).getId()).size();
+            
+            Post post = ShowPostsController.posts.get(i);
+            int NbrComments =  ps.showComments(ShowPostsController.posts.get(i).getId()).size();
             if(NbrComments==1){
             commentP.setText(String.valueOf(NbrComments)+" Comment");
             }else{
               commentP.setText(String.valueOf(NbrComments)+" Comments");
             }
+            postNbr.setText(i+1 + "#");
             titleP.setText(post.getTitle());
            dateP.setText(post.getDate_post());
            descP.setText(post.getDetails());
+           Image image = new Image(post.getImage());
+      
+       imageP.setImage(image);
+        
             rateP.setText("Rate: "+String.valueOf(post.getRate())+"/5");
             System.out.println(post.getDate_post());
             }
@@ -126,24 +165,28 @@ Empty.getChildren().add(pane);
 @FXML
  public void nextPost(){   
       i++;
-        List<Post> posts;
+        
       
         try {
-            posts = new PostService().getAll();
-             Collections.reverse(posts);
-            if(posts.size()==i){
-                i--;
-            JOptionPane.showMessageDialog(null, "Pas de post suivante!");
+            
+            if(ShowPostsController.posts.size()==i){
+                i=0;
+                
+            showPost();
             }else{
-            Post post = posts.get(i);
-            int NbrComments =  ps.showComments(posts.get(i).getId()).size();
+            Post post = ShowPostsController.posts.get(i);
+            int NbrComments =  ps.showComments(ShowPostsController.posts.get(i).getId()).size();
             if(NbrComments==1){
             commentP.setText(String.valueOf(NbrComments)+" Comment");
             }else{
               commentP.setText(String.valueOf(NbrComments)+" Comments");
             }
+             postNbr.setText(i+1 + "#");
             titleP.setText(post.getTitle());
            dateP.setText(post.getDate_post());
+            Image image = new Image(post.getImage());
+      
+       imageP.setImage(image);
            descP.setText(post.getDetails());
             rateP.setText("Rate: "+String.valueOf(post.getRate())+"/5");
             System.out.println(post.getDate_post());
@@ -155,24 +198,29 @@ Empty.getChildren().add(pane);
  @FXML
  public void PreviousPost(){   
       i--;
-        List<Post> posts;
-      
+       
         try {
-            posts = new PostService().getAll();
-             Collections.reverse(posts);
+           
             if(i<0){
-                i++;
-            JOptionPane.showMessageDialog(null, "Pas de post prècedente!");
+               
+                 i=ShowPostsController.posts.size()-1;
+                
+            showPost();
+            
             }else{
-            Post post = posts.get(i);
-            int NbrComments =  ps.showComments(posts.get(i).getId()).size();
+            Post post = ShowPostsController.posts.get(i);
+            int NbrComments =  ps.showComments(ShowPostsController.posts.get(i).getId()).size();
             if(NbrComments==1){
             commentP.setText(String.valueOf(NbrComments)+" Comment");
             }else{
               commentP.setText(String.valueOf(NbrComments)+" Comments");
             }
+             postNbr.setText(i+1 + "#");
             titleP.setText(post.getTitle());
            dateP.setText(post.getDate_post());
+            Image image = new Image(post.getImage());
+      
+       imageP.setImage(image);
            descP.setText(post.getDetails());
            rateP.setText("Rate: "+String.valueOf(post.getRate())+"/5");
             System.out.println(post.getDate_post());
@@ -197,15 +245,18 @@ Empty.getChildren().add(pane);
  
  @FXML
     private void AjoutPost(javafx.event.ActionEvent event) throws IOException {
+          timeline.stop();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../GUI/AjoutPost.fxml"));
         Parent root = loader.load();
         ajoutPP.getScene().setRoot(root);
+      
 
     }
     
    @FXML
      private void detailP() throws SQLException {
         try {
+              timeline.stop();
               List<Post> posts;
             posts = new PostService().getAll();
              Collections.reverse(posts);

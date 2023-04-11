@@ -62,6 +62,25 @@
     -fx-background-radius: 20;
    
 }
+.star{
+    -fx-background-color: transparent;
+    
+}
+.star:hover{
+     -fx-effect: innershadow(gaussian, #000000, 10, 0.2, 0, 0);
+      -fx-effect: dropshadow(gaussian, #000000, 10, 0.2, 0, 0);
+        -fx-background-color: transparent;
+    -fx-background-radius: 20;
+    -fx-text-fill: white;
+}
+.star:pressed{
+    -fx-effect: innershadow(gaussian, #000000, 10, 0.3, 0, 0);
+      -fx-effect: dropshadow(gaussian, #000000, 10, 0.3, 0, 0);
+        -fx-background-color: transparent;
+    -fx-background-radius: 20;
+   
+}
+
 .tabmenu{
     -fx-padding: 5 180 0 10;
     -fx-background-color:#DCDCDC;

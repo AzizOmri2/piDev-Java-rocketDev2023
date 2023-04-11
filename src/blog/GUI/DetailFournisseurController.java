@@ -22,9 +22,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.Authenticator;
-import java.net.PasswordAuthentication;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -34,6 +31,10 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.scene.image.ImageView;
+import javafx.util.Duration;
 /**
  * FXML Controller class
  *
@@ -44,6 +45,8 @@ public class DetailFournisseurController implements Initializable {
     @FXML
     private Button retourlisttF;
     
+     @FXML
+    private ImageView waiting;
     @FXML
     private Button sendMail;
     
@@ -72,9 +75,11 @@ public class DetailFournisseurController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+mailer.setText(null);
+waiting.setVisible(false);
     }
-
+ @FXML
+    private Label mailer;
     @FXML
     private void handleModifierF() {
         // Get the values from the labels in the current scene
@@ -174,20 +179,33 @@ private void sendMail() {
        alert.setTitle("Confirmation d'envoie");
         alert.setHeaderText("Voulez-vous envoyez ce mail à "+labNomF.getText()+" ?");
         alert.setContentText("Cette action est requise.");
-
+ waiting.setVisible(true);
         // Show the confirmation dialog and wait for the user's response
         Optional<ButtonType> result = alert.showAndWait();  
 
         // Send the email
-         
+        
           if (result.get() == ButtonType.OK) {
-              System.out.println("En cours d'envoie...");
+             
+              waiting.setVisible(false);
+
            Transport.send(msg);
-                   System.out.println("Envoyé avec succès !");
+            
+           
+
+                 mailer.setText("Envoyé avec succès !");
+                  Timeline timeline1 = new Timeline(new KeyFrame(Duration.seconds(2), event -> mailer.setText(null)));
+timeline1.play();
+
+                   
         } else {
             // Close the dialog and do nothing
             alert.close();
-            System.out.println("Echec d'envoie!");
+             waiting.setVisible(false);
+
+             mailer.setText("Echec d'envoie!");
+             Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(2), event -> mailer.setText(null)));
+timeline.play();
         }
 
       

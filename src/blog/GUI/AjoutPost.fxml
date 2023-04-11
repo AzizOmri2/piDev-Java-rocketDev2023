@@ -15,8 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="900.0" prefWidth="1200.0" style="-fx-background-color: white;" stylesheets="@navsidebar.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="blog.GUI.AjoutPostController">
+<AnchorPane id="AnchorPane" prefHeight="900.0" prefWidth="1200.0" style="-fx-background-color: white;" stylesheets="@navsidebar.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="blog.GUI.AjoutPostController">
    <children>
       <BorderPane prefHeight="900.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <left>
@@ -103,13 +102,13 @@
                   <AnchorPane prefHeight="656.0" prefWidth="434.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
                      <children>
                         <TextField fx:id="titleAjoutP" layoutX="228.0" layoutY="101.0" prefHeight="44.0" prefWidth="308.0" promptText="Title" AnchorPane.leftAnchor="250.0" AnchorPane.topAnchor="100.0" />
-                        <TextField fx:id="descAjoutP" layoutX="238.0" layoutY="209.0" prefHeight="44.0" prefWidth="308.0" promptText="Description" AnchorPane.leftAnchor="250.0" AnchorPane.topAnchor="300.0" />
+                        <TextField fx:id="descAjoutP" layoutX="250.0" layoutY="189.0" prefHeight="44.0" prefWidth="308.0" promptText="Description" AnchorPane.leftAnchor="250.0" AnchorPane.topAnchor="189.0" />
                         <Label layoutX="120.0" layoutY="106.0" prefHeight="37.0" prefWidth="67.0" text="Titre:" AnchorPane.leftAnchor="120.0" AnchorPane.topAnchor="110.0">
                            <font>
                               <Font name="Calibri Bold Italic" size="20.0" />
                            </font>
                         </Label>
-                        <Label layoutX="99.0" layoutY="310.0" prefHeight="37.0" prefWidth="112.0" text="Déscription:" AnchorPane.leftAnchor="120.0" AnchorPane.topAnchor="310.0">
+                        <Label layoutX="120.0" layoutY="199.0" prefHeight="37.0" prefWidth="112.0" text="Déscription:" AnchorPane.leftAnchor="120.0" AnchorPane.topAnchor="200.0">
                            <font>
                               <Font name="Calibri Bold Italic" size="20.0" />
                            </font>
@@ -138,6 +137,12 @@
                               <Font name="Calibri Bold Italic" size="18.0" />
                            </font>
                         </Button>
+                        <Button fx:id="imageButton" layoutX="250.0" layoutY="290.0" mnemonicParsing="false" onAction="#getImage" styleClass="MenuButton" text="choose image" AnchorPane.leftAnchor="150.0" AnchorPane.topAnchor="290.0">
+                           <font>
+                              <Font name="Calibri Bold Italic" size="18.0" />
+                           </font>
+                        </Button>
+                        <TextField fx:id="fileP" editable="false" layoutX="322.0" layoutY="283.0" prefHeight="30.0" prefWidth="240.0" promptText="File path" AnchorPane.leftAnchor="320.0" AnchorPane.topAnchor="290.0" />
                      </children>
                   </AnchorPane>
                </center>

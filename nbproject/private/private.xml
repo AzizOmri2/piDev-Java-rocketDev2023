@@ -6,8 +6,8 @@
             <file>file:/C:/Users/Ahmed%20Ben%20Abid/Desktop/PI%20JAVA/Blog%20+Ressources/src/blog/Entities/Charge.java</file>
             <file>file:/C:/Users/Ahmed%20Ben%20Abid/Desktop/PI%20JAVA/Blog%20+Ressources/src/blog/GUI/DetailFournisseurController.java</file>
             <file>file:/C:/Users/Ahmed%20Ben%20Abid/Desktop/PI%20JAVA/Blog%20+Ressources/src/blog/Services/PostService.java</file>
-            <file>file:/C:/Users/Ahmed%20Ben%20Abid/Desktop/PI%20JAVA/Blog%20+Ressources/src/blog/GUI/BlogTest.fxml</file>
             <file>file:/C:/Users/Ahmed%20Ben%20Abid/Desktop/PI%20JAVA/Blog%20+Ressources/src/blog/GUI/BlogTestController.java</file>
+            <file>file:/C:/Users/Ahmed%20Ben%20Abid/Desktop/PI%20JAVA/Blog%20+Ressources/src/blog/GUI/navsidebar.css</file>
             <file>file:/C:/Users/Ahmed%20Ben%20Abid/Desktop/PI%20JAVA/Blog%20+Ressources/src/blog/GUI/ListMaterielController.java</file>
             <file>file:/C:/Users/Ahmed%20Ben%20Abid/Desktop/PI%20JAVA/Blog%20+Ressources/src/blog/GUI/BackOfficeHomeController.java</file>
             <file>file:/C:/Users/Ahmed%20Ben%20Abid/Desktop/PI%20JAVA/Blog%20+Ressources/src/blog/GUI/ModifMaterielController.java</file>
@@ -18,6 +18,7 @@
             <file>file:/C:/Users/Ahmed%20Ben%20Abid/Desktop/PI%20JAVA/Blog%20+Ressources/src/blog/GUI/ListChargeController.java</file>
             <file>file:/C:/Users/Ahmed%20Ben%20Abid/Desktop/PI%20JAVA/Blog%20+Ressources/src/blog/Blog.java</file>
             <file>file:/C:/Users/Ahmed%20Ben%20Abid/Desktop/PI%20JAVA/Blog%20+Ressources/src/blog/Entities/Comment.java</file>
+            <file>file:/C:/Users/Ahmed%20Ben%20Abid/Desktop/PI%20JAVA/Blog%20+Ressources/src/blog/GUI/AjoutPostController.java</file>
             <file>file:/C:/Users/Ahmed%20Ben%20Abid/Desktop/PI%20JAVA/Blog%20+Ressources/src/blog/Interfaces/ChargesCRUD.java</file>
             <file>file:/C:/Users/Ahmed%20Ben%20Abid/Desktop/PI%20JAVA/Blog%20+Ressources/src/blog/Entities/Fournisseur.java</file>
             <file>file:/C:/Users/Ahmed%20Ben%20Abid/Desktop/PI%20JAVA/Blog%20+Ressources/src/blog/DbConfig/MyDB.java</file>

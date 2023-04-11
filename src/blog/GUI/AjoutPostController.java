@@ -7,6 +7,7 @@ package blog.GUI;
 
 import blog.Entities.Post;
 import blog.Services.PostService;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -18,6 +19,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 
@@ -41,9 +43,17 @@ public class AjoutPostController implements Initializable {
 
     @FXML
     private Button annulerP;
+    
+     @FXML
+    private Button imageButton;
+
+    @FXML
+    private TextField fileP;
+ FileChooser filechooser = new FileChooser();
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        
+       filechooser.setInitialDirectory(new File("C:\\Users\\Ahmed Ben Abid\\Desktop\\PI JAVA\\Blog +Ressources\\src\\blog\\Image"));
     }    
     
     @FXML
@@ -54,7 +64,16 @@ public class AjoutPostController implements Initializable {
         // Fermez la fenêtre
         stage.close();
     }
+   
+    @FXML 
+    private void getImage(){
+    File file = filechooser.showOpenDialog(new Stage());
+    if (file != null) {
+    String filePath = file.toURI().toString();
     
+    fileP.setText(filePath);
+}
+    }
      @FXML
     private void retourBlog(javafx.event.ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../GUI/ShowPosts.fxml"));
@@ -62,7 +81,8 @@ public class AjoutPostController implements Initializable {
         annulerP.getScene().setRoot(root);
 
     }
-    
+     @FXML
+   
      private boolean verifs() {
 if (titleAjoutP.getText().isEmpty() ) {
         JOptionPane.showMessageDialog(null, "Le champ titre est obligatoire !");
@@ -70,6 +90,10 @@ if (titleAjoutP.getText().isEmpty() ) {
     }
     if (descAjoutP.getText().isEmpty() ) {
         JOptionPane.showMessageDialog(null, "Le champ description est obligatoire !");
+        return false;
+    }
+    if (fileP.getText().isEmpty() ) {
+        JOptionPane.showMessageDialog(null, "tu dois choisir une image!");
         return false;
     }
  
@@ -83,7 +107,7 @@ if (titleAjoutP.getText().isEmpty() ) {
          
        if (verifs()) {
         
-        Post p = new Post(filterWords(titleAjoutP.getText()),filterWords(descAjoutP.getText()));
+        Post p = new Post(filterWords(titleAjoutP.getText()),filterWords(descAjoutP.getText()),fileP.getText());
        
        utilisateurService.create(p);
      JOptionPane.showMessageDialog(null, "Post ajouté avec succe");

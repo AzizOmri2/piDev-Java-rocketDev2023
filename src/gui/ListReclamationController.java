@@ -51,8 +51,8 @@ public class ListReclamationController implements Initializable {
     private AnchorPane listReclamationPane;
     
     @FXML
-    void open_addReponse(ActionEvent event) throws IOException {
-        Parent fxml= FXMLLoader.load(getClass().getResource("ajoutReponse.fxml"));
+    void open_addReclamation(ActionEvent event) throws IOException {
+        Parent fxml= FXMLLoader.load(getClass().getResource("ajoutReclamation.fxml"));
         listReclamationPane.getChildren().removeAll();
         listReclamationPane.getChildren().setAll(fxml);
     }

@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,6 +20,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -47,7 +50,9 @@ public class AjoutCategoryReclamationController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        ObservableList<String> options = FXCollections.observableArrayList(
+        "Faible","Haute","Moyenne");
+        textPrioriteCategRec.setItems(options);
     }    
     
     
@@ -55,7 +60,7 @@ public class AjoutCategoryReclamationController implements Initializable {
     @FXML
     private TextField textNomCategRec;
     @FXML
-    private TextField textPrioriteCategRec;
+    private ComboBox<String> textPrioriteCategRec;
     @FXML
     private TextArea textDescriptionCategRec;
     
@@ -70,20 +75,20 @@ public class AjoutCategoryReclamationController implements Initializable {
     private void AjoutCategoryReclamation(ActionEvent event) {
         //check if not empty
         if(event.getSource() == btnAddCategRec){
-            if (textNomCategRec.getText().isEmpty() || textPrioriteCategRec.getText().isEmpty() || textDescriptionCategRec.getText().isEmpty()) 
+            if (textNomCategRec.getText().isEmpty() || textPrioriteCategRec.getValue().isEmpty() || textDescriptionCategRec.getText().isEmpty()) 
             {    
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Missing Information");
+                alert.setTitle("Information manquante");
                 alert.setHeaderText(null);
-                alert.setContentText("You have to complete all details about your category reclamation.");
+                alert.setContentText("Vous devez remplir tous les détails concernant votre catégorie réclamation.");
                 Optional<ButtonType> option = alert.showAndWait();
                 
             } else {
                 ajouterCategoryReclamation();
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Added Successfully");
+                alert.setTitle("Ajouté avec succès");
                 alert.setHeaderText(null);
-                alert.setContentText("Your Category Reclamation was added to DataBase.");
+                alert.setContentText("Votre catégorie réclamation a été ajoutée avec succès.");
                 Optional<ButtonType> option = alert.showAndWait();
                 
                 clearFieldsCategoryReclamation();
@@ -98,18 +103,15 @@ public class AjoutCategoryReclamationController implements Initializable {
     @FXML
     private void clearFieldsCategoryReclamation() {
         textNomCategRec.clear();
-        textPrioriteCategRec.clear();
         textDescriptionCategRec.clear();
     }
     
     
     private void ajouterCategoryReclamation() {
         
-         // From Formulaire
         String nomCategRec = textNomCategRec.getText();
-        String prioriteCategRec = textPrioriteCategRec.getText();
+        String prioriteCategRec = textPrioriteCategRec.getValue();
         String descriptionRec = textDescriptionCategRec.getText();
-        
         
         
         CategoryReclamation cr = new CategoryReclamation(

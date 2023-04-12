@@ -6,10 +6,16 @@
 package gui;
 
 import entities.Activite;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.UUID;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -23,7 +29,11 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import services.ActiviteService;
 import utils.MyDB;
 
@@ -53,7 +63,7 @@ public class AjoutActiviteController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         ObservableList<String> options = FXCollections.observableArrayList(
-        "Facile","Moyen","Difficile");
+        "Facile","Moyenne","Difficile");
         textDiffAct.setItems(options);
     }    
     
@@ -61,15 +71,10 @@ public class AjoutActiviteController implements Initializable {
     /*Formulaire AjoutActivité*/
     @FXML
     private TextArea textDescriptionAct;
-    /*@FXML
-    private TextField textDiffAct;*/
-    
-    String difficulte[] = { "Facile", "Moyen", "Difficile" };
-    /*@FXML
-    private ComboBox textDiffAct=*/
+
     @FXML
     private ComboBox<String> textDiffAct;
-            
+    
     @FXML
     private TextField textDureeAct;
     @FXML
@@ -78,6 +83,8 @@ public class AjoutActiviteController implements Initializable {
     private TextField textTenueAct;
     @FXML
     private TextField textImageAct;
+    @FXML
+    private ImageView imgActiviteInput;
     
     
     @FXML
@@ -88,25 +95,50 @@ public class AjoutActiviteController implements Initializable {
     private Button btnClearAct;
     
     
+    private File selectedImageFile;
+    private String imageName = null ;
+    
+    
+    @FXML
+    void ajouterImage() throws IOException {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Choisir une image");
+        fileChooser.getExtensionFilters().addAll(new ExtensionFilter("Images", "*.png", "*.jpg", "*.jpeg", "*.gif"));
+        selectedImageFile = fileChooser.showOpenDialog(imgActiviteInput.getScene().getWindow());
+        if (selectedImageFile != null) {
+            Image image = new Image(selectedImageFile.toURI().toString());
+            imgActiviteInput.setImage(image);
+
+            // Générer un nom de fichier unique pour l'image
+            String uniqueID = UUID.randomUUID().toString();
+            String extension = selectedImageFile.getName().substring(selectedImageFile.getName().lastIndexOf("."));
+            imageName = uniqueID + extension;
+
+            Path destination = Paths.get(System.getProperty("user.dir"), "src", "uploads", imageName);
+            Files.copy(selectedImageFile.toPath(), destination, StandardCopyOption.REPLACE_EXISTING);
+
+        }
+    }
+    
     @FXML
     private void AjoutActivite(ActionEvent event) {
         //check if not empty
         if(event.getSource() == btnAddAct){
             if (textDescriptionAct.getText().isEmpty() || textDiffAct.getItems().isEmpty() || textDureeAct.getText().isEmpty() || textNomAct.getText().isEmpty() || 
-                textTenueAct.getText().isEmpty() || textImageAct.getText().isEmpty()) 
+                textTenueAct.getText().isEmpty() || imageName==null) 
             {    
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Missing Information");
+                alert.setTitle("Information manquante");
                 alert.setHeaderText(null);
-                alert.setContentText("You have to complete all details about your activity.");
+                alert.setContentText("Vous devez remplir tous les détails concernant votre activité.");
                 Optional<ButtonType> option = alert.showAndWait();
                 
             } else {    
                 ajouterActivite();
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Added Successfully");
+                alert.setTitle("Ajouté avec succès");
                 alert.setHeaderText(null);
-                alert.setContentText("Your activity was added to DataBase.");
+                alert.setContentText("Votre activité a été ajoutée avec succès.");
                 Optional<ButtonType> option = alert.showAndWait();
                 
                 clearFieldsActivite();
@@ -121,7 +153,6 @@ public class AjoutActiviteController implements Initializable {
     @FXML
     private void clearFieldsActivite() {
         textDescriptionAct.clear();
-        textDiffAct.getItems().clear();
         textDureeAct.clear();
         textNomAct.clear();
         textTenueAct.clear();
@@ -136,7 +167,7 @@ public class AjoutActiviteController implements Initializable {
         String dureeAct = textDureeAct.getText();
         String tenueAct = textTenueAct.getText();
         String diffAct = textDiffAct.getValue();
-        String imgAct = textImageAct.getText();
+        String imgAct = imageName;
         String descpAct = textDescriptionAct.getText();
        
         

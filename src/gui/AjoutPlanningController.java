@@ -5,6 +5,7 @@
  */
 package gui;
 
+import entities.Cours;
 import entities.Planning;
 import java.io.IOException;
 import java.net.URL;
@@ -12,8 +13,13 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,10 +28,17 @@ import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import services.CoursService;
 import services.PlanningService;
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
+
+
 
 /**
  * FXML Controller class
@@ -49,21 +62,48 @@ public class AjoutPlanningController implements Initializable {
     }
     
     
+    CoursService cs = new CoursService();
+    List<Cours> cours = cs.Show();
+    private int coursId=-1;
+            
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        Map<String, Integer> valuesMap = new HashMap<>();
+        for(Cours c : cours){
+            textCoursPlanning.getItems().add(c.getNom_cours());
+            valuesMap.put(c.getNom_cours(),c.getId());
+        }
+        
+        textCoursPlanning.setOnAction(event ->{
+            String SelectedOption = null;
+            SelectedOption = textCoursPlanning.getValue();
+            int SelectedValue = 0;
+            SelectedValue = valuesMap.get(SelectedOption);
+            coursId = SelectedValue;
+        });
+        
+        
+        ObservableList<String> optionsHeure = FXCollections.observableArrayList(
+        "09","11","13","16","19");
+        textHeurePlanning.setItems(optionsHeure);
+        
+        ObservableList<String> optionsJour = FXCollections.observableArrayList(
+        "Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi","Dimanche");
+        textJourPlanning.setItems(optionsJour);
     }    
     
     
     /*Formulaire AjoutPlanning*/
     @FXML
-    private TextField textCoursPlanning;
+    private ComboBox<String> textCoursPlanning;
     @FXML
     private DatePicker txtDatePlanning;
     @FXML
-    private TextField textJourPlanning;
+    private ComboBox<String> textJourPlanning;
     @FXML
-    private TextField textHeurePlanning;
+    private ComboBox<String> textHeurePlanning;
+    @FXML 
+    private TextField txtNumUser;
     
     
     @FXML
@@ -76,20 +116,20 @@ public class AjoutPlanningController implements Initializable {
     private void AjoutPlanning(ActionEvent event) {
         //check if not empty
         if(event.getSource() == btnAddPlanning){
-            if (textCoursPlanning.getText().isEmpty() || textJourPlanning.getText().isEmpty() || textHeurePlanning.getText().isEmpty()) 
+            if (coursId==-1 || txtNumUser.getText().isEmpty() || textHeurePlanning.getValue().isEmpty() || textJourPlanning.getValue().isEmpty() ) 
             {    
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Missing Information");
+                alert.setTitle("Information manquante");
                 alert.setHeaderText(null);
-                alert.setContentText("You have to complete all details about your planning.");
+                alert.setContentText("Vous devez remplir tous les détails concernant votre planning.");
                 Optional<ButtonType> option = alert.showAndWait();
                 
             } else {
                 ajouterPlanning();
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Added Successfully");
+                alert.setTitle("Ajouté avec succès");
                 alert.setHeaderText(null);
-                alert.setContentText("Your Planning was added to DataBase.");
+                alert.setContentText("Votre planning a été ajoutée avec succès.");
                 Optional<ButtonType> option = alert.showAndWait();
                 
                 clearFieldsPlanning();
@@ -103,16 +143,14 @@ public class AjoutPlanningController implements Initializable {
     
     @FXML
     private void clearFieldsPlanning() {
-        textCoursPlanning.clear();
-        textJourPlanning.clear();
-        textHeurePlanning.clear();
+        txtNumUser.clear();
     }
     
     
     private void ajouterPlanning() {
         
          // From Formulaire
-        int coursPlanning = Integer.parseInt(textCoursPlanning.getText());
+        int coursPlanning = coursId;
         Date datePlanning = null;
         try {
             LocalDate localDate = txtDatePlanning.getValue();
@@ -124,14 +162,41 @@ public class AjoutPlanningController implements Initializable {
             e.printStackTrace();
         }
         
-        String jourPlanning = textJourPlanning.getText();
-        int heurePlanning = Integer.parseInt(textHeurePlanning.getText());
+        String jourPlanning = textJourPlanning.getValue();
+        int heurePlanning = Integer.parseInt(textHeurePlanning.getValue());
        
         
         Planning p = new Planning(
                 coursPlanning, datePlanning, jourPlanning, heurePlanning);
         PlanningService ps = new PlanningService();
         ps.ajouter(p);
+        //send_SMS();
     }
+    
+    
+    
+    void send_SMS (){
+        // Initialisation de la bibliothèque Twilio avec les informations de votre compte
+        String ACCOUNT_SID = "AC861631f98dc0930ce29521048a763b12";
+        String AUTH_TOKEN = "352232e03c832a2188efae5fb3201bb4";
+             
+        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+
+            String recipientNumber = "+216" + txtNumUser.getText();
+            String message = "Bonjour Braiek Ali\n,Nous sommes ravis de vous offrir un coupon pour sac-ecologique valable jusqu'au 25/04/2023.\n Utilisez le code suivant 071532 lors de votre prochain achat en ligne ou en magasin pour bénéficier de 20% de la réduction.\n Merci de votre fidélité et à bientôt chez ZeroWaste.\nCordialement,\nZeroWaste";
+                
+            Message twilioMessage = Message.creator(
+                new PhoneNumber(recipientNumber),
+                new PhoneNumber("+15075163294"),
+                message)
+                .create();
+                
+            System.out.println("SMS envoyé : " + twilioMessage.getSid());
+            /*TrayNotificationAlert.notif("Coupon", "Coupon sent successfully.",
+            NotificationType.SUCCESS, AnimationType.POPUP, Duration.millis(2500));*/
+
+        
+         
+     }
     
 }

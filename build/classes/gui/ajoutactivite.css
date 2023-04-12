@@ -62,6 +62,12 @@
     -fx-cursor: hand;
 }
 
+.import-btn:hover{
+    -fx-background-color: #aeabab;
+    -fx-text-fill: #720000;    
+    -fx-cursor: hand;
+}
+
 .btn{
     -fx-background-color: #720000;
     -fx-background-radius: 8px;

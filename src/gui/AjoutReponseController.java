@@ -5,6 +5,7 @@
  */
 package gui;
 
+import entities.Reclamation;
 import entities.Reponse;
 import java.io.IOException;
 import java.net.URL;
@@ -12,6 +13,9 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -22,10 +26,12 @@ import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import services.ReclamationService;
 import services.ReponseService;
 
 /**
@@ -49,16 +55,30 @@ public class AjoutReponseController implements Initializable {
         addReponsePane.getChildren().setAll(fxml);
     }
     
+    ReclamationService rs = new ReclamationService();
+    List<Reclamation> reclamation = rs.Show();
+    private int reclamationId;
+
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        Map<String, Integer> valuesMap = new HashMap<>();
+        for(Reclamation rec : reclamation){
+            textReclamationReponse.getItems().add(rec.getNom_user_reclamation());
+            valuesMap.put(rec.getNom_user_reclamation(),rec.getId());
+        }
+        
+        textReclamationReponse.setOnAction(event ->{
+            String SelectedOption = textReclamationReponse.getValue();
+            int SelectedValue = valuesMap.get(SelectedOption);
+            reclamationId = SelectedValue;
+        });
     }    
     
     
     /*Formulaire AjoutReponse*/
     @FXML
-    private TextField textReclamationReponse;
+    private ComboBox <String> textReclamationReponse;
     @FXML
     private TextField textObjetReponse;
     @FXML
@@ -79,21 +99,21 @@ public class AjoutReponseController implements Initializable {
     private void AjoutReponse(ActionEvent event) {
         //check if not empty
         if(event.getSource() == btnAddReponse){
-            if (textReclamationReponse.getText().isEmpty() || textObjetReponse.getText().isEmpty() 
+            if (textReclamationReponse.getValue().isEmpty() || textObjetReponse.getText().isEmpty() 
                     || textPieceJointeReponse.getText().isEmpty() || textContenuReponse.getText().isEmpty()) 
             {    
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Missing Information");
+                alert.setTitle("Information manquante");
                 alert.setHeaderText(null);
-                alert.setContentText("You have to complete all details about your reply.");
+                alert.setContentText("Vous devez remplir tous les détails concernant votre réponse.");
                 Optional<ButtonType> option = alert.showAndWait();
                 
             } else {
                 ajouterReponse();
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Added Successfully");
+                alert.setTitle("Ajouté avec succès");
                 alert.setHeaderText(null);
-                alert.setContentText("Your Reply was added to DataBase.");
+                alert.setContentText("Votre réponse a été ajoutée avec succès.");
                 Optional<ButtonType> option = alert.showAndWait();
                 
                 clearFieldsReponse();
@@ -107,7 +127,6 @@ public class AjoutReponseController implements Initializable {
     
     @FXML
     private void clearFieldsReponse() {
-        textReclamationReponse.clear();
         textObjetReponse.clear();
         textPieceJointeReponse.clear();
         textContenuReponse.clear();
@@ -117,7 +136,7 @@ public class AjoutReponseController implements Initializable {
     private void ajouterReponse() {
         
          // From Formulaire
-        int recRep = Integer.parseInt(textReclamationReponse.getText());
+        int recRep = Integer.parseInt(textReclamationReponse.getValue());
         String objetRep = textObjetReponse.getText();
         Date dateRep = null;
         try {

@@ -81,6 +81,13 @@
     -fx-font-weight: 800;
 }
 
+.label-ajout-nb{
+    -fx-text-fill: #000;
+    -fx-font-size:10px;
+    -fx-font-family:"System";
+    -fx-font-weight: 800;
+}
+
 .btn{
     -fx-background-color: #720000;
     -fx-background-radius: 8px;
@@ -95,3 +102,15 @@
     -fx-background-color: #5B0000;
 }
 
+
+.comboBox{
+    -fx-background-color: linear-gradient(to bottom, #efefef, #eee);
+    -fx-border-color: #720000;
+    -fx-border-width: .8px;
+    -fx-font-family: "Tahoma";
+    -fx-border-radius: 4px;
+}
+
+.comboBox:selected{
+    -fx-border-width: 2px;
+}

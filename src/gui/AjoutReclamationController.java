@@ -5,6 +5,7 @@
  */
 package gui;
 
+import entities.CategoryReclamation;
 import entities.Reclamation;
 import java.io.IOException;
 import java.net.URL;
@@ -12,6 +13,9 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -22,10 +26,12 @@ import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import services.CategoryReclamationService;
 import services.ReclamationService;
 
 /**
@@ -50,9 +56,27 @@ public class AjoutReclamationController implements Initializable {
     }
     
     
+    
+    CategoryReclamationService crs = new CategoryReclamationService();
+    List<CategoryReclamation> category = crs.Show();
+    private int categoryId;
+    
+    
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        Map<String, Integer> valuesMap = new HashMap<>();
+        for(CategoryReclamation cr : category){
+            textCategRec.getItems().add(cr.getNom_category());
+            valuesMap.put(cr.getNom_category(),cr.getId());
+        }
+        
+        textCategRec.setOnAction(event ->{
+            String SelectedOption = textCategRec.getValue();
+            int SelectedValue = valuesMap.get(SelectedOption);
+            categoryId = SelectedValue;
+        });
+
     }    
     
     
@@ -64,7 +88,7 @@ public class AjoutReclamationController implements Initializable {
     @FXML
     private TextField textObjetRec;
     @FXML
-    private TextField textCategRec;
+    private ComboBox<String> textCategRec;
     @FXML
     private DatePicker txtDateRec;
     @FXML
@@ -82,20 +106,20 @@ public class AjoutReclamationController implements Initializable {
         //check if not empty
         if(event.getSource() == btnAddRec){
             if (textNomUserRec.getText().isEmpty() || textEmailUserRec.getText().isEmpty() || textObjetRec.getText().isEmpty()
-                    || textCategRec.getText().isEmpty() || textTexteRec.getText().isEmpty()) 
+                    || textCategRec.getValue().isEmpty() || textTexteRec.getText().isEmpty()) 
             {    
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Missing Information");
+                alert.setTitle("Information manquante");
                 alert.setHeaderText(null);
-                alert.setContentText("You have to complete all details about your reclamation.");
+                alert.setContentText("Vous devez remplir tous les détails concernant votre planning.");
                 Optional<ButtonType> option = alert.showAndWait();
                 
             } else {
                 ajouterReclamation();
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Added Successfully");
+                alert.setTitle("Ajouté avec succès");
                 alert.setHeaderText(null);
-                alert.setContentText("Your Reclamation was added to DataBase.");
+                alert.setContentText("Votre réclamation a été ajoutée avec succès.");
                 Optional<ButtonType> option = alert.showAndWait();
                 
                 clearFieldsReclamation();
@@ -112,7 +136,7 @@ public class AjoutReclamationController implements Initializable {
         textNomUserRec.clear();
         textEmailUserRec.clear();
         textObjetRec.clear();
-        textCategRec.clear();
+        textCategRec.getItems().clear();
         textTexteRec.clear();
     }
     
@@ -123,7 +147,7 @@ public class AjoutReclamationController implements Initializable {
         String nomUserRec = textNomUserRec.getText();
         String emailUserRec = textEmailUserRec.getText();
         String objetRec = textObjetRec.getText();
-        int categRec = Integer.parseInt(textCategRec.getText());
+        int categRec = Integer.parseInt(textCategRec.getValue());
         Date dateReclamation = null;
         try {
             LocalDate localDate = txtDateRec.getValue();

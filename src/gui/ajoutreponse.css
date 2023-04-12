@@ -95,3 +95,15 @@
 .btn:hover{
     -fx-background-color: #5B0000;
 }
+
+.comboBox{
+    -fx-background-color: linear-gradient(to bottom, #efefef, #eee);
+    -fx-border-color: #720000;
+    -fx-border-width: .8px;
+    -fx-font-family: "Tahoma";
+    -fx-border-radius: 4px;
+}
+
+.comboBox:selected{
+    -fx-border-width: 2px;
+}

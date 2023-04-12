@@ -18,8 +18,10 @@ import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import services.CoursService;
 import utils.MyDB;
@@ -48,7 +50,8 @@ public class AjoutCoursController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        numberPrixInputError.setText("");
+        numberAgeInputError.setText("");
     }  
     
     
@@ -63,6 +66,10 @@ public class AjoutCoursController implements Initializable {
     private TextField textAgeMinCours;
     @FXML
     private TextArea textDescriptionCours;
+    @FXML
+    private Label numberPrixInputError;
+    @FXML
+    private Label numberAgeInputError;
     
     
     @FXML
@@ -70,26 +77,65 @@ public class AjoutCoursController implements Initializable {
     @FXML
     private Button btnClearCours;
     
+    int numberAgeTest = 0;
+    int numberPrixTest = 0;
+    
+    @FXML
+    void numberPrixTypedInput(KeyEvent event) {
+        String numberText = ((TextField) event.getSource()).getText();
+        if (!numberText.matches("-?\\d+")) {
+            numberPrixInputError.setText("Le nombre doit être valide.");
+            numberPrixTest = 0;
+        } else {
+            int number = Integer.parseInt(numberText);
+            if (number < 0) {
+                numberPrixInputError.setText("Le nombre doit être positive.");
+                numberPrixTest = 0;
+            } else {
+                numberPrixInputError.setText(" ");
+                numberPrixTest = 1;
+            }
+        }
+    }
+    
+    
+    @FXML
+    void numberAgeTypedInput(KeyEvent event) {
+        String numberText = ((TextField) event.getSource()).getText();
+        if (!numberText.matches("-?\\d+")) {
+            numberAgeInputError.setText("L'age doit être valide.");
+            numberAgeTest = 0;
+        } else {
+            int number = Integer.parseInt(numberText);
+            if (number < 0) {
+                numberAgeInputError.setText("L'age doit être positive.");
+                numberAgeTest = 0;
+            } else {
+                numberAgeInputError.setText(" ");
+                numberAgeTest = 1;
+            }
+        }
+    }
     
     @FXML
     private void AjoutCours(ActionEvent event) {
         //check if not empty
         if(event.getSource() == btnAddCours){
             if (textNomCours.getText().isEmpty() || textPrixCours.getText().isEmpty() || textNomCoachCours.getText().isEmpty() || textAgeMinCours.getText().isEmpty() || 
-                textDescriptionCours.getText().isEmpty()) 
+                textDescriptionCours.getText().isEmpty() || numberPrixTest == 0 || numberAgeTest == 0) 
             {    
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Missing Information");
+                alert.setTitle("Information manquante");
                 alert.setHeaderText(null);
-                alert.setContentText("You have to complete all details about your course.");
+                alert.setContentText("Vous devez remplir tous les détails concernant votre cours.");
                 Optional<ButtonType> option = alert.showAndWait();
                 
             } else {
                 ajouterCours();
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Added Successfully");
+                alert.setTitle("Ajouté avec succès");
                 alert.setHeaderText(null);
-                alert.setContentText("Your course was added to DataBase.");
+                alert.setContentText("Votre cours a été ajoutée avec succès.");
                 Optional<ButtonType> option = alert.showAndWait();
                 
                 clearFieldsCours();

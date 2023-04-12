@@ -2,6 +2,7 @@
 
 <?import java.net.URL?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
@@ -27,13 +28,19 @@
             <Font name="System Bold" size="21.0" />
          </font>
       </Label>
-      <Button fx:id="btnReturnReclamation" layoutX="34.0" layoutY="34.0" mnemonicParsing="false" onAction="#return_ListReclamation" prefHeight="34.0" prefWidth="66.0" styleClass="btn" stylesheets="@ajoutreclamation.css" text="Back" />
+      <Button fx:id="btnReturnReclamation" layoutX="34.0" layoutY="34.0" mnemonicParsing="false" onAction="#return_ListReclamation" prefHeight="34.0" prefWidth="66.0" styleClass="btn" stylesheets="@ajoutreclamation.css">
+         <graphic>
+            <ImageView fitHeight="25.0" fitWidth="57.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/return.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
       <TextField fx:id="textNomUserRec" layoutX="293.0" layoutY="276.0" prefHeight="26.0" prefWidth="216.0" promptText="Nom User" styleClass="textfield" stylesheets="@ajoutreclamation.css" />
       <TextField fx:id="textEmailUserRec" layoutX="293.0" layoutY="318.0" prefHeight="26.0" prefWidth="216.0" promptText="Email User" styleClass="textfield" stylesheets="@ajoutreclamation.css" />
       <TextField fx:id="textObjetRec" layoutX="293.0" layoutY="359.0" prefHeight="26.0" prefWidth="216.0" promptText="Objet Réclamation" styleClass="textfield" stylesheets="@ajoutreclamation.css" />
-      <TextField fx:id="textCategRec" layoutX="293.0" layoutY="399.0" prefHeight="26.0" prefWidth="216.0" promptText="Catégorie Réclamation" styleClass="textfield" stylesheets="@ajoutreclamation.css" />
       <TextArea fx:id="textTexteRec" layoutX="293.0" layoutY="483.0" prefHeight="58.0" prefWidth="216.0" promptText="Texte Réclamation" styleClass="textarea" stylesheets="@ajoutreclamation.css" />
-      <DatePicker fx:id="txtDateRec" layoutX="294.0" layoutY="440.0" prefHeight="26.0" prefWidth="216.0" styleClass="datePicker" stylesheets="@ajoutreclamation.css" />
+      <DatePicker fx:id="txtDateRec" layoutX="294.0" layoutY="440.0" prefHeight="26.0" prefWidth="216.0" promptText="Date Réclamation" styleClass="datePicker" stylesheets="@ajoutreclamation.css" />
       <Label layoutX="191.0" layoutY="444.0" prefHeight="18.0" prefWidth="86.0" styleClass="label-ajout" stylesheets="@ajoutplanning.css" text="Date :" />
       <Label layoutX="191.0" layoutY="481.0" prefHeight="18.0" prefWidth="86.0" styleClass="label-ajout" stylesheets="@ajoutplanning.css" text="Texte :" />
       <ImageView fitHeight="582.0" fitWidth="600.0" layoutX="747.0" layoutY="175.0" pickOnBounds="true" preserveRatio="true">
@@ -41,5 +48,6 @@
             <Image url="@../images/CoachReg.png" />
          </image>
       </ImageView>
+      <ComboBox fx:id="textCategRec" layoutX="293.0" layoutY="400.0" prefHeight="26.0" prefWidth="216.0" promptText="Catégorie Réclamation" styleClass="comboBox" stylesheets="@ajoutreclamation.css" />
    </children>
 </AnchorPane>

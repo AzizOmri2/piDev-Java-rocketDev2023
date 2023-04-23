@@ -5,20 +5,42 @@
  */
 package gui;
 
+import com.itextpdf.text.BadElementException;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfWriter;
+import entites.Menu;
+import entites.Plat;
+import entites.Reservation;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.Image;
+//import java.awt.Image;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,11 +48,22 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import pidev3a52.Pidev3a52;
+import services.MenuServices;
+import services.PlatServices;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfPageEvent;
+import javafx.scene.control.Alert;
+
 
 /**
  * FXML Controller class
@@ -40,9 +73,16 @@ import javax.swing.JPanel;
 public class FXML_FrontRestaurantController implements Initializable {
 
     @FXML
-    private Button Reserver;
-    
-    
+    private Label menuN;
+    @FXML
+    private Button GoToPlats;
+    @FXML
+    private Button PDF;
+    @FXML
+    private ComboBox idPlatpdf;  
+    private Button Darkmode;
+     private Button QrCode; 
+     
     public Connection conx;
     public Statement stm;
     /**
@@ -50,84 +90,284 @@ public class FXML_FrontRestaurantController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       // TODO
+        MenuServices ser = new MenuServices();    
+List<Menu> listeee;
+        try {
+            listeee = ser.afficherListe();
+ObservableList<String> list = FXCollections.observableArrayList();
+
+for (Menu menu : listeee) {
+    list.addAll(menu.getCategories());
+}
+ menuN.setText(list.get(Pidev3a52.i));
+   } catch (SQLException ex) {
+            Logger.getLogger(FXML_FrontRestaurantController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
          try {
             // Initialize your database connection here
             conx = DriverManager.getConnection("jdbc:mysql://localhost:3306/rocketdevdb4", "root", "");
         } catch (SQLException ex) {
             System.out.println("Failed to connect to database: " + ex.getMessage());
-        }   
-      Reserver.setOnAction((ActionEvent event) -> {
-            GoToReservation();
-    }); 
-    //  FXML_FrontRestaurantController controller = new FXML_FrontRestaurantController();
-    //  controller.afficherMenuSousFormeDImages();
+        } 
+ //************************PDF ****************
+PlatServices serr = new PlatServices();    
+List<Plat> lista;
+    
+        try {
+            lista = serr.afficherListe();
+        
+ObservableList<String> list = FXCollections.observableArrayList();
 
-    }    
-     private void GoToReservation(){
-            Parent root;
+for (Plat plat : lista) {
+    list.addAll(plat.getNom());
+}
+
+            idPlatpdf.setItems(list);
+        } catch (SQLException ex) {
+            Logger.getLogger(FXML_FrontRestaurantController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        PDF.setOnAction((event) -> {
             try {
-            root = FXMLLoader.load(getClass().getResource("FXML_AjouterReservation.fxml"));
+                exporterPDF((String) idPlatpdf.getValue()); // exporter le plat sélectionné en PDF
+
+                // Créer une alerte pour informer que le PDF a été exporté avec succès
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Succès");
+                alert.setHeaderText("Le PDF a été exporté avec succès !");
+               // alert.setContentText("");
+                alert.showAndWait();
+
+            } catch (SQLException | DocumentException | FileNotFoundException ex) {
+                Logger.getLogger(FXML_FrontRestaurantController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(FXML_FrontRestaurantController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+        
+
+}
+  
+
+      @FXML
+  public void next() throws SQLException {
+      Pidev3a52.i ++;
+             MenuServices ser = new MenuServices();    
+List<Menu> listeee;
+            listeee = ser.afficherListe();
+            if( Pidev3a52.i == listeee.size())
+                Pidev3a52.i = 0;
+            ObservableList<String> list = FXCollections.observableArrayList();
+
+for (Menu menu : listeee) {
+    list.addAll(menu.getCategories());
+}
+ menuN.setText(list.get(Pidev3a52.i));
+  }
+        @FXML
+  public void pred() throws SQLException {
+      Pidev3a52.i --;
+             MenuServices ser = new MenuServices();    
+List<Menu> listeee;
+            listeee = ser.afficherListe();
+            if( Pidev3a52.i == -1)
+                Pidev3a52.i = listeee.size()-1;
+      ObservableList<String> list = FXCollections.observableArrayList();
+
+for (Menu menu : listeee) {
+    list.addAll(menu.getCategories());
+}
+ menuN.setText(list.get(Pidev3a52.i));
+  }
+ @FXML
+  public void plat() throws SQLException {
+                   MenuServices ser = new MenuServices();    
+
+         Pidev3a52.id = ser.idmenu(menuN.getText());
+          Parent root;
+            try {
+            root = FXMLLoader.load(getClass().getResource("FXML_platFront.fxml"));
             Scene c=new Scene(root);
-             Stage stage=(Stage)Reserver.getScene().getWindow();
+             Stage stage=(Stage)GoToPlats.getScene().getWindow();
             stage.setScene(c);
         } catch (IOException ex) {
-            Logger.getLogger(FXML_AjouterReservationController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FXML_FrontRestaurantController.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }  
+  }
+ //****************************************PDF**************************************** 
+ private void exporterPDF(String nomPlat) throws SQLException, FileNotFoundException, DocumentException, BadElementException, IOException {
+      
+    String req = "SELECT nom, prix, description, calories FROM plat WHERE nom = ?";
+   
+    PreparedStatement pstmt = conx.prepareStatement(req);
+    pstmt.setString(1, nomPlat); 
+    // exécution de la requête SQL et récupération des résultats
+    ResultSet rs = pstmt.executeQuery();
+    rs.next(); // on suppose qu'il n'y a qu'un seul résultat
+
+    // création du document PDF
+    Document document = new Document();
+    DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss"); // format de date pour générer un nom de fichier unique
+    String filePath = "C:\\Users\\lenovo\\Desktop\\PIDEV_Desc\\src\\pdfs\\Details_plat_" + dateFormat.format(new Date()) + ".pdf";
+    PdfWriter.getInstance(document, new FileOutputStream(filePath));
+    document.open();
+    
+     // ajout du logo
+     Image logo = Image.getInstance("C:\\Users\\lenovo\\Desktop\\PIDEV_Desc\\src\\gui\\images\\LogoGymBlack.png"); // créer une instance de l'image
+     logo.scaleToFit(100, 100); // ajuster la taille de l'image
+     logo.setAbsolutePosition(20, 750); // positionner l'image en haut et à gauche
+     logo.setAlignment(Element.ALIGN_LEFT); // aligner l'image  à gauche
+     document.add(logo); // ajouter l'image au document
      
- /*    
-public void afficherMenuSousFormeDImages() {
-    // Créer une JFrame pour contenir le panel
-    JFrame frame = new JFrame("Menu");
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    //ajouter un paragraphe vide pour l'espace
+     document.add(new Paragraph("\n"));
+     document.add(new Paragraph("\n"));
+     document.add(new Paragraph("\n"));
+     
+    // ajout des détails du plat au document
+    Font fontTitre = new Font(Font.FontFamily.HELVETICA, 24, Font.BOLD,new BaseColor(216, 24, 50));
+    Font fontTitreCouleur = new Font(Font.FontFamily.HELVETICA, 24, Font.BOLD,new BaseColor(216, 24, 50));
+    Font fontNormal = new Font(Font.FontFamily.HELVETICA, 20, Font.BOLD,new BaseColor(0x00, 0x00, 0x00));
 
-    // Créer un JPanel pour contenir les images du menu
-    JPanel menuPanel = new JPanel(new GridLayout(1, 0, 10, 0));
-    menuPanel.setPreferredSize(new Dimension(800, 400));
+    Paragraph titre = new Paragraph("Nom du plat : ", fontTitre);
+    Chunk nomPlatChunk = new Chunk(rs.getString("nom"), fontNormal);
+    titre.add(nomPlatChunk);
+    titre.setAlignment(Paragraph.ALIGN_CENTER);
+    titre.setSpacingAfter(10f); // espace après le paragraphe
+    document.add(titre);
 
-    try {
-        // Exécuter une requête SQL pour récupérer le nom de chaque menu
-        String sql = "SELECT categories FROM menu";
-        stm = conx.createStatement();
-        ResultSet rs = stm.executeQuery(sql);
+    document.add(Chunk.NEWLINE);
+    document.add(Chunk.NEWLINE);
+      
+    Phrase phrasePrixTitre = new Phrase("Prix : ", fontTitreCouleur);
+    Phrase phrasePrixValeur = new Phrase(rs.getDouble("prix") + " Dt", fontNormal);
+    Phrase phrasePrixComplete = new Phrase();
+    phrasePrixComplete.add(phrasePrixTitre);
+    phrasePrixComplete.add(phrasePrixValeur);
+    document.add(phrasePrixComplete);
+    document.add(Chunk.NEWLINE);
 
-        // Parcourir chaque nom de menu dans le résultat de la requête
-        while (rs.next()) {
-            // Récupérer le nom de menu à partir du résultat de la requête
-            String menuNom = rs.getString("categories");
+    document.add(Chunk.NEWLINE);
+    document.add(Chunk.NEWLINE);
+      
+    Phrase phraseDescriptionTitre = new Phrase("Description : ", fontTitreCouleur);
+    Phrase phraseDescriptionValeur = new Phrase(rs.getString("description"), fontNormal);
+    Phrase phraseDescriptionComplete = new Phrase();
+    phraseDescriptionComplete.add(phraseDescriptionTitre);
+    phraseDescriptionComplete.add(phraseDescriptionValeur);
+    document.add(phraseDescriptionComplete);
+    document.add(Chunk.NEWLINE);
 
-            // Charger l'image correspondante à partir du nom de fichier
-            ImageIcon icon = new ImageIcon(getClass().getResource(menuNom.toLowerCase() + ".jpg"));
-            Image image = icon.getImage();
-            Image scaledImage = image.getScaledInstance(250, 250, Image.SCALE_SMOOTH);
+    document.add(Chunk.NEWLINE);
+    document.add(Chunk.NEWLINE);
+     
+    Phrase phraseCaloriesTitre = new Phrase("Nombre de calories : ", fontTitreCouleur);
+    Phrase phraseCaloriesValeur = new Phrase(rs.getString("calories"), fontNormal);
+    Phrase phraseCaloriesComplete = new Phrase();
+    phraseCaloriesComplete.add(phraseCaloriesTitre);
+    phraseCaloriesComplete.add(phraseCaloriesValeur);
+    document.add(phraseCaloriesComplete);
+   
+    // fermeture du document PDF
+    document.close();
 
-            // Créer un JLabel pour afficher l'image
-            JLabel imageLabel = new JLabel(new ImageIcon(scaledImage));
-            imageLabel.setVerticalAlignment(JLabel.TOP);
+    // fermeture de la connexion à la base de données
+    conx.close();
 
-            // Ajouter le nom du menu sous l'image
-            JLabel nameLabel = new JLabel(menuNom);
-            nameLabel.setHorizontalAlignment(JLabel.CENTER);
-
-            // Créer un JPanel pour contenir l'image et le nom de menu
-            JPanel menuImagePanel = new JPanel(new GridLayout(2, 0, 0, 10));
-            menuImagePanel.add(imageLabel);
-            menuImagePanel.add(nameLabel);
-
-            // Ajouter le JPanel à la vue contenant toutes les images
-            menuPanel.add(menuImagePanel);
-        }
-    } catch (SQLException ex) {
-        System.out.println("Failed to execute SQL query: " + ex.getMessage());
-    }
-
-    // Ajouter la vue contenant toutes les images à la JFrame
-    frame.getContentPane().add(menuPanel);
-    frame.pack();
-    frame.setVisible(true);
+   System.out.println("Le PDF a été généré avec succès !");
 }
-*/
-     
-     
+//****************************************PDF****************************************  
+ 
+ 
+ 
 }
+  
+/*private void importerPDF() throws SQLException, FileNotFoundException, DocumentException {
+      
+    String req = "SELECT nom, prix, description ,calories FROM plat WHERE id = ?";
+   
+    PreparedStatement pstmt = conx.prepareStatement(req);
+    pstmt.setInt(1, Integer.parseInt(idPlatpdf.getText())); 
+    // exécution de la requête SQL et récupération des résultats
+    ResultSet rs = pstmt.executeQuery();
+    rs.next(); // on suppose qu'il n'y a qu'un seul résultat
+
+    // création du document PDF
+    Document document = new Document();
+    DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss"); // format de date pour générer un nom de fichier unique
+    String filePath = "C:\\Users\\lenovo\\Desktop\\PIDEV_Desc\\src\\pdfs\\Details_plat_" + dateFormat.format(new Date()) + ".pdf";
+    PdfWriter.getInstance(document, new FileOutputStream(filePath));
+    document.open();
+
+    
+    // ajout des détails du plat au document
+    Font fontTitre = new Font(Font.FontFamily.HELVETICA, 24, Font.BOLD,new BaseColor(216, 24, 50));
+   // BaseColor rougeFoncé = new BaseColor(0x72, 0x00, 0x00);
+    Font fontTitreCouleur = new Font(Font.FontFamily.HELVETICA, 24, Font.BOLD,new BaseColor(216, 24, 50));
+    Font fontNormal = new Font(Font.FontFamily.HELVETICA, 20, Font.BOLD,new BaseColor(0x00, 0x00, 0x00));
+
+    Paragraph titre = new Paragraph("Nom du plat : ", fontTitre);
+    Chunk nomPlat = new Chunk(rs.getString("nom"), fontNormal);
+   // nomPlat.setUnderline(0.1f, -2f); // souligner le texte
+    titre.add(nomPlat);
+    titre.setAlignment(Paragraph.ALIGN_CENTER);
+    titre.setSpacingAfter(10f); // espace après le paragraphe
+    document.add(titre);
+
+     document.add(Chunk.NEWLINE);
+     document.add(Chunk.NEWLINE);
+      
+    Phrase phrasePrixTitre = new Phrase("Prix : ", fontTitreCouleur);
+    Phrase phrasePrixValeur = new Phrase(rs.getDouble("prix") + " Dt", fontNormal);
+    Phrase phrasePrixComplete = new Phrase();
+    phrasePrixComplete.add(phrasePrixTitre);
+    phrasePrixComplete.add(phrasePrixValeur);
+    document.add(phrasePrixComplete);
+    document.add(Chunk.NEWLINE);
+
+     document.add(Chunk.NEWLINE);
+     document.add(Chunk.NEWLINE);
+      
+    Phrase phraseDescriptionTitre = new Phrase("Description : ", fontTitreCouleur);
+    Phrase phraseDescriptionValeur = new Phrase(rs.getString("description"), fontNormal);
+    Phrase phraseDescriptionComplete = new Phrase();
+    phraseDescriptionComplete.add(phraseDescriptionTitre);
+    phraseDescriptionComplete.add(phraseDescriptionValeur);
+    document.add(phraseDescriptionComplete);
+    document.add(Chunk.NEWLINE);
+
+     document.add(Chunk.NEWLINE);
+     document.add(Chunk.NEWLINE);
+     
+    Phrase phraseCaloriesTitre = new Phrase("Nombre de calories : ", fontTitreCouleur);
+    Phrase phraseCaloriesValeur = new Phrase(rs.getString("calories"), fontNormal);
+    Phrase phraseCaloriesComplete = new Phrase();
+    phraseCaloriesComplete.add(phraseCaloriesTitre);
+    phraseCaloriesComplete.add(phraseCaloriesValeur);
+    document.add(phraseCaloriesComplete);
+   
+
+   
+
+    // fermeture du document PDF
+    document.close();
+
+    // fermeture de la connexion à la base de données
+    conx.close();
+
+    System.out.println("Le PDF a été généré avec succès !");
+}
+  /*   PDF.setOnAction((ActionEvent event) -> {
+            try {
+                importerPDF();
+            } catch (SQLException ex) {
+                Logger.getLogger(FXML_FrontPlatController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(FXML_FrontPlatController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (DocumentException ex) {
+                Logger.getLogger(FXML_FrontPlatController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        });
+   */
+/* ***************************************PDF****************************************   */  

@@ -12,3 +12,11 @@
     -fx-background-color: #5B0000;
     color: white;
 }
+
+.combo-box .text-input {
+    -fx-text-fill: white;
+}
+.combo-box .list-cell:filled:selected .text {
+    -fx-text-fill: white;
+}
+

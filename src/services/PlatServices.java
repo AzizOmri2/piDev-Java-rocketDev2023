@@ -6,9 +6,16 @@
 package services;
 
 
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
 import services.Icrud;
 import entites.Menu;
 import entites.Plat;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,6 +23,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.fxml.FXML;
+import javafx.scene.control.TextField;
 import utils.MyDB;
 
 /**
@@ -42,9 +51,20 @@ public class PlatServices implements Icrud<Plat> {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
+      @Override
     public List<Plat> afficherListe() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       String req = "SELECT * FROM `plat`";
+        stm = conx.createStatement();
+        ResultSet rs = stm.executeQuery(req);
+        List<Plat> menus = new ArrayList<Plat>();
+        while (rs.next()) {
+            Plat m = new Plat(rs.getInt("id"), //or rst.getInt(1)
+                    rs.getString("nom"),
+                    rs.getDouble("prix"));
+            menus.add(m);
+        }
+
+        return menus;
     }
 
   //  @Override
@@ -77,11 +97,56 @@ public class PlatServices implements Icrud<Plat> {
         pst.setString(5, m.getEtat());
         pst.setString(6, m.getImage());
         pst.setInt(7, m.getNbp());
-        pst.setInt(8, m.getId());
-        pst.setInt(9, m.getCategories_id());
+        pst.setInt(8, m.getCategories_id());
+        pst.setInt(9, m.getId());
         pst.executeUpdate();
         System.out.println("Plat modifié avec succès");
     }
+
+    @Override
+    public int idmenu(String nom) {
+         String req = "SELECT id FROM plat WHERE nom = ?";
+    try {
+        PreparedStatement pstmt = conx.prepareStatement(req);
+        pstmt.setString(1, nom);
+        ResultSet rs = pstmt.executeQuery();
+        if (rs.next()) {
+            return rs.getInt("id");
+        } else {
+            return 0;
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return 0;
+    }    }
+
+    @Override
+    public List<Plat> afficherListe1(int id) throws SQLException {
+             String req = "SELECT * FROM `plat` where categories_id = ?";
+            PreparedStatement pstmt = conx.prepareStatement(req);
+        pstmt.setInt(1, id);
+        ResultSet rs = pstmt.executeQuery();
+        List<Plat> menus = new ArrayList<Plat>();
+        while (rs.next()) {
+                Plat m = new Plat(rs.getInt("id"), //or rst.getInt(1)
+                    rs.getString("nom"),
+                    rs.getDouble("prix"),
+                    rs.getString("calories"),
+                    rs.getString("description"),
+                    rs.getInt("nbp"),
+                    rs.getString("image"));
+            menus.add(m);
+        }
+
+        return menus;
+    }
+    
+ //PDF 
+    
+   
+    
+    
+    
     
 }
    

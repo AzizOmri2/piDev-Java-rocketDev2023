@@ -17,12 +17,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -35,7 +39,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -98,9 +107,29 @@ public class FXML_PlatController implements Initializable {
     private Button Refresh;
       @FXML
     private Button Afficher;
-      
+    @FXML
+    private Button TriPrix;
+    @FXML
+    private Button TriNom;
+    
     public Connection conx;
     public Statement stm;
+     @FXML
+    private TextField fxrecherche ;
+     
+     int index = -1;
+    @FXML
+    private  ImageView ShowImg;
+    @FXML
+    private TableColumn<Plat, String> imageplat;
+    
+    @FXML
+    private Button captureEcran;
+    @FXML
+    private AnchorPane monAnchorPane;
+    
+    
+    
     /**
      * Initializes the controller class.
      */
@@ -130,8 +159,34 @@ public class FXML_PlatController implements Initializable {
         });
      Ajout.setOnAction((ActionEvent event) -> {
            GoToAjout();
-    });  
-    }    
+    });
+     TriPrix.setOnAction((ActionEvent event) -> {
+            triParPrix();
+    }); 
+     TriNom.setOnAction((ActionEvent event) -> {
+            triParNom();
+    }); 
+   captureEcran.setOnAction(event -> {
+    CaptureEcran cap = new CaptureEcran();
+    try {
+        cap.capturer(monAnchorPane);
+        System.out.println("La capture d'écran a été générée avec succès !");
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Capture d'écran");
+        alert.setHeaderText("Capture d'écran générée avec succès !");
+        alert.showAndWait();
+    } catch (Exception ex) {
+        System.out.println("Erreur lors de la capture d'écran : " + ex.getMessage());
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Erreur");
+        alert.setHeaderText("Erreur lors de la capture d'écran !");
+        alert.setContentText("Une erreur est survenue lors de la capture d'écran : " + ex.getMessage());
+        alert.showAndWait();
+    }
+});
+
+    }  
+    
     private void GoToRestau(){
             Parent root;
             try {
@@ -211,12 +266,53 @@ public class FXML_PlatController implements Initializable {
          calories.setCellValueFactory(new PropertyValueFactory<>("calories"));
          etat.setCellValueFactory(new PropertyValueFactory<>("etat"));
          nbp.setCellValueFactory(new PropertyValueFactory<>("nbp"));
-         image.setCellValueFactory(new PropertyValueFactory<>("image"));
+        // image.setCellValueFactory(new PropertyValueFactory<>("image"));
          categories.setCellValueFactory(new PropertyValueFactory<>("categories_id"));
-       
+
+       // Set up custom cell factory for image column
+        image.setCellFactory(column -> {
+        TableCell<Plat, String> cell = new TableCell<Plat, String>() {
+            private final ImageView imageView = new ImageView();
+            
+            @Override
+            protected void updateItem(String imagePath, boolean empty) {
+                super.updateItem(imagePath, empty);
+
+                if (empty || imagePath == null) {
+                    setGraphic(null);
+                } else {
+                Image image = new Image("file:src/uploads/" + imagePath + ".png") {};
+                imageView.setImage(image);
+                imageView.setFitWidth(200);
+                imageView.setFitHeight(200);
+                setGraphic(imageView);
+                }
+            }
+        };
+        return cell;
+    });  
+ 
         tvPlat.setItems(list);
+         search();    
      }   
-     
+    @FXML
+    public void getSelected(MouseEvent event) throws SQLException {
+        index = tvPlat.getSelectionModel().getSelectedIndex();
+        if (index <= -1) {
+
+            return;
+        }
+         nom.setText(nom.getCellData(index).toString());
+         prix.setText(prix.getCellData(index).toString());
+         description.setText(description.getCellData(index).toString());
+         calories.setText(calories.getCellData(index).toString());
+         etat.setText(etat.getCellData(index).toString());
+         nbp.setText(nbp.getCellData(index).toString());
+         categories.setText(categories.getCellData(index).toString());
+  
+        ShowImg.setImage(new Image("file:src/uploads/" + imageplat.getCellData(index).toString() + ".png"));
+        System.out.println(imageplat.getCellData(index).toString());    
+    }  
    @FXML
 public void showActions() {
    ObservableList<Plat> list = getPlatList();
@@ -296,6 +392,8 @@ public void showActions() {
     tvPlat.setItems(list);
 
     tvPlat.getColumns().addAll(colBtn, colBtn2);
+    
+     search();    
 }
      
   private void SupprimerPlat(Plat p) {
@@ -338,6 +436,111 @@ public void showActions() {
     stage.show();
 }   
   
+//****************************************Recherche-Avancée****************************************     
+void search() {
+    ObservableList<Plat> list = getPlatList();
+    nom.setCellValueFactory(new PropertyValueFactory<>("nom"));
+    prix.setCellValueFactory(new PropertyValueFactory<>("prix"));
+    description.setCellValueFactory(new PropertyValueFactory<>("description"));
+    calories.setCellValueFactory(new PropertyValueFactory<>("calories"));
+    etat.setCellValueFactory(new PropertyValueFactory<>("etat"));
+    nbp.setCellValueFactory(new PropertyValueFactory<>("nbp"));
+    image.setCellValueFactory(new PropertyValueFactory<>("image"));
+    categories.setCellValueFactory(new PropertyValueFactory<>("categories_id"));
+    conx = MyDB.getInstance().getConx();
+
+    ObservableList<Plat> dataList = getPlatList();
+    tvPlat.setItems(dataList);
+
+    FilteredList<Plat> filteredData = new FilteredList<>(dataList, b -> true);
+    fxrecherche.textProperty().addListener((observable, oldValue, newValue) -> {
+        filteredData.setPredicate(plat -> {
+            if (newValue == null || newValue.isEmpty()) {
+                return true;
+            }
+            String lowerCaseFilter = newValue.toLowerCase();
+            if (plat.getNom().toLowerCase().contains(lowerCaseFilter) ||
+                    plat.getDescription().toLowerCase().contains(lowerCaseFilter)) {
+                return true; // Filter matches name or description
+            } else {
+                return false; // Does not match.
+            }
+        });
+    });
+
+    SortedList<Plat> sortedData = new SortedList<>(filteredData);
+    sortedData.comparatorProperty().bind(tvPlat.comparatorProperty());
+    tvPlat.setItems(sortedData);
+}
+
+//****************************************Recherche-Avancée****************************************
+
+//****************************************Tri-Par-Prix****************************************
+public void triParPrix() {
+    ObservableList<Plat> dataList = getPlatList();
+    Collections.sort(dataList, new Comparator<Plat>() {
+        @Override
+        public int compare(Plat m1, Plat m2) {
+            // Tri ascendant par prix
+            return Double.compare(m1.getPrix(), m2.getPrix());
+        }
+    });
+    tvPlat.setItems(dataList);
+}
+//****************************************Fin-Tri-Par-Prix****************************************
+ 
+//****************************************Tri-Par-Nom****************************************
+public void triParNom() {
+        ObservableList<Plat> dataList = getPlatList();
+        Collections.sort(dataList, new Comparator<Plat>() {
+            @Override
+            public int compare(Plat m1, Plat m2) {
+                return m1.getNom().compareToIgnoreCase(m2.getNom());
+            }
+        });
+        tvPlat.setItems(dataList);
+    }
+//****************************************Fin-Tri-Par-Nom****************************************
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  
  
  /*  

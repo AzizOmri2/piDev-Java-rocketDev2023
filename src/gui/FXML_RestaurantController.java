@@ -64,8 +64,8 @@ public class FXML_RestaurantController implements Initializable {
             btnPlats.setOnAction((ActionEvent event) -> {
         GoToPlat();
     });
-              btnReservations.setOnAction((ActionEvent event) -> {
-        GoToReservation();
+         btnReservations.setOnAction((ActionEvent event) -> {
+             GoToReservation();
     });
     
     }    
@@ -101,7 +101,7 @@ public class FXML_RestaurantController implements Initializable {
             Stage stage=(Stage)btnReservations.getScene().getWindow();
            stage.setScene(c);
         } catch (IOException ex) {
-            Logger.getLogger(FXML_AjouterMenuController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FXML_RestaurantController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

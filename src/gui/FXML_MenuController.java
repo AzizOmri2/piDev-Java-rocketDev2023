@@ -47,10 +47,21 @@ import javafx.scene.input.MouseEvent;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.util.Collections;
+import java.util.Comparator;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
+import javafx.scene.control.TextArea;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+
+import gui.CaptureEcran;
+import javafx.event.EventHandler;
+import javafx.scene.layout.AnchorPane;
+
 
 /**
  * FXML Controller class
@@ -96,7 +107,16 @@ public class FXML_MenuController implements Initializable {
              
     public Connection conx;
     public Statement stm;
-
+   @FXML
+    private TextField fxrecherche ;
+    @FXML
+    private Button Trier;
+    @FXML
+    private Button captureEcran;
+    @FXML
+    private AnchorPane monAnchorPane;
+     
+    
     
     /**
      * Initializes the controller class.
@@ -129,9 +149,34 @@ public class FXML_MenuController implements Initializable {
        Refresh.setOnAction((ActionEvent event) -> {
             ShowListe();
     });
-                  
-    }    
- 
+        Trier.setOnAction((ActionEvent event) -> {
+            trierMenuParNom();
+        });
+         
+        captureEcran.setOnAction(event -> {
+        CaptureEcran cap = new CaptureEcran();
+    try {
+        cap.capturer(monAnchorPane);
+        System.out.println("La capture d'écran a été générée avec succès !");
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Capture d'écran");
+        alert.setHeaderText("Capture d'écran générée avec succès !");
+        alert.showAndWait();
+    } catch (Exception ex) {
+        System.out.println("Erreur lors de la capture d'écran : " + ex.getMessage());
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Erreur");
+        alert.setHeaderText("Erreur lors de la capture d'écran !");
+        alert.setContentText("Une erreur est survenue lors de la capture d'écran : " + ex.getMessage());
+        alert.showAndWait();
+    }
+});
+
+        
+}    
+
+
+
    private void GoToRestau(){
             Parent root;
             try {
@@ -220,6 +265,7 @@ public class FXML_MenuController implements Initializable {
          nom.setCellValueFactory(new PropertyValueFactory<>("categories"));
          description.setCellValueFactory(new PropertyValueFactory<>("descriptionmenu"));
         tvMenu.setItems(list);
+        search();
      }
        
 @FXML
@@ -295,6 +341,7 @@ public void showActions() {
     tvMenu.setItems(list);
 
     tvMenu.getColumns().addAll(colBtn, colBtn2);
+    search();
 
 }
 
@@ -314,7 +361,117 @@ public void showActions() {
     alert.showAndWait();
 }
    
-//Modifier 
+ 
+  private void ModifierMenu(Menu m) {
+    // chargement de la vue FXML pour la modification du menu
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML_ModifierMenu.fxml"));
+    Parent root;
+    try {
+        root = loader.load();
+    } catch (IOException ex) {
+        Logger.getLogger(FXML_MenuController.class.getName()).log(Level.SEVERE, null, ex);
+        return;
+    }
+    
+    // récupération du contrôleur de la vue FXML pour la modification du menu
+    FXML_ModifierMenuController controller = loader.getController();
+    
+    // passage des détails du menu sélectionné au contrôleur
+    controller.setMenu(m);
+    
+    // création d'une nouvelle fenêtre pour la modification du menu
+    Stage stage = new Stage();
+    Scene scene = new Scene(root);
+    stage.setScene(scene);
+    stage.show();
+}
+ //****************************************Recherche-Avancé****************************************   
+void search() {
+    nom.setCellValueFactory(new PropertyValueFactory<>("categories"));
+    description.setCellValueFactory(new PropertyValueFactory<>("descriptionmenu"));
+    conx = MyDB.getInstance().getConx();
+
+    ObservableList<Menu> dataList = getMenuList();
+    tvMenu.setItems(dataList);
+
+    FilteredList<Menu> filteredData = new FilteredList<>(dataList, b -> true);
+    fxrecherche.textProperty().addListener((observable, oldValue, newValue) -> {
+        filteredData.setPredicate(menu -> {
+            if (newValue == null || newValue.isEmpty()) {
+                return true;
+            }
+            String lowerCaseFilter = newValue.toLowerCase();
+            if (menu.getCategories().toLowerCase().contains(lowerCaseFilter)) {
+                return true; // Filter matches category
+            } else if (menu.getDescriptionmenu().toLowerCase().contains(lowerCaseFilter)) {
+                return true; // Filter matches description
+            } else {
+                return false; // Does not match.
+            }
+        });
+    });
+
+    SortedList<Menu> sortedData = new SortedList<>(filteredData);
+    sortedData.comparatorProperty().bind(tvMenu.comparatorProperty());
+    tvMenu.setItems(sortedData);
+}
+
+//****************************************Recherche-Avancé****************************************
+
+//****************************************TRI****************************************
+    public void trierMenuParNom() {
+        ObservableList<Menu> dataList = getMenuList();
+        Collections.sort(dataList, new Comparator<Menu>() {
+            @Override
+            public int compare(Menu m1, Menu m2) {
+                return m1.getCategories().compareToIgnoreCase(m2.getCategories());
+            }
+        });
+        tvMenu.setItems(dataList);
+    }
+//****************************************TRI****************************************
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ /* **************************************************************************************************************************************************************** */   
+ //Modifier 
  /* @FXML
 public void showM() {
     ObservableList<Menu> list = getMenuList();
@@ -357,62 +514,9 @@ public void showM() {
     tvMenu.getColumns().addAll(colBtn);
    
 }
-  */   
-  private void ModifierMenu(Menu m) {
-    // chargement de la vue FXML pour la modification du menu
-    FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML_ModifierMenu.fxml"));
-    Parent root;
-    try {
-        root = loader.load();
-    } catch (IOException ex) {
-        Logger.getLogger(FXML_MenuController.class.getName()).log(Level.SEVERE, null, ex);
-        return;
-    }
-    
-    // récupération du contrôleur de la vue FXML pour la modification du menu
-    FXML_ModifierMenuController controller = loader.getController();
-    
-    // passage des détails du menu sélectionné au contrôleur
-    controller.setMenu(m);
-    
-    // création d'une nouvelle fenêtre pour la modification du menu
-    Stage stage = new Stage();
-    Scene scene = new Scene(root);
-    stage.setScene(scene);
-    stage.show();
-}
-   
-  
-  
-  
-  
+  */  
 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-}
-   
- 
-     
-    
-     
-
-     
-     
-     
-     
-     
+      
 /*  ************************************************************************************  
         //Afficher bl bouttons modifier kodm kol menu :
          public void afficherMenu(){
@@ -474,7 +578,8 @@ public void showM() {
       
 ************************************************************************************   */     
 
-    
+
+          
       
    
 

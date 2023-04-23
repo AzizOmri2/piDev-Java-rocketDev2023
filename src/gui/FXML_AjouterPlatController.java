@@ -5,7 +5,10 @@
  */
 package gui;
 
+import entites.Menu;
 import entites.Plat;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -13,10 +16,17 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -24,8 +34,15 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
+import javax.imageio.ImageIO;
+import services.MenuServices;
 
 public class FXML_AjouterPlatController implements Initializable {
     @FXML
@@ -53,49 +70,77 @@ public class FXML_AjouterPlatController implements Initializable {
 
     public Connection conx;
      public Statement stm;
+      @FXML
+    private ImageView imagepro;
+       @FXML
+    private ComboBox combo;
+
+    private File file;
+    private String lien = "";
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        Plat p = new Plat();
-
+        MenuServices ser = new MenuServices();    
+List<Menu> listeee;
         try {
-            // Initialize your database connection here
-            conx = DriverManager.getConnection("jdbc:mysql://localhost:3306/rocketdevdb4", "root", "");
-        } catch (SQLException ex) {
-            System.out.println("Failed to connect to database: " + ex.getMessage());
+            listeee = ser.afficherListe();
+    
+ObservableList<String> list = FXCollections.observableArrayList();
+
+for (Menu menu : listeee) {
+    list.addAll(menu.getCategories());
+}
+
+combo.setItems(list);
+      } catch (SQLException ex) {
+            Logger.getLogger(FXML_AjouterPlatController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        fxajout.setOnAction((ActionEvent event) -> {
-            if (validateInputs() && controleDeSaisie())
-            {
-                p.setNom(fxnom.getText());
-                p.setDescription(fxdesc.getText());
-                p.setEtat(fxetat.getText());
-                p.setPrix(Double.parseDouble(fxprix.getText()));
-                p.setCalories(fxcalories.getText());
-                p.setImage(fximage.getText());
-                p.setNbp(Integer.parseInt(fxnbp.getText()));
-                p.setCategories_id(Integer.parseInt(fxcategId.getText()));
-                 ajouterPlat(p);
+            Plat p = new Plat();
+            
+            try {
+                // Initialize your database connection here
+                conx = DriverManager.getConnection("jdbc:mysql://localhost:3306/rocketdevdb4", "root", "");
+            } catch (SQLException ex) {
+                System.out.println("Failed to connect to database: " + ex.getMessage());
             }
-        });
-   
-        fxannuler.setOnAction((ActionEvent event) -> {
-            fxnom.clear();
-            fxdesc.clear();
-            fxprix.clear();
-            fxcalories.clear();
-            fxetat.clear();
-            fximage.clear();
-            fxnbp.clear();
-            fxcategId.clear();
-        });
-        
-        retour.setOnAction((ActionEvent event) -> {
-            redirectToList();
-        });
+            
+            fxajout.setOnAction(new EventHandler<ActionEvent>() {
+               @Override
+               public void handle(ActionEvent event) {
+                   if (validateInputs() && controleDeSaisie())
+                   {
+                       p.setNom(fxnom.getText());
+                       p.setDescription(fxdesc.getText());
+                       p.setEtat(fxetat.getText());
+                       p.setPrix(Double.parseDouble(fxprix.getText()));
+                       p.setCalories(fxcalories.getText());
+                       //   p.setImage(fximage.getText());
+                       p.setImage(lien);
+                       p.setNbp(Integer.parseInt(fxnbp.getText()));
+                       p.setCategories_id(ser.idmenu(combo.getSelectionModel().getSelectedItem().toString()));
+                       ajouterPlat(p);
+                   }
+               }
+           });
+            
+            fxannuler.setOnAction((ActionEvent event) -> {
+                fxnom.clear();
+                fxdesc.clear();
+                fxprix.clear();
+                fxcalories.clear();
+                fxetat.clear();
+                fximage.clear();
+                fxnbp.clear();
+                fxcategId.clear();
+            });
+            
+            retour.setOnAction((ActionEvent event) -> {
+                redirectToList();
+            });
+     
     }
 
      public void ajouterPlat(Plat p) {
@@ -123,13 +168,13 @@ public class FXML_AjouterPlatController implements Initializable {
            String nom = fxnom.getText();
            String desc = fxdesc.getText();
            String prix = fxprix.getText();
-           String categId = fxcategId.getText();
            String calories = fxcalories.getText();
            String etat = fxetat.getText();
-           String image = fximage.getText();
+          // String image = fximage.getText();
+           String image = imagepro.toString();
            String nbp = fxnbp.getText();
            
-        if (nom.trim().isEmpty() || desc.trim().isEmpty() || prix.trim().isEmpty() || categId.trim().isEmpty()
+        if (nom.trim().isEmpty() || desc.trim().isEmpty() || prix.trim().isEmpty()
             || calories.trim().isEmpty() || etat.trim().isEmpty() || image.trim().isEmpty()
             || nbp.trim().isEmpty()) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -140,7 +185,6 @@ public class FXML_AjouterPlatController implements Initializable {
     }
     try {
         Double.parseDouble(prix);
-        Integer.parseInt(categId);
         Integer.parseInt(nbp);
         return true;
     } catch (NumberFormatException e) {
@@ -168,11 +212,11 @@ private boolean controleDeSaisie() {
     // Récupérer les valeurs saisies par l'utilisateur
     String nom = fxnom.getText().trim();
     String desc = fxdesc.getText().trim();
-    String categId = fxcategId.getText().trim();
     String prixStr = fxprix.getText().trim();
     String caloriesStr = fxcalories.getText().trim();
     String etatStr = fxetat.getText().trim();
-    String image = fximage.getText().trim();
+   // String image = fximage.getText().trim();
+    String image =imagepro.toString();
     String nbpStr = fxnbp.getText().trim();
 
     // Vérifier la validité des saisies
@@ -262,11 +306,54 @@ private boolean controleDeSaisie() {
         p.setCalories(caloriesStr);
         p.setImage(image);
         p.setNbp(nbp);
-        p.setCategories_id(Integer.parseInt(categId));
-        ajouterPlat(p);
+       // ajouterPlat(p);
     }
 
     return isValid;
 }
+   
+@FXML
+private void handleChooseImage(ActionEvent event) {
+  FileChooser fileChooser = new FileChooser();
+
+        // Set extension filter
+        ExtensionFilter extFilterJPG = new ExtensionFilter("JPG files (.JPG)", "*.JPG");
+        ExtensionFilter extFilterjpg = new ExtensionFilter("jpg files (.jpg)", "*.jpg");
+        ExtensionFilter extFilterPNG = new ExtensionFilter("PNG files (.PNG)", "*.PNG");
+        ExtensionFilter extFilterpng = new ExtensionFilter("png files (.png)", "*.png");
+        fileChooser.getExtensionFilters().addAll(extFilterJPG, extFilterjpg, extFilterPNG, extFilterpng);
+
+        // Show open file dialog
+        file = fileChooser.showOpenDialog(null);
+
+        if (file != null) {
+            try {
+                BufferedImage image = ImageIO.read(file);
+                WritableImage imagee = SwingFXUtils.toFXImage(image, null);
+                imagepro.setImage(imagee);
+                imagepro.setFitWidth(200);
+                imagepro.setFitHeight(200);
+                imagepro.setSmooth(true);
+                imagepro.setCache(true);
+
+                try {
+                    // Save image to PNG file
+                    this.lien = UUID.randomUUID().toString();
+                    File f = new File("src/uploads/" + this.lien + ".png");
+                    System.out.println(f.toURI().toString());
+                    ImageIO.write(image, "PNG", f);
+
+                } catch (IOException ex) {
+                    Logger.getLogger(FXML_AjouterPlatController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(FXML_AjouterPlatController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+
+
+
 
 }

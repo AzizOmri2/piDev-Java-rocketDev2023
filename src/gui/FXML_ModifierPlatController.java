@@ -10,9 +10,12 @@ import entites.Plat;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,6 +24,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 import services.MenuServices;
@@ -55,6 +59,8 @@ public class FXML_ModifierPlatController implements Initializable {
     private TextArea fxcalories;
     @FXML
     private TextArea fxcategId;
+    @FXML
+    private ComboBox combo;
     
     private Plat plat;
     /**
@@ -62,6 +68,21 @@ public class FXML_ModifierPlatController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+          MenuServices ser = new MenuServices();    
+List<Menu> listeee;
+        try {
+            listeee = ser.afficherListe();
+    
+ObservableList<String> list = FXCollections.observableArrayList();
+
+for (Menu menu : listeee) {
+    list.addAll(menu.getCategories());
+}
+
+combo.setItems(list);
+      } catch (SQLException ex) {
+            Logger.getLogger(FXML_AjouterPlatController.class.getName()).log(Level.SEVERE, null, ex);
+        }
       Annuler.setOnAction((ActionEvent event) -> {
             fxnom.clear();
             fxdesc.clear();
@@ -99,11 +120,12 @@ public class FXML_ModifierPlatController implements Initializable {
        fxetat.setText(m.getEtat());
        fximage.setText(m.getImage());
       fxnbp.setText(String.valueOf(m.getNbp()));
-      fxcategId.setText(String.valueOf(m.getCategories_id()));
     }
    
    @FXML
     public void modifierPlat(ActionEvent event) {
+                  MenuServices ser = new MenuServices();    
+
         // récupérer les nouvelles valeurs entrées par l'utilisateur
        
        String nom = fxnom.getText();
@@ -113,9 +135,8 @@ public class FXML_ModifierPlatController implements Initializable {
        String etat = fxetat.getText();
        String image = fximage.getText();
        String nbp = fxnbp.getText();
-       String categories_id = fxcategId.getText();
 // vérifier que toutes les informations requises sont fournies
-if (nom.isEmpty() || description.isEmpty() || prix.isEmpty() || calories.isEmpty() || etat.isEmpty() || image.isEmpty() || nbp.isEmpty() || categories_id.isEmpty()) {
+if (nom.isEmpty() || description.isEmpty() || prix.isEmpty() || calories.isEmpty() || etat.isEmpty() || image.isEmpty() || nbp.isEmpty()) {
     Alert alert = new Alert(Alert.AlertType.ERROR);
     alert.setTitle("Erreur");
     alert.setHeaderText("Tous les champs doivent être remplis.");
@@ -129,7 +150,7 @@ if (nom.isEmpty() || description.isEmpty() || prix.isEmpty() || calories.isEmpty
     plat.setEtat(etat);
     plat.setImage(image);
     plat.setNbp(Integer.parseInt(nbp));
-    plat.setCategories_id(Integer.parseInt(categories_id));
+    plat.setCategories_id(ser.idmenu(combo.getSelectionModel().getSelectedItem().toString()));
 
     // enregistrer les modifications dans la base de données
     try {

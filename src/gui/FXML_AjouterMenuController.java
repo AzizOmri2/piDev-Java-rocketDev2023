@@ -152,8 +152,6 @@ public class FXML_AjouterMenuController implements Initializable {
     }
 }
 
-
-
       private void redirectToList(){
             Parent root;
             try {

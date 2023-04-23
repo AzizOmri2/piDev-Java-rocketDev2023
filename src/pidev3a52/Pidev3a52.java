@@ -7,29 +7,35 @@
 package pidev3a52;
 
 import entites.Menu;
+import entites.Plat;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.Animation;
 import javafx.animation.TranslateTransition;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.DialogPane;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import services.MenuServices;
+import services.PlatServices;
 import utils.MyDB;
 
 /**
@@ -37,17 +43,47 @@ import utils.MyDB;
  * @author lenovo
  */
 public class Pidev3a52 extends Application{
-
+public static int i = 0;
+public static int j = 0;
+public static int k = 0;
+public static int id;
   
      @Override
     public void start(Stage stage) throws Exception {
-      Parent root = FXMLLoader.load(getClass().getResource("/gui/FXML_BACKRestaurant.fxml"));
-   // Parent root = FXMLLoader.load(getClass().getResource("/gui/FXML_FrontRestaurant.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/gui/FXML_BACKRestaurant.fxml"));
+     // Parent root = FXMLLoader.load(getClass().getResource("/gui/FXML_FrontRestaurant.fxml"));
+       
          // Jouer un son
-           Media sound = new Media(new File("welcome.mp3").toURI().toString());
-           MediaPlayer mediaPlayer = new MediaPlayer(sound);
-           mediaPlayer.play();
+         //  Media sound = new Media(new File("welcome.mp3").toURI().toString());
+        //   MediaPlayer mediaPlayer = new MediaPlayer(sound);
+         //  mediaPlayer.play();
          //fin jouer son 
+         
+        /*   ShwowVIDeo
+       String filePath = "file:///C:/Users/lenovo/Desktop/PIDEV_Desc/EnergyBoxRestaurant.mp4";
+       Media media = new Media(filePath);
+
+         // Le lecteur de media
+         MediaPlayer mediaPlayer = new MediaPlayer(media);
+
+         // L'élément qui affiche le lecteur
+         MediaView mediaView = new MediaView();
+         // Association du lecteur à cette vue
+         mediaView.setMediaPlayer(mediaPlayer);
+         // Joue la vidéo
+         mediaPlayer.play();
+
+         // L'élément racine centre la vidéo
+         VBox roott = new VBox(mediaView);
+         roott.setAlignment(Pos.CENTER);
+
+         Scene sceene = new Scene(roott, 1000, 1000);
+        
+       stage.setScene(sceene);
+        stage.show();
+        */
+         
+         
     
       // Afficher un message de bienvenue
     Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -99,6 +135,8 @@ alert.getDialogPane().setContent(textFlow);
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+       
+        launch(args);
   /*      
  //        MyDB db = new MyDB();
 //        MyDB db1 = new MyDB();
@@ -118,7 +156,7 @@ alert.getDialogPane().setContent(textFlow);
         }
         */
 
-     launch(args);
+    
 
     }
    

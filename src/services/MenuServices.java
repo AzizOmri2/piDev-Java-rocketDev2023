@@ -122,5 +122,26 @@ public class MenuServices implements Icrud<Menu> {
         pst.executeUpdate();
         System.out.println("Menu modifié avec succès");
     }
+    @Override
+    public int idmenu(String nom) {
+         String req = "SELECT id FROM menu WHERE categories = ?";
+    try {
+        PreparedStatement pstmt = conx.prepareStatement(req);
+        pstmt.setString(1, nom);
+        ResultSet rs = pstmt.executeQuery();
+        if (rs.next()) {
+            return rs.getInt("id");
+        } else {
+            return 0;
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return 0;
+    }    }
+
+    @Override
+    public List<Menu> afficherListe1(int id) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
 }

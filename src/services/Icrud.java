@@ -18,9 +18,11 @@ public interface Icrud<T>  {
      public void ajouter(T m);
     public void ajouterr(T m);
     public List<T> afficherListe() throws SQLException ;
+    public List<T> afficherListe1(int id) throws SQLException ;
    // public void supprimer(int id);
   //  public void modifier(T m);
     public void Supprimer(T t) throws SQLException ;
     public void Modifier(T m) throws SQLException ;
+    public int idmenu(String nom);
 
 }

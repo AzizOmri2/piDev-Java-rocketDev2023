@@ -5,8 +5,6 @@
  */
 package gui;
 
-import entites.Menu;
-import entites.Plat;
 import entites.Reservation;
 import java.io.IOException;
 import java.net.URL;
@@ -29,10 +27,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -41,6 +42,8 @@ import javafx.util.Callback;
 import services.PlatServices;
 import services.ReservationServices;
 import utils.MyDB;
+import gui.Mailing;
+import javafx.scene.layout.AnchorPane;
 
 /**
  * FXML Controller class
@@ -71,7 +74,7 @@ public class FXML_ReservationController implements Initializable {
     @FXML
     private Button refresh;
     @FXML
-    private Button Ajout;
+    private Button Stat;
     
 @FXML
 private TableColumn<Reservation, Integer> idreservation;
@@ -87,14 +90,25 @@ private TableColumn<Reservation, String> userid;
 
     @FXML
     private  TableView tvReservation;
-      
+     @FXML
+    private Button Mailing; 
+     @FXML
+    private TextField saisieEmail;     
+    @FXML
+    private Button captureEcran;
+    @FXML
+    private AnchorPane monAnchorPane;
+    
     public Connection conx;
     public Statement stm;
+    
+   
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
      // TODO
          try {
             // Initialize your database connection here
@@ -102,22 +116,67 @@ private TableColumn<Reservation, String> userid;
         } catch (SQLException ex) {
             System.out.println("Failed to connect to database: " + ex.getMessage());
         }   
-      btnHome.setOnAction((ActionEvent event) -> {
+        btnHome.setOnAction((ActionEvent event) -> {
             GoToRestau();
-    }); 
-       btnPlats.setOnAction((ActionEvent event) -> {
+        });
+        btnPlats.setOnAction((ActionEvent event) -> {
             GoToPlat();
-    }); 
-      btnMenus.setOnAction((ActionEvent event) -> {
+        });
+        btnMenus.setOnAction((ActionEvent event) -> {
             GoToMenu();
-    }); 
-      refresh.setOnAction((ActionEvent event) -> {
-        showRec();
-    });
-     /*  Ajout.setOnAction((ActionEvent event) -> {
-            GoToAjout();
-    });*/
-    }    
+        });
+        refresh.setOnAction((ActionEvent event) -> {
+            showActions();
+        });
+
+        Mailing.setOnAction((ActionEvent event) -> {
+            Mailing m = new Mailing();
+            String destinataire = saisieEmail.getText();
+            try {
+                m.sendEmail(destinataire);
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                // Afficher un message d'erreur à l'utilisateur, par exemple :
+                Alert alert = new Alert(AlertType.ERROR, "Erreur lors de l'envoi du mail : " + ex.getMessage(), ButtonType.OK);
+                alert.showAndWait();
+            }
+        });
+
+        captureEcran.setOnAction(event -> {
+            CaptureEcran cap = new CaptureEcran();
+            try {
+                cap.capturer(monAnchorPane);
+                System.out.println("La capture d'écran a été générée avec succès !");
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Capture d'écran");
+                alert.setHeaderText("Capture d'écran générée avec succès !");
+                alert.showAndWait();
+            } catch (Exception ex) {
+                System.out.println("Erreur lors de la capture d'écran : " + ex.getMessage());
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Erreur");
+                alert.setHeaderText("Erreur lors de la capture d'écran !");
+                alert.setContentText("Une erreur est survenue lors de la capture d'écran : " + ex.getMessage());
+                alert.showAndWait();
+            }
+        });
+
+      
+     Stat.setOnAction((ActionEvent event) -> {
+           try {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXML_STAT.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+    });  
+    
+}    
    private void GoToRestau(){
             Parent root;
             try {
@@ -126,7 +185,7 @@ private TableColumn<Reservation, String> userid;
              Stage stage=(Stage)btnHome.getScene().getWindow();
             stage.setScene(c);
         } catch (IOException ex) {
-            Logger.getLogger(FXML_AjouterMenuController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FXML_ReservationController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
       private void GoToPlat(){
@@ -137,7 +196,7 @@ private TableColumn<Reservation, String> userid;
              Stage stage=(Stage)btnPlats.getScene().getWindow();
             stage.setScene(c);
         } catch (IOException ex) {
-            Logger.getLogger(FXML_AjouterMenuController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FXML_ReservationController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
       private void GoToMenu(){
@@ -148,7 +207,7 @@ private TableColumn<Reservation, String> userid;
              Stage stage=(Stage)btnMenus.getScene().getWindow();
             stage.setScene(c);
         } catch (IOException ex) {
-            Logger.getLogger(FXML_AjouterMenuController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FXML_ReservationController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
    
@@ -185,7 +244,7 @@ private TableColumn<Reservation, String> userid;
      }   
  
  @FXML
-  public void showRec() {
+  public void showActions() {
     ObservableList<Reservation> list = getReservationList();
     idreservation.setCellValueFactory(new PropertyValueFactory<>("id"));
     idplat.setCellValueFactory(new PropertyValueFactory<>("idplat_id"));
@@ -227,6 +286,7 @@ private TableColumn<Reservation, String> userid;
     tvReservation.setItems(list);
     tvReservation.getColumns().addAll(colBtn);
 }
+   
      
   private void SupprimerReservation(Reservation r) {
     ReservationServices u=new ReservationServices();
@@ -243,16 +303,139 @@ private TableColumn<Reservation, String> userid;
     alert.setContentText("Reservation supprimé");
     alert.showAndWait();
 }    
-  /*  private void GoToAjout(){
-            Parent root;
-            try {
-            root = FXMLLoader.load(getClass().getResource("FXML_AjouterReservation.fxml"));
-            Scene c=new Scene(root);
-             Stage stage=(Stage)Ajout.getScene().getWindow();
-            stage.setScene(c);
-        } catch (IOException ex) {
-            Logger.getLogger(FXML_AjouterMenuController.class.getName()).log(Level.SEVERE, null, ex);
+  
+ //Stat 
+  /*
+  public Map<String, Integer> getReservationStatsByDate() {
+    Map<String, Integer> stats = new HashMap<>();
+    String query = "SELECT date, COUNT(*) FROM reservation GROUP BY date";
+    try (PreparedStatement stmt = conx.prepareStatement(query);
+         ResultSet rs = stmt.executeQuery()) {
+        while (rs.next()) {
+            String date = rs.getString("date");
+            int count = rs.getInt(2);
+            stats.put(date, count);
         }
-    }      
-    */     
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return stats;
 }
+*/
+ //FinStat 
+  
+  
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ /*        
+   @FXML
+public void showActions() {
+  ObservableList<Reservation> list = getReservationList();
+    idreservation.setCellValueFactory(new PropertyValueFactory<>("id"));
+    idplat.setCellValueFactory(new PropertyValueFactory<>("idplat_id"));
+    date.setCellValueFactory(new PropertyValueFactory<>("date"));
+    userid.setCellValueFactory(new PropertyValueFactory<>("userid"));
+
+    TableColumn<Reservation, Void> colBtn = new TableColumn("Actions");
+
+      Callback<TableColumn<Reservation, Void>, TableCell<Reservation, Void>> cellFactory = new Callback<TableColumn<Reservation, Void>, TableCell<Reservation, Void>>() {
+
+        @Override
+        public TableCell<Reservation, Void> call(final TableColumn<Reservation, Void> param) {
+            final TableCell<Reservation, Void> cell = new TableCell<Reservation, Void>() {
+
+                private final Button btn = new Button("Supprimer");
+
+                {
+                    btn.setOnAction((ActionEvent event) -> {
+                        Reservation data = getTableView().getItems().get(getIndex());
+                        SupprimerReservation(data);
+                    });
+                }
+
+                @Override
+                public void updateItem(Void item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty) {
+                        setGraphic(null);
+                    } else {
+                        setGraphic(btn);
+                    }
+                }
+            };
+            return cell;
+        }
+    };
+
+    colBtn.setCellFactory(cellFactory);
+
+    TableColumn<Reservation, Void> colBtn2 = new TableColumn("Actions");
+
+    Callback<TableColumn<Reservation, Void>, TableCell<Reservation, Void>> cellFactory2 = new Callback<TableColumn<Reservation, Void>, TableCell<Reservation, Void>>() {
+        @Override
+        public TableCell<Reservation, Void> call(final TableColumn<Reservation, Void> param) {
+            final TableCell<Reservation, Void> cell = new TableCell<Reservation, Void>() {
+
+                private final Button btn = new Button("Modifier");
+
+                {
+                    btn.setOnAction((ActionEvent event) -> {
+                          Mailing m = new Mailing();
+                        Reservation data = getTableView().getItems().get(getIndex());
+                            m.sendEmail(data);
+                    });
+                }
+
+                @Override
+                public void updateItem(Void item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty) {
+                        setGraphic(null);
+                    } else {
+                        setGraphic(btn);
+                    }
+                }
+            };
+            return cell;
+        }
+    };
+
+    colBtn2.setCellFactory(cellFactory2);
+
+    tvReservation.setItems(list);
+
+    tvReservation.getColumns().addAll(colBtn, colBtn2);
+
+
+}
+*/
+  
+ 
+  

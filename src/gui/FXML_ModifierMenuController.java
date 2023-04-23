@@ -62,6 +62,8 @@ public class FXML_ModifierMenuController implements Initializable {
     private Button Retour;
         
      private Menu menu;
+   
+
     /**
      * Initializes the controller class.
      */
@@ -72,21 +74,25 @@ public class FXML_ModifierMenuController implements Initializable {
             champDescription.clear();
         });
         
-        Retour.setOnAction((ActionEvent event) -> {
-            redirectToList();
-        });
+     //   Retour.setOnAction((ActionEvent event) -> {
+     //       redirectToList();
+     //   });
     }   
-    private void redirectToList() {
-        Parent root;
-        try {
+    /* private void redirectToList(){
+            Parent root;
+            try {
+            
             root = FXMLLoader.load(getClass().getResource("FXML_Menu.fxml"));
-            Scene c = new Scene(root);
-            Stage stage = (Stage) Retour.getScene().getWindow();
+            Scene c=new Scene(root);
+             Stage stage=(Stage) Retour.getScene().getWindow();
             stage.setScene(c);
         } catch (IOException ex) {
-            Logger.getLogger(FXML_AjouterPlatController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FXML_ModifierMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+ */
+     
+     
     // méthode pour passer les détails du menu sélectionné au contrôleur
     public void setMenu(Menu m) {
         this.menu = m;

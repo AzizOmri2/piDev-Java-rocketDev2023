@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.FXML_ReservationController">
+<AnchorPane id="AnchorPane" fx:id="monAnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.FXML_ReservationController">
   
     <children>
       <VBox prefHeight="671.0" prefWidth="254.0" style="-fx-background-color: #720000;">
@@ -109,5 +109,9 @@
          </children>
       </Pane>
       <Button fx:id="refresh" layoutX="1030.0" layoutY="99.0" mnemonicParsing="false" stylesheets="@design.css" text="Afficher la liste" />
+      <Button fx:id="Stat" layoutX="922.0" layoutY="99.0" mnemonicParsing="false" stylesheets="@design.css" text="Statistiques" />
+      <Button fx:id="Mailing" layoutX="269.0" layoutY="99.0" mnemonicParsing="false" stylesheets="@design.css" text="Envoyer Mail " />
+      <TextField fx:id="saisieEmail" layoutX="386.0" layoutY="99.0" promptText="Saisir mail destinatiare.." style="-fx-background-color: #ffffff; -fx-border-color: #720000; -fx-border-radius: 2em;" />
+      <Button fx:id="captureEcran" layoutX="528.0" layoutY="41.0" mnemonicParsing="false" stylesheets="@design.css" text="Capturer" />
     </children>
 </AnchorPane>

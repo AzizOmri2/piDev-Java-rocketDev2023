@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 package gui;
+import entites.Menu;
+import entites.Plat;
 import java.sql.Date;
 import entites.Reservation;
 import java.io.IOException;
@@ -16,9 +18,12 @@ import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -27,9 +32,39 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
+import services.MenuServices;
+import services.PlatServices;
+
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
+import javafx.scene.control.TextField;
+
+
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.imageio.ImageIO;
+
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
+import java.awt.BorderLayout;
+import java.util.UUID;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+import java.util.Random;
 
 /**
  * FXML Controller class
@@ -52,7 +87,11 @@ public class FXML_AjouterReservationController implements Initializable {
     private TextArea fxuserid;
     @FXML
     private DatePicker fxdate;
-
+    @FXML
+    private ComboBox combo;
+    @FXML
+    private TextField teluser;
+   
     public Connection conx;
     public Statement stm;
     /**
@@ -61,6 +100,23 @@ public class FXML_AjouterReservationController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+         PlatServices ser = new PlatServices();    
+List<Plat> listeee;
+    
+        try {
+            listeee = ser.afficherListe();
+        
+    
+ObservableList<String> list = FXCollections.observableArrayList();
+
+for (Plat plat : listeee) {
+    list.addAll(plat.getNom());
+}
+
+combo.setItems(list);
+      } catch (SQLException ex) {
+            Logger.getLogger(FXML_AjouterReservationController.class.getName()).log(Level.SEVERE, null, ex);
+        }
           Reservation m =new Reservation () ;
           
          try {
@@ -84,6 +140,7 @@ public class FXML_AjouterReservationController implements Initializable {
             m.setDate(sqlDate);
 
             ajouterReservation(m);
+           // SMS();
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erreur de saisie");
@@ -97,6 +154,7 @@ public class FXML_AjouterReservationController implements Initializable {
     });
          Annuler.setOnAction((ActionEvent event) -> {
           fxdate.setValue(null);
+          teluser.clear();
     });
 
 
@@ -114,18 +172,88 @@ private void redirectToList(){
     }
 }
     public void ajouterReservation(Reservation p) {
+         PlatServices ser = new PlatServices();    
 
         try {
-            String req = "INSERT INTO `reservation`(`date`) "
-                    + "VALUES (?)";
+            String req = "INSERT INTO `reservation`(`date`,`idplat_id`) "
+                    + "VALUES (?,?)";
             PreparedStatement ps = conx.prepareStatement(req);
             ps.setDate(1, p.getDate());
+            ps.setInt(2, ser.idmenu(combo.getSelectionModel().getSelectedItem().toString()));
             ps.executeUpdate();
             System.out.println("Réservation ajoutée avec succèes");
+            
+             try {
+                int numTable = 0;
+                 // Générer le QR code pour cette réservation
+                 generateQRCode(combo.getSelectionModel().getSelectedItem().toString(), p.getDate().toString(), "RANDOM_CODE",numTable);
+             } catch (WriterException ex) {
+                 Logger.getLogger(FXML_AjouterReservationController.class.getName()).log(Level.SEVERE, null, ex);
+             } catch (IOException ex) {
+                 Logger.getLogger(FXML_AjouterReservationController.class.getName()).log(Level.SEVERE, null, ex);
+             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
     }
     
+/*    
+//SMS
+void SMS(){
+        String ACCOUNT_SID = "AC8ccdc9247ba4ead9aabef04a1ccc183b";
+        String AUTH_TOKEN = "4983c7243a884c7021934aa976559e84";
+        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+
+            String recipientNumber = "+216" + teluser.getText();
+            String message = "Cher(e) Client(e),\n\nVotre réservation a été ajoutée avec succès.\nVotre plat sera prêt dans une heure à partir de la date de la réservation.\n\nMerci pour votre confiance et à bientôt chez nous !\n\nCordialement,\n EnergyBox";
+
+            Message twilioMessage = Message.creator(
+                new PhoneNumber(recipientNumber),
+                new PhoneNumber("+12766000930"),
+                message)
+                .create();
+                
+            System.out.println("SMS envoyé : " + twilioMessage.getSid());
+     
+     }
+//SMS    
+   */ 
+//QrCode 
+public static void generateQRCode(String platChoisi, String date, String RANDOM_CODE ,int numTable) throws WriterException, IOException {
+    String codeRandom = UUID.randomUUID().toString();
+    Random rand = new Random();
+    int tableNumber = rand.nextInt(100); // Générer un nombre aléatoire entre 0 et 99
+    String qrCodeData = "Nom du plat : " + platChoisi + "\n" + "Date de réservation : " + date + "\n" + "Numéro de table : " + tableNumber + "\n" + "Code de réservation : " + codeRandom + "\n" + "Merci de montrer le code pour récupérer votre plat";
+    int size = 500;
+    Map<EncodeHintType, Object> hintMap = new HashMap<EncodeHintType, Object>();
+    hintMap.put(EncodeHintType.CHARACTER_SET, "UTF-8");
+    hintMap.put(EncodeHintType.MARGIN, 1);
+    QRCodeWriter qrCodeWriter = new QRCodeWriter();
+    BitMatrix byteMatrix = qrCodeWriter.encode(qrCodeData, BarcodeFormat.QR_CODE, size, size, hintMap);
+    int width = byteMatrix.getWidth();
+    BufferedImage image = new BufferedImage(width, width, BufferedImage.TYPE_INT_RGB);
+    image.createGraphics();
+    java.awt.Graphics2D graphics = (java.awt.Graphics2D) image.getGraphics();
+    graphics.setColor(java.awt.Color.WHITE);
+    graphics.fillRect(0, 0, width, width);
+    graphics.setColor(java.awt.Color.BLACK);
+    for (int i = 0; i < width; i++) {
+        for (int j = 0; j < width; j++) {
+            if (byteMatrix.get(i, j)) {
+                graphics.fillRect(i, j, 1, 1);
+            }
+        }
+    }
+    ImageIcon qrCodeIcon = new ImageIcon(image);
+    JLabel qrCodeLabel = new JLabel(qrCodeIcon);
+    JFrame frame = new JFrame();
+    frame.getContentPane().add(qrCodeLabel, BorderLayout.CENTER);
+    frame.pack();
+    frame.setVisible(true);
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    System.out.println("QR Code generated successfully!");
+}
+
+//QrCode     
 }
  

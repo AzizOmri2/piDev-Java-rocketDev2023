@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="671.0" prefWidth="1164.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.FXML_PlatController">
+<AnchorPane id="AnchorPane" fx:id="monAnchorPane" prefHeight="671.0" prefWidth="1164.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.FXML_PlatController">
     <children>
       <VBox prefHeight="671.0" prefWidth="254.0" style="-fx-background-color: #720000;">
          <children>
@@ -85,12 +85,6 @@
                         <Font name="System Bold" size="22.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="603.0" layoutY="6.0" prefHeight="26.0" prefWidth="235.0" promptText="Search ..." style="-fx-background-color: #fff; -fx-border-color: #720000; -fx-border-radius: 2em;" />
-                  <ImageView fitHeight="18.0" fitWidth="19.0" layoutX="811.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@images/icons8_search_500px.png" />
-                     </image>
-                  </ImageView>
                </children>
             </Pane>
          </children>
@@ -110,5 +104,14 @@
         </columns>
       </TableView>
       <Button fx:id="Refresh" layoutX="959.0" layoutY="100.0" mnemonicParsing="false" stylesheets="@design.css" text="Refresh" />
+      <TextField fx:id="fxrecherche" layoutX="912.0" layoutY="17.0" prefHeight="26.0" prefWidth="235.0" promptText="Search ..." style="-fx-background-color: #fff; -fx-border-color: #720000; -fx-border-radius: 2em;" />
+      <ImageView fitHeight="18.0" fitWidth="19.0" layoutX="1122.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/icons8_search_500px.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="TriPrix" layoutX="259.0" layoutY="100.0" mnemonicParsing="false" prefHeight="11.0" prefWidth="70.0" stylesheets="@design.css" text="Tri Prix" />
+      <Button fx:id="TriNom" layoutX="338.0" layoutY="100.0" mnemonicParsing="false" stylesheets="@design.css" text="Tri Nom" />
+      <Button fx:id="captureEcran" layoutX="460.0" layoutY="37.0" mnemonicParsing="false" stylesheets="@design.css" text="Capturer" />
     </children>
 </AnchorPane>

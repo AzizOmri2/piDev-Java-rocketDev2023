@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import utils.MyDB;
 
 /**
@@ -96,6 +97,43 @@ public class CategoryReclamationService implements CrudCategoryReclamation<Categ
             System.err.println(e.getMessage());
         }
         return list;
+    }
+
+    @Override
+    public List<CategoryReclamation> Search(String t) {
+        List<CategoryReclamation> list1 = new ArrayList<>();
+        List<CategoryReclamation> list2 = Show();
+        list1 = (list2.stream().filter(c -> c.getNom_category().startsWith(t)).collect(Collectors.toList()));
+
+        return list1;
+    }
+    
+    public List<CategoryReclamation> triNomCategory() {
+
+        List<CategoryReclamation> list1 = new ArrayList<>();
+        List<CategoryReclamation> list2 = Show();
+
+        list1 = list2.stream().sorted((o1, o2) -> o1.getNom_category().compareTo(o2.getNom_category())).collect(Collectors.toList());
+        return list1;
+
+    }
+    public List<CategoryReclamation> triDescriptionCategory() {
+
+        List<CategoryReclamation> list1 = new ArrayList<>();
+        List<CategoryReclamation> list2 = Show();
+
+        list1 = list2.stream().sorted((o1, o2) -> o1.getDescription_category().compareTo(o2.getDescription_category())).collect(Collectors.toList());
+        return list1;
+
+    }
+    public List<CategoryReclamation> triPrioriteCategory() {
+
+        List<CategoryReclamation> list1 = new ArrayList<>();
+        List<CategoryReclamation> list2 = Show();
+
+        list1 = list2.stream().sorted((o1, o2) -> o1.getPriorite_category().compareTo(o2.getPriorite_category())).collect(Collectors.toList());
+        return list1;
+
     }
     
 }

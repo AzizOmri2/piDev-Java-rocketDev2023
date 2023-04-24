@@ -8,27 +8,56 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="EnergyBoxApp.jar" size="1746082" download="eager" />
+    <jar href="EnergyBoxApp.jar" size="1691132" download="eager" />
+    <jar href="lib\SparseBitSet-1.2.jar" size="24510" download="eager" />
+    <jar href="lib\accessors-smart-2.4.7.jar" size="29489" download="eager" />
+    <jar href="lib\annotations-23.0.0.jar" size="29371" download="eager" />
+    <jar href="lib\ant-1.10.12.jar" size="2254148" download="eager" />
+    <jar href="lib\ant-launcher-1.10.12.jar" size="18705" download="eager" />
+    <jar href="lib\api-2.3.0.jar" size="76938" download="eager" />
+    <jar href="lib\asm-9.1.jar" size="121790" download="eager" />
     <jar href="lib\commons-codec-1.15.jar" size="353793" download="eager" />
+    <jar href="lib\commons-collections4-4.4.jar" size="751914" download="eager" />
+    <jar href="lib\commons-compress-1.21.jar" size="1018316" download="eager" />
+    <jar href="lib\commons-io-2.11.0.jar" size="327135" download="eager" />
     <jar href="lib\commons-io-2.7.jar" size="276413" download="eager" />
     <jar href="lib\commons-logging-1.2.jar" size="61829" download="eager" />
+    <jar href="lib\commons-math3-3.6.1.jar" size="2213560" download="eager" />
+    <jar href="lib\curvesapi-1.07.jar" size="111978" download="eager" />
     <jar href="lib\httpclient-4.5.13.jar" size="780321" download="eager" />
     <jar href="lib\httpcore-4.4.13.jar" size="328593" download="eager" />
-    <jar href="lib\itextpdf-5.5.13.3.jar" size="2334491" download="eager" />
+    <jar href="lib\itextpdf-5.1.0.jar" size="1614453" download="eager" />
+    <jar href="lib\jackson-2.3.0.jar" size="13289" download="eager" />
+    <jar href="lib\jackson-annotations-2.13.3.jar" size="75714" download="eager" />
     <jar href="lib\jackson-annotations-2.14.0.jar" size="76091" download="eager" />
+    <jar href="lib\jackson-core-2.13.3.jar" size="374895" download="eager" />
     <jar href="lib\jackson-core-2.14.0.jar" size="458975" download="eager" />
+    <jar href="lib\jackson-databind-2.13.3.jar" size="1536542" download="eager" />
     <jar href="lib\jackson-databind-2.14.0.jar" size="1618273" download="eager" />
     <jar href="lib\jackson-dataformat-xml-2.14.0.jar" size="130374" download="eager" />
     <jar href="lib\jackson-datatype-jsr310-2.14.0.jar" size="122014" download="eager" />
+    <jar href="lib\javax.mail.jar" size="659033" download="eager" />
     <jar href="lib\jjwt-api-0.11.2.jar" size="78784" download="eager" />
     <jar href="lib\jjwt-impl-0.11.2.jar" size="78853" download="eager" />
     <jar href="lib\jjwt-jackson-0.11.2.jar" size="8400" download="eager" />
     <jar href="lib\json-20220320.jar" size="70939" download="eager" />
+    <jar href="lib\json-path-2.7.0.jar" size="271159" download="eager" />
+    <jar href="lib\json-smart-2.4.7.jar" size="119227" download="eager" />
+    <jar href="lib\log4j-2.3.0.jar" size="26192" download="eager" />
+    <jar href="lib\log4j-api-2.18.0.jar" size="315115" download="eager" />
+    <jar href="lib\log4j-core-2.18.0.jar" size="1861441" download="eager" />
+    <jar href="lib\log4j-layout-template-json-2.18.0.jar" size="231789" download="eager" />
     <jar href="lib\mysql-connector-java-5.1.23-bin.jar" size="834126" download="eager" />
+    <jar href="lib\poi-5.2.3.jar" size="2964641" download="eager" />
+    <jar href="lib\poi-excelant-5.2.3.jar" size="28800" download="eager" />
+    <jar href="lib\poi-ooxml-5.2.3.jar" size="2010497" download="eager" />
+    <jar href="lib\poi-ooxml-lite-5.2.3.jar" size="5898622" download="eager" />
     <jar href="lib\slf4j-api-1.7.30.jar" size="41472" download="eager" />
+    <jar href="lib\slf4j-api-1.7.33.jar" size="41473" download="eager" />
     <jar href="lib\stax2-api-4.2.1.jar" size="195909" download="eager" />
     <jar href="lib\twilio-9.4.0.jar" size="4925044" download="eager" />
     <jar href="lib\woodstox-core-6.4.0.jar" size="1586060" download="eager" />
+    <jar href="lib\xmlbeans-5.1.1.jar" size="2196526" download="eager" />
   </resources>
   <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="EnergyBoxApp" >
     <param name="requiredFXVersion" value="8.0+"/>

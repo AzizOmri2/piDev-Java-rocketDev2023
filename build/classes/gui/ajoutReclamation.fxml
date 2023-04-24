@@ -49,5 +49,6 @@
          </image>
       </ImageView>
       <ComboBox fx:id="textCategRec" layoutX="293.0" layoutY="400.0" prefHeight="26.0" prefWidth="216.0" promptText="Catégorie Réclamation" styleClass="comboBox" stylesheets="@ajoutreclamation.css" />
+      <Button layoutX="617.0" layoutY="110.0" mnemonicParsing="false" onAction="#sendMail" text="Send" />
    </children>
 </AnchorPane>

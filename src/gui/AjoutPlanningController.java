@@ -112,13 +112,14 @@ public class AjoutPlanningController implements Initializable {
     private Button btnAddPlanning;
     
     
+    
     @FXML
     private void AjoutPlanning(ActionEvent event) {
         //check if not empty
         if(event.getSource() == btnAddPlanning){
             if (coursId==-1 || txtNumUser.getText().isEmpty() || textHeurePlanning.getValue().isEmpty() || textJourPlanning.getValue().isEmpty() ) 
             {    
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Information manquante");
                 alert.setHeaderText(null);
                 alert.setContentText("Vous devez remplir tous les détails concernant votre planning.");
@@ -144,6 +145,7 @@ public class AjoutPlanningController implements Initializable {
     @FXML
     private void clearFieldsPlanning() {
         txtNumUser.clear();
+        txtDatePlanning.getEditor().clear();
     }
     
     
@@ -170,7 +172,7 @@ public class AjoutPlanningController implements Initializable {
                 coursPlanning, datePlanning, jourPlanning, heurePlanning);
         PlanningService ps = new PlanningService();
         ps.ajouter(p);
-        //send_SMS();
+        send_SMS();
     }
     
     
@@ -178,18 +180,21 @@ public class AjoutPlanningController implements Initializable {
     void send_SMS (){
         // Initialisation de la bibliothèque Twilio avec les informations de votre compte
         String ACCOUNT_SID = "AC861631f98dc0930ce29521048a763b12";
-        String AUTH_TOKEN = "352232e03c832a2188efae5fb3201bb4";
+        String AUTH_TOKEN = "d81ec72c5b057a7c0f324c54c14ef8d3";
              
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
 
             String recipientNumber = "+216" + txtNumUser.getText();
-            String message = "Bonjour Braiek Ali\n,Nous sommes ravis de vous offrir un coupon pour sac-ecologique valable jusqu'au 25/04/2023.\n Utilisez le code suivant 071532 lors de votre prochain achat en ligne ou en magasin pour bénéficier de 20% de la réduction.\n Merci de votre fidélité et à bientôt chez ZeroWaste.\nCordialement,\nZeroWaste";
+            String message = "Bonjour Mr ,\n"
+                    + "Nous sommes ravis de vous informer qu'un planning a été ajouté.\n "
+                    + "Veuillez contactez l'administration pour plus de details.\n "
+                    + "Merci de votre fidélité et à bientôt chez EnergyBox.\n"
+                    + "Cordialement,\n"
+                    + "EnergyBox | CrossFit Center";
                 
             Message twilioMessage = Message.creator(
                 new PhoneNumber(recipientNumber),
-                new PhoneNumber("+15075163294"),
-                message)
-                .create();
+                new PhoneNumber("+15075163294"),message).create();
                 
             System.out.println("SMS envoyé : " + twilioMessage.getSid());
             /*TrayNotificationAlert.notif("Coupon", "Coupon sent successfully.",

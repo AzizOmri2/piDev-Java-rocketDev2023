@@ -57,7 +57,7 @@ public class AjoutReponseController implements Initializable {
     
     ReclamationService rs = new ReclamationService();
     List<Reclamation> reclamation = rs.Show();
-    private int reclamationId;
+    private int reclamationId = -1;
 
     
     @Override
@@ -69,8 +69,10 @@ public class AjoutReponseController implements Initializable {
         }
         
         textReclamationReponse.setOnAction(event ->{
-            String SelectedOption = textReclamationReponse.getValue();
-            int SelectedValue = valuesMap.get(SelectedOption);
+            String SelectedOption = null;
+            SelectedOption = textReclamationReponse.getValue();
+            int SelectedValue = 0;
+            SelectedValue = valuesMap.get(SelectedOption);
             reclamationId = SelectedValue;
         });
     }    
@@ -99,10 +101,10 @@ public class AjoutReponseController implements Initializable {
     private void AjoutReponse(ActionEvent event) {
         //check if not empty
         if(event.getSource() == btnAddReponse){
-            if (textReclamationReponse.getValue().isEmpty() || textObjetReponse.getText().isEmpty() 
-                    || textPieceJointeReponse.getText().isEmpty() || textContenuReponse.getText().isEmpty()) 
-            {    
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            if (textReclamationReponse.getValue().isEmpty() || textObjetReponse.getText().isEmpty() || textPieceJointeReponse.getText().isEmpty() 
+                    || textContenuReponse.getText().isEmpty() || reclamationId == -1) 
+            {   
+                Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Information manquante");
                 alert.setHeaderText(null);
                 alert.setContentText("Vous devez remplir tous les détails concernant votre réponse.");
@@ -130,13 +132,14 @@ public class AjoutReponseController implements Initializable {
         textObjetReponse.clear();
         textPieceJointeReponse.clear();
         textContenuReponse.clear();
+        textDateReponse.getEditor().clear();
     }
     
     
     private void ajouterReponse() {
         
          // From Formulaire
-        int recRep = Integer.parseInt(textReclamationReponse.getValue());
+        int recRep = reclamationId ;
         String objetRep = textObjetReponse.getText();
         Date dateRep = null;
         try {

@@ -45,7 +45,14 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.scene.Node;
+import javafx.scene.control.ComboBox;
 
 
 /**
@@ -96,6 +103,8 @@ public class ListActiviteController implements Initializable {
     private Button btnDeleteAct;
     @FXML
     private TextField txtSearchAct;
+    @FXML
+    private ComboBox<String> comboBoxTriAct;
     
     
     ObservableList<Activite> data = FXCollections.observableArrayList();
@@ -175,7 +184,90 @@ public class ListActiviteController implements Initializable {
         });
         
         tableActivite.setItems(data);
+        comboBoxTriAct.getItems().addAll("Trier Selon",  "Nom", "Tenue", "Difficulte" , "Description");
+        try {
+            searchActivite();
+        } catch (SQLException ex) {
+            Logger.getLogger(ListActiviteController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
+    
+    private void TrieNom() {
+        ActiviteService as = new ActiviteService();
+        List<Activite> a = as.triNomActivite();
+        NomActCell.setCellValueFactory(new PropertyValueFactory<>("nom_activite"));
+        DureeActCell.setCellValueFactory(new PropertyValueFactory<>("duree_activite"));
+        TenueActCell.setCellValueFactory(new PropertyValueFactory<>("tenue_activite"));
+        DiffActCell.setCellValueFactory(new PropertyValueFactory<>("difficulte_activite"));
+        ImageActCell.setCellValueFactory(new PropertyValueFactory<>("image_activite"));
+        DescriptionActCell.setCellValueFactory(new PropertyValueFactory<>("description_activite"));
+        
+
+        tableActivite.setItems(FXCollections.observableList(a));
+
+    }
+    
+    private void TrieTenue() {
+        ActiviteService as = new ActiviteService();
+        List<Activite> a = as.triTenueActivite();
+        NomActCell.setCellValueFactory(new PropertyValueFactory<>("nom_activite"));
+        DureeActCell.setCellValueFactory(new PropertyValueFactory<>("duree_activite"));
+        TenueActCell.setCellValueFactory(new PropertyValueFactory<>("tenue_activite"));
+        DiffActCell.setCellValueFactory(new PropertyValueFactory<>("difficulte_activite"));
+        ImageActCell.setCellValueFactory(new PropertyValueFactory<>("image_activite"));
+        DescriptionActCell.setCellValueFactory(new PropertyValueFactory<>("description_activite"));
+        
+
+        tableActivite.setItems(FXCollections.observableList(a));
+
+    }
+    
+    private void TrieDiff() {
+        ActiviteService as = new ActiviteService();
+        List<Activite> a = as.triDiffActivite();
+        NomActCell.setCellValueFactory(new PropertyValueFactory<>("nom_activite"));
+        DureeActCell.setCellValueFactory(new PropertyValueFactory<>("duree_activite"));
+        TenueActCell.setCellValueFactory(new PropertyValueFactory<>("tenue_activite"));
+        DiffActCell.setCellValueFactory(new PropertyValueFactory<>("difficulte_activite"));
+        ImageActCell.setCellValueFactory(new PropertyValueFactory<>("image_activite"));
+        DescriptionActCell.setCellValueFactory(new PropertyValueFactory<>("description_activite"));
+        
+
+        tableActivite.setItems(FXCollections.observableList(a));
+
+    }
+    
+    private void TrieDescription() {
+        ActiviteService as = new ActiviteService();
+        List<Activite> a = as.triDescriptionActivite();
+        NomActCell.setCellValueFactory(new PropertyValueFactory<>("nom_activite"));
+        DureeActCell.setCellValueFactory(new PropertyValueFactory<>("duree_activite"));
+        TenueActCell.setCellValueFactory(new PropertyValueFactory<>("tenue_activite"));
+        DiffActCell.setCellValueFactory(new PropertyValueFactory<>("difficulte_activite"));
+        ImageActCell.setCellValueFactory(new PropertyValueFactory<>("image_activite"));
+        DescriptionActCell.setCellValueFactory(new PropertyValueFactory<>("description_activite"));
+        
+
+        tableActivite.setItems(FXCollections.observableList(a));
+
+    }
+    
+    @FXML
+    private void TriChoice(ActionEvent event) throws IOException {
+        if (comboBoxTriAct.getValue().equals("Nom")) {
+            TrieNom();
+        } else if (comboBoxTriAct.getValue().equals("Tenue")) {
+            TrieTenue();
+        } else if (comboBoxTriAct.getValue().equals("Difficulte")) {
+            TrieDiff();
+        } else if (comboBoxTriAct.getValue().equals("Description")) {
+            TrieDescription();
+        }
+
+    }
+    
+    
     
     @FXML
     private void supprimerActivite(ActionEvent event) throws SQLException {
@@ -209,6 +301,45 @@ public class ListActiviteController implements Initializable {
     }
     
     
+    
+    public ActiviteService as = new ActiviteService();
+    
+    public void searchActivite() throws SQLException {    
+        FilteredList<Activite> filteredData = new FilteredList<>(FXCollections.observableArrayList(as.Show()), p -> true);
+        txtSearchAct.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(act -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String nom = String.valueOf(act.getNom_activite());
+                String duree = String.valueOf(act.getDuree_activite());
+                String tenue = String.valueOf(act.getTenue_activite());
+                String diff = String.valueOf(act.getDifficulte_activite());
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (nom.toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (duree.toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (tenue.toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (diff.toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+        });
+        SortedList<Activite> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(tableActivite.comparatorProperty());
+        tableActivite.setItems(sortedData);
+    }
+    
+    
+    
+
+    
+    
     @FXML
     void genererPDF(MouseEvent event) {
         // Afficher la boîte de dialogue de sélection de fichier
@@ -236,14 +367,14 @@ public class ListActiviteController implements Initializable {
                 image.setAbsolutePosition(5, document.getPageSize().getHeight() - 120);
 
                 // Modifier la taille de l'image
-                image.scaleAbsolute(150, 150);
+                image.scaleAbsolute(152, 100);
 
                 // Ajouter l'image au document
                 document.add(image);
 
                 // Créer une police personnalisée pour la date
                 Font fontDate = new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.BOLD);
-                BaseColor color = new BaseColor(50, 187, 111); // Rouge: 50, Vert: 187, Bleu: 111
+                BaseColor color = new BaseColor(114, 0, 0); // Rouge: 114, Vert: 0, Bleu: 0
                 fontDate.setColor(color); // Définir la couleur de la police
 
                 // Créer un paragraphe avec le lieu
@@ -266,7 +397,7 @@ public class ListActiviteController implements Initializable {
 
                 // Créer une police personnalisée
                 Font font = new Font(Font.FontFamily.TIMES_ROMAN, 32, Font.BOLD);
-                BaseColor titleColor = new BaseColor(67, 136, 43); //
+                BaseColor titleColor = new BaseColor(114, 0, 0); //
                 font.setColor(titleColor);
 
                 // Ajouter le contenu au document
@@ -276,18 +407,18 @@ public class ListActiviteController implements Initializable {
                 title.setSpacingAfter(20);
                 document.add(title);
 
-                PdfPTable table = new PdfPTable(5); // 5 colonnes pour les 5 attributs des produits
+                PdfPTable table = new PdfPTable(5); // 5 colonnes pour les 5 attributs des activités
                 table.setWidthPercentage(100);
                 table.setSpacingBefore(30f);
                 table.setSpacingAfter(30f);
 
                 // Ajouter les en-têtes de colonnes
                 Font hrFont = new Font(Font.FontFamily.TIMES_ROMAN, 16, Font.BOLD);
-                BaseColor hrColor = new BaseColor(50, 89, 74); //
+                BaseColor hrColor = new BaseColor(255, 255, 255); //
                 hrFont.setColor(hrColor);
 
                 PdfPCell cell1 = new PdfPCell(new Paragraph("ID", hrFont));
-                BaseColor bgColor = new BaseColor(222, 254, 230);
+                BaseColor bgColor = new BaseColor(114, 0, 0);
                 cell1.setBackgroundColor(bgColor);
                 cell1.setBorderColor(titleColor);
                 cell1.setPaddingTop(20);
@@ -329,7 +460,7 @@ public class ListActiviteController implements Initializable {
                 table.addCell(cell5);
 
                 Font hdFont = new Font(Font.FontFamily.TIMES_ROMAN, 14, Font.NORMAL);
-                BaseColor hdColor = new BaseColor(50, 89, 74); //
+                BaseColor hdColor = new BaseColor(255, 255, 255); //
                 hrFont.setColor(hdColor);
                 // Ajouter les données des produits
                 for (Activite act : activiteList) {

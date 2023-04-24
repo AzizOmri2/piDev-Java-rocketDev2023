@@ -13,10 +13,15 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -26,6 +31,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -81,7 +87,8 @@ public class ListPlanningController implements Initializable {
     private Button btnDeletePlanning;
     @FXML
     private TextField txtSearchPlanning;
-    
+    @FXML
+    private ComboBox<String> comboBoxTriPlanning;
     
     ObservableList<Planning> dataPlanning = FXCollections.observableArrayList();
     
@@ -157,6 +164,12 @@ public class ListPlanningController implements Initializable {
             }
         });
         tablePlanning.setItems(dataPlanning);
+        comboBoxTriPlanning.getItems().addAll("Trier Selon",  "Jour", "Date");
+        try {
+            searchPlanning();
+        } catch (SQLException ex) {
+            Logger.getLogger(ListActiviteController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     @FXML
@@ -188,6 +201,78 @@ public class ListPlanningController implements Initializable {
             // Rafraîchir la vue de la table
             tablePlanning.refresh();
         }
+    }
+    
+    
+    private void TriJourPlanning() {
+        PlanningService cs = new PlanningService();
+        List<Planning> a = cs.triJourPlanning();
+        CoursPlanningCell.setCellValueFactory(new PropertyValueFactory<>("cours_id"));
+        DatePlanningCell.setCellValueFactory(new PropertyValueFactory<>("date_planning"));
+        JourPlanningCell.setCellValueFactory(new PropertyValueFactory<>("jour_planning"));
+        HeurePlanningCell.setCellValueFactory(new PropertyValueFactory<>("heure_planning"));
+        
+
+        tablePlanning.setItems(FXCollections.observableList(a));
+
+    }
+    
+    
+    private void TriDatePlanning() {
+        PlanningService cs = new PlanningService();
+        List<Planning> a = cs.triDatePlanning();
+        CoursPlanningCell.setCellValueFactory(new PropertyValueFactory<>("cours_id"));
+        DatePlanningCell.setCellValueFactory(new PropertyValueFactory<>("date_planning"));
+        JourPlanningCell.setCellValueFactory(new PropertyValueFactory<>("jour_planning"));
+        HeurePlanningCell.setCellValueFactory(new PropertyValueFactory<>("heure_planning"));
+        
+
+        tablePlanning.setItems(FXCollections.observableList(a));
+    }
+    
+    
+    @FXML
+    private void TriChoice(ActionEvent event) throws IOException {
+        if (comboBoxTriPlanning.getValue().equals("Jour")) {
+            TriJourPlanning();
+        } else if (comboBoxTriPlanning.getValue().equals("Date")) {
+            TriDatePlanning();
+        } 
+
+    }
+    
+    
+    public PlanningService ps = new PlanningService();
+    
+    public void searchPlanning() throws SQLException {    
+        FilteredList<Planning> filteredData = new FilteredList<>(FXCollections.observableArrayList(ps.Show()), p -> true);
+        txtSearchPlanning.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(planning -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String cours = String.valueOf(planning.getCours_id());
+                String date = String.valueOf(planning.getDate_planning());
+                String jour = String.valueOf(planning.getJour_planning());
+                String heure = String.valueOf(planning.getHeure_planning());
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (cours.toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (date.toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (jour.toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (heure.toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+        });
+        SortedList<Planning> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(tablePlanning.comparatorProperty());
+        tablePlanning.setItems(sortedData);
     }
     
 }

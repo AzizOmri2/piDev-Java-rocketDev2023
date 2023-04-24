@@ -13,10 +13,17 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -26,6 +33,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -85,6 +93,8 @@ public class ListReclamationController implements Initializable {
     private Button btnDeleteRec;
     @FXML
     private TextField txtSearchRec;
+    @FXML
+    private ComboBox<String> comboBoxTriReclamation;
     
     
     ObservableList<Reclamation> dataReclamation = FXCollections.observableArrayList();
@@ -183,6 +193,12 @@ public class ListReclamationController implements Initializable {
             }
         });
         tableReclamation.setItems(dataReclamation);
+        comboBoxTriReclamation.getItems().addAll("Trier Selon",  "Nom User", "Email User", "Date", "Objet", "Texte");
+        try {
+            searchReclamation();
+        } catch (SQLException ex) {
+            Logger.getLogger(ListActiviteController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     
@@ -215,6 +231,130 @@ public class ListReclamationController implements Initializable {
             // Rafraîchir la vue de la table
             tableReclamation.refresh();
         }
+    }
+    
+    
+    private void TriNomUser() {
+        ReclamationService cs = new ReclamationService();
+        List<Reclamation> a = cs.triNomUserReclamation();
+        NomUserRecCell.setCellValueFactory(new PropertyValueFactory<>("nom_user_reclamation"));
+        EmailUserRecCell.setCellValueFactory(new PropertyValueFactory<>("email_user_reclamation"));
+        ObjetRecCell.setCellValueFactory(new PropertyValueFactory<>("objet_reclamation"));
+        CategRecCell.setCellValueFactory(new PropertyValueFactory<>("category_id"));
+        DateRecCell.setCellValueFactory(new PropertyValueFactory<>("date_reclamation"));
+        TexteRecCell.setCellValueFactory(new PropertyValueFactory<>("texte_reclamation"));
+
+        tableReclamation.setItems(FXCollections.observableList(a));
+    }
+    
+    private void TriEmailUser() {
+        ReclamationService cs = new ReclamationService();
+        List<Reclamation> a = cs.triEmailUserReclamation();
+        NomUserRecCell.setCellValueFactory(new PropertyValueFactory<>("nom_user_reclamation"));
+        EmailUserRecCell.setCellValueFactory(new PropertyValueFactory<>("email_user_reclamation"));
+        ObjetRecCell.setCellValueFactory(new PropertyValueFactory<>("objet_reclamation"));
+        CategRecCell.setCellValueFactory(new PropertyValueFactory<>("category_id"));
+        DateRecCell.setCellValueFactory(new PropertyValueFactory<>("date_reclamation"));
+        TexteRecCell.setCellValueFactory(new PropertyValueFactory<>("texte_reclamation"));
+
+        tableReclamation.setItems(FXCollections.observableList(a));
+    }
+    
+    
+    private void TriDateReclamation() {
+        ReclamationService cs = new ReclamationService();
+        List<Reclamation> a = cs.triDateReclamation();
+        NomUserRecCell.setCellValueFactory(new PropertyValueFactory<>("nom_user_reclamation"));
+        EmailUserRecCell.setCellValueFactory(new PropertyValueFactory<>("email_user_reclamation"));
+        ObjetRecCell.setCellValueFactory(new PropertyValueFactory<>("objet_reclamation"));
+        CategRecCell.setCellValueFactory(new PropertyValueFactory<>("category_id"));
+        DateRecCell.setCellValueFactory(new PropertyValueFactory<>("date_reclamation"));
+        TexteRecCell.setCellValueFactory(new PropertyValueFactory<>("texte_reclamation"));
+
+        tableReclamation.setItems(FXCollections.observableList(a));
+    }
+    
+    
+    private void TriObjetReclamation() {
+        ReclamationService cs = new ReclamationService();
+        List<Reclamation> a = cs.triObjetReclamation();
+        NomUserRecCell.setCellValueFactory(new PropertyValueFactory<>("nom_user_reclamation"));
+        EmailUserRecCell.setCellValueFactory(new PropertyValueFactory<>("email_user_reclamation"));
+        ObjetRecCell.setCellValueFactory(new PropertyValueFactory<>("objet_reclamation"));
+        CategRecCell.setCellValueFactory(new PropertyValueFactory<>("category_id"));
+        DateRecCell.setCellValueFactory(new PropertyValueFactory<>("date_reclamation"));
+        TexteRecCell.setCellValueFactory(new PropertyValueFactory<>("texte_reclamation"));
+
+        tableReclamation.setItems(FXCollections.observableList(a));
+    }
+    
+    private void TriTexteReclamation() {
+        ReclamationService cs = new ReclamationService();
+        List<Reclamation> a = cs.triTexteReclamation();
+        NomUserRecCell.setCellValueFactory(new PropertyValueFactory<>("nom_user_reclamation"));
+        EmailUserRecCell.setCellValueFactory(new PropertyValueFactory<>("email_user_reclamation"));
+        ObjetRecCell.setCellValueFactory(new PropertyValueFactory<>("objet_reclamation"));
+        CategRecCell.setCellValueFactory(new PropertyValueFactory<>("category_id"));
+        DateRecCell.setCellValueFactory(new PropertyValueFactory<>("date_reclamation"));
+        TexteRecCell.setCellValueFactory(new PropertyValueFactory<>("texte_reclamation"));
+
+        tableReclamation.setItems(FXCollections.observableList(a));
+    }
+    
+    
+    @FXML
+    private void TriChoice(ActionEvent event) throws IOException {
+        if (comboBoxTriReclamation.getValue().equals("Nom User")) {
+            TriNomUser();
+        } else if (comboBoxTriReclamation.getValue().equals("Email User")) {
+            TriEmailUser();
+        } else if (comboBoxTriReclamation.getValue().equals("Date")) {
+            TriDateReclamation();
+        } else if (comboBoxTriReclamation.getValue().equals("Objet")) {
+            TriObjetReclamation();
+        } else if (comboBoxTriReclamation.getValue().equals("Texte")) {
+            TriTexteReclamation();
+        } 
+
+    }
+    
+    public ReclamationService rs = new ReclamationService();
+    
+    public void searchReclamation() throws SQLException {    
+        FilteredList<Reclamation> filteredData = new FilteredList<>(FXCollections.observableArrayList(rs.Show()), p -> true);
+        txtSearchRec.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(rec -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String category = String.valueOf(rec.getCategory_id());
+                String objet = String.valueOf(rec.getObjet_reclamation());
+                String texte = String.valueOf(rec.getTexte_reclamation());
+                String date = String.valueOf(rec.getDate_reclamation());
+                String nomUser = String.valueOf(rec.getNom_user_reclamation());
+                String emailUser = String.valueOf(rec.getEmail_user_reclamation());
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (category.toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (objet.toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (texte.toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (date.toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (nomUser.toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (emailUser.toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+        });
+        SortedList<Reclamation> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(tableReclamation.comparatorProperty());
+        tableReclamation.setItems(sortedData);
     }
     
 }

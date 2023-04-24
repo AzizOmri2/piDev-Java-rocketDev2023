@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import utils.MyDB;
 
 /**
@@ -101,6 +102,62 @@ public class CoursService implements CrudCours<Cours>{
             System.err.println(e.getMessage());
         }
         return list;
+    }
+
+    @Override
+    public List<Cours> Search(String t) {
+        List<Cours> list1 = new ArrayList<>();
+        List<Cours> list2 = Show();
+        list1 = (list2.stream().filter(c -> c.getNom_cours().startsWith(t)).collect(Collectors.toList()));
+
+        return list1;
+    }
+    
+    
+    public List<Cours> triNomCours() {
+
+        List<Cours> list1 = new ArrayList<>();
+        List<Cours> list2 = Show();
+
+        list1 = list2.stream().sorted((o1, o2) -> o1.getNom_cours().compareTo(o2.getNom_cours())).collect(Collectors.toList());
+        return list1;
+
+    }
+    /*public List<Cours> triPrixCours() {
+
+        List<Cours> list1 = new ArrayList<>();
+        List<Cours> list2 = Show();
+
+        list1 = list2.stream().sorted((o1, o2) -> o1.getPrix_cours().compareTo(o2.getPrix_cours())).collect(Collectors.toList());
+        return list1;
+
+    }*/
+    public List<Cours> triNomCoach() {
+
+        List<Cours> list1 = new ArrayList<>();
+        List<Cours> list2 = Show();
+
+        list1 = list2.stream().sorted((o1, o2) -> o1.getNom_coach().compareTo(o2.getNom_coach())).collect(Collectors.toList());
+        return list1;
+
+    }
+    /*public List<Cours> triAgeMin() {
+
+        List<Cours> list1 = new ArrayList<>();
+        List<Cours> list2 = Show();
+
+        list1 = list2.stream().sorted((o1, o2) -> o1.getAge_min_cours().compareTo(o2.getAge_min_cours())).collect(Collectors.toList());
+        return list1;
+
+    }*/
+    public List<Cours> triDescriptionCours() {
+
+        List<Cours> list1 = new ArrayList<>();
+        List<Cours> list2 = Show();
+
+        list1 = list2.stream().sorted((o1, o2) -> o1.getDescription_cours().compareTo(o2.getDescription_cours())).collect(Collectors.toList());
+        return list1;
+
     }
     
     

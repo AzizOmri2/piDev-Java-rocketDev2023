@@ -18,4 +18,5 @@ public interface CrudCours<Cours> {
     public void modifier(Cours c);
     public void supprimer(int id) throws SQLException;
     public List<Cours> Show();
+    public List<Cours> Search(String t);
 }

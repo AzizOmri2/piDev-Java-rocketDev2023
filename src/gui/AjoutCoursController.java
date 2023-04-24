@@ -26,6 +26,8 @@ import javafx.scene.layout.AnchorPane;
 import services.CoursService;
 import utils.MyDB;
 
+
+
 /**
  * FXML Controller class
  *
@@ -124,7 +126,7 @@ public class AjoutCoursController implements Initializable {
             if (textNomCours.getText().isEmpty() || textPrixCours.getText().isEmpty() || textNomCoachCours.getText().isEmpty() || textAgeMinCours.getText().isEmpty() || 
                 textDescriptionCours.getText().isEmpty() || numberPrixTest == 0 || numberAgeTest == 0) 
             {    
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Information manquante");
                 alert.setHeaderText(null);
                 alert.setContentText("Vous devez remplir tous les détails concernant votre cours.");
@@ -172,5 +174,8 @@ public class AjoutCoursController implements Initializable {
         CoursService cs = new CoursService();
         cs.ajouter(c);
     }  
+    
+    
+    
     
 }

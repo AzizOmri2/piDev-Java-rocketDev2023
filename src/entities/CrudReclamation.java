@@ -18,4 +18,5 @@ public interface CrudReclamation<Rec> {
     public void modifier(Rec r);
     public void supprimer(int id) throws SQLException;
     public List<Reclamation> Show();
+    public List<Reclamation> Search(String t);
 }

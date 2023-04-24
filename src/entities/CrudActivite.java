@@ -20,5 +20,6 @@ public interface CrudActivite<Act> {
     public void modifier(Act a);
     public void supprimer(int id) throws SQLException;
     public List<Activite> Show();
+    public List<Activite> Search(String t);
 
 }

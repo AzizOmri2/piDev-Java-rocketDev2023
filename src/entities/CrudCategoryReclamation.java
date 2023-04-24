@@ -18,4 +18,5 @@ public interface CrudCategoryReclamation<Categ> {
     public void modifier(Categ ca);
     public void supprimer(int id) throws SQLException;
     public List<CategoryReclamation> Show();
+    public List<CategoryReclamation> Search(String t);
 }

@@ -9,10 +9,17 @@ import entities.CategoryReclamation;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -22,6 +29,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -72,6 +80,8 @@ public class ListCategoryReclamationController implements Initializable {
     private Button btnDeleteCategRec;
     @FXML
     private TextField txtSearchCategRec;
+    @FXML
+    private ComboBox<String> comboBoxTriCategRec;
     
     
     ObservableList<CategoryReclamation> dataCategoryReclamation = FXCollections.observableArrayList();
@@ -118,6 +128,12 @@ public class ListCategoryReclamationController implements Initializable {
             }
         });
         tableCategReclamation.setItems(dataCategoryReclamation);
+        comboBoxTriCategRec.getItems().addAll("Trier Selon",  "Nom", "Priorite", "Description");
+        try {
+            searchCategoryReclamation();
+        } catch (SQLException ex) {
+            Logger.getLogger(ListActiviteController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     @FXML
@@ -151,5 +167,84 @@ public class ListCategoryReclamationController implements Initializable {
         }
     }
     
+    
+    private void TriNom() {
+        CategoryReclamationService crs = new CategoryReclamationService();
+        List<CategoryReclamation> categRec = crs.triNomCategory();
+        NomCategRecCell.setCellValueFactory(new PropertyValueFactory<>("nom_category"));
+        DescriptionCategRecCell.setCellValueFactory(new PropertyValueFactory<>("description_category"));
+        PrioriteCategRecCell.setCellValueFactory(new PropertyValueFactory<>("priorite_category"));
+        
+
+        tableCategReclamation.setItems(FXCollections.observableList(categRec));
+
+    }
+    
+    private void TriPriorite() {
+        CategoryReclamationService crs = new CategoryReclamationService();
+        List<CategoryReclamation> categRec = crs.triPrioriteCategory();
+        NomCategRecCell.setCellValueFactory(new PropertyValueFactory<>("nom_category"));
+        DescriptionCategRecCell.setCellValueFactory(new PropertyValueFactory<>("description_category"));
+        PrioriteCategRecCell.setCellValueFactory(new PropertyValueFactory<>("priorite_category"));
+        
+
+        tableCategReclamation.setItems(FXCollections.observableList(categRec));
+
+    }
+    
+    private void TriDescription() {
+        CategoryReclamationService crs = new CategoryReclamationService();
+        List<CategoryReclamation> categRec = crs.triDescriptionCategory();
+        NomCategRecCell.setCellValueFactory(new PropertyValueFactory<>("nom_category"));
+        DescriptionCategRecCell.setCellValueFactory(new PropertyValueFactory<>("description_category"));
+        PrioriteCategRecCell.setCellValueFactory(new PropertyValueFactory<>("priorite_category"));
+        
+
+        tableCategReclamation.setItems(FXCollections.observableList(categRec));
+    }
+    
+    
+    @FXML
+    private void TriChoice(ActionEvent event) throws IOException {
+        if (comboBoxTriCategRec.getValue().equals("Nom")) {
+            TriNom();
+        } else if (comboBoxTriCategRec.getValue().equals("Priorite")) {
+            TriPriorite();
+        } else if (comboBoxTriCategRec.getValue().equals("Description")) {
+            TriDescription();
+        }
+
+    }
+    
+    
+    public CategoryReclamationService as = new CategoryReclamationService();
+    
+    public void searchCategoryReclamation() throws SQLException {    
+        FilteredList<CategoryReclamation> filteredData = new FilteredList<>(FXCollections.observableArrayList(as.Show()), p -> true);
+        txtSearchCategRec.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(categRec -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String nom = String.valueOf(categRec.getNom_category());
+                String description = String.valueOf(categRec.getDescription_category());
+                String priorite = String.valueOf(categRec.getPriorite_category());
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (nom.toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (description.toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (priorite.toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+        });
+        SortedList<CategoryReclamation> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(tableCategReclamation.comparatorProperty());
+        tableCategReclamation.setItems(sortedData);
+    }
     
 }

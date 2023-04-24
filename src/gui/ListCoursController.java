@@ -6,13 +6,23 @@
 package gui;
 
 import entities.Cours;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -22,6 +32,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -31,6 +42,16 @@ import javafx.scene.layout.AnchorPane;
 import javafx.util.StringConverter;
 import javafx.util.converter.IntegerStringConverter;
 import services.CoursService;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.scene.input.MouseEvent;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+
 
 /**
  * FXML Controller class
@@ -78,6 +99,8 @@ public class ListCoursController implements Initializable {
     private Button btnDeleteCours;
     @FXML
     private TextField txtSearchCours;
+    @FXML
+    private ComboBox<String> comboBoxTriCours;
     
     
     ObservableList<Cours> dataCours = FXCollections.observableArrayList();  
@@ -156,6 +179,12 @@ public class ListCoursController implements Initializable {
             }
         });
         tableCours.setItems(dataCours);
+        comboBoxTriCours.getItems().addAll("Trier Selon",  "Nom Cours", "Nom Coach" , "Description");
+        try {
+            searchCours();
+        } catch (SQLException ex) {
+            Logger.getLogger(ListActiviteController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     @FXML
@@ -187,6 +216,148 @@ public class ListCoursController implements Initializable {
             // Rafraîchir la vue de la table
             tableCours.refresh();
         }
+    }
+    
+    /*@FXML
+    void excelBtn(MouseEvent event) throws FileNotFoundException, IOException {
+        // Créer un nouveau classeur
+        Workbook workbook = new XSSFWorkbook();
+
+        // Créer une nouvelle feuille de calcul
+        Sheet sheet = workbook.createSheet("Cours");
+
+        // Récupérer la liste des produits
+        CoursService cs = new CoursService();
+        List<Cours> coursList = cs.Show();
+
+         // Créer la première ligne pour les en-têtes des colonnes
+        Row headerRow = sheet.createRow(0);
+        headerRow.createCell(0).setCellValue("ID");
+        headerRow.createCell(1).setCellValue("Nom Cours");
+        headerRow.createCell(2).setCellValue("Prix Cours");
+        headerRow.createCell(3).setCellValue("Nom Coach");
+        headerRow.createCell(4).setCellValue("Age Minimale");
+        headerRow.createCell(5).setCellValue("Description Cours");
+
+        // Remplir les données des produits
+        int rowNum = 1;
+        for (Cours cour : coursList) {
+            Row row = sheet.createRow(rowNum++);
+            row.createCell(0).setCellValue(cour.getId());
+            row.createCell(1).setCellValue(cour.getNom_cours());
+            row.createCell(2).setCellValue(cour.getPrix_cours());
+            row.createCell(3).setCellValue(cour.getNom_coach());
+            row.createCell(4).setCellValue(cour.getAge_min_cours());
+            row.createCell(5).setCellValue(cour.getDescription_cours());
+        }
+
+        
+
+        // Ouvrir une boîte de dialogue de sélection de fichier
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Enregistrer le fichier Excel");
+        fileChooser.getExtensionFilters().add(new ExtensionFilter("Fichiers Excel", "*.xlsx"));
+        File selectedFile = fileChooser.showSaveDialog(null);
+
+        if (selectedFile != null) {
+            // Enregistrer le fichier dans l'emplacement choisi par l'utilisateur
+            try (FileOutputStream outputStream = new FileOutputStream(selectedFile)) {
+                workbook.write(outputStream);
+            }
+        }
+    }*/
+    
+    
+    private void TriNomCours() {
+        CoursService cs = new CoursService();
+        List<Cours> a = cs.triNomCours();
+        NomCoursCell.setCellValueFactory(new PropertyValueFactory<>("nom_cours"));
+        PrixCoursCell.setCellValueFactory(new PropertyValueFactory<>("prix_cours"));
+        NomCoachCoursCell.setCellValueFactory(new PropertyValueFactory<>("nom_coach"));
+        AgeMinCoursCell.setCellValueFactory(new PropertyValueFactory<>("age_min_cours"));
+        DescriptionCoursCell.setCellValueFactory(new PropertyValueFactory<>("description_cours"));
+        
+
+        tableCours.setItems(FXCollections.observableList(a));
+
+    }
+    
+    
+    private void TriNomCoach() {
+        CoursService cs = new CoursService();
+        List<Cours> a = cs.triNomCoach();
+        NomCoursCell.setCellValueFactory(new PropertyValueFactory<>("nom_cours"));
+        PrixCoursCell.setCellValueFactory(new PropertyValueFactory<>("prix_cours"));
+        NomCoachCoursCell.setCellValueFactory(new PropertyValueFactory<>("nom_coach"));
+        AgeMinCoursCell.setCellValueFactory(new PropertyValueFactory<>("age_min_cours"));
+        DescriptionCoursCell.setCellValueFactory(new PropertyValueFactory<>("description_cours"));
+        
+
+        tableCours.setItems(FXCollections.observableList(a));
+
+    }
+    
+    private void TriDescription() {
+        CoursService cs = new CoursService();
+        List<Cours> a = cs.triDescriptionCours();
+        NomCoursCell.setCellValueFactory(new PropertyValueFactory<>("nom_cours"));
+        PrixCoursCell.setCellValueFactory(new PropertyValueFactory<>("prix_cours"));
+        NomCoachCoursCell.setCellValueFactory(new PropertyValueFactory<>("nom_coach"));
+        AgeMinCoursCell.setCellValueFactory(new PropertyValueFactory<>("age_min_cours"));
+        DescriptionCoursCell.setCellValueFactory(new PropertyValueFactory<>("description_cours"));
+        
+
+        tableCours.setItems(FXCollections.observableList(a));
+
+    }
+    
+    
+    @FXML
+    private void TriChoice(ActionEvent event) throws IOException {
+        if (comboBoxTriCours.getValue().equals("Nom Cours")) {
+            TriNomCours();
+        } else if (comboBoxTriCours.getValue().equals("Nom Coach")) {
+            TriNomCoach();
+        } else if (comboBoxTriCours.getValue().equals("Description")) {
+            TriDescription();
+        }
+
+    }
+    
+    public CoursService cs = new CoursService();
+    
+    public void searchCours() throws SQLException {    
+        FilteredList<Cours> filteredData = new FilteredList<>(FXCollections.observableArrayList(cs.Show()), p -> true);
+        txtSearchCours.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(cours -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String nom = String.valueOf(cours.getNom_cours());
+                String prix = String.valueOf(cours.getPrix_cours());
+                String nomCoach = String.valueOf(cours.getNom_coach());
+                String ageMin = String.valueOf(cours.getAge_min_cours());
+                String description = String.valueOf(cours.getDescription_cours());
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (nom.toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (prix.toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (nomCoach.toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (ageMin.toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (description.toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+        });
+        SortedList<Cours> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(tableCours.comparatorProperty());
+        tableCours.setItems(sortedData);
     }
     
 }

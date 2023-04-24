@@ -77,7 +77,7 @@ public class AjoutCategoryReclamationController implements Initializable {
         if(event.getSource() == btnAddCategRec){
             if (textNomCategRec.getText().isEmpty() || textPrioriteCategRec.getValue().isEmpty() || textDescriptionCategRec.getText().isEmpty()) 
             {    
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Information manquante");
                 alert.setHeaderText(null);
                 alert.setContentText("Vous devez remplir tous les détails concernant votre catégorie réclamation.");

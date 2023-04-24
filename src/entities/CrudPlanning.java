@@ -18,4 +18,5 @@ public interface CrudPlanning<Planning> {
     public void modifier(Planning p);
     public void supprimer(int id) throws SQLException;
     public List<Planning> Show();
+    public List<Planning> Search(String t);
 }

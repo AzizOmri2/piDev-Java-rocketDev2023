@@ -18,4 +18,5 @@ public interface CrudReponse<Rep> {
     public void modifier(Rep r);
     public void supprimer(int id) throws SQLException;
     public List<Reponse> Show();
+    public List<Reponse> Search(String t);
 }

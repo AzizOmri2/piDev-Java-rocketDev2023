@@ -5,7 +5,6 @@
  */
 package services;
 
-import entities.Activite;
 import entities.CrudReclamation;
 import entities.Reclamation;
 import java.sql.Connection;
@@ -15,6 +14,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import utils.MyDB;
 
 /**
@@ -107,6 +107,62 @@ public class ReclamationService implements CrudReclamation<Reclamation>{
             System.err.println(e.getMessage());
         }
         return list;
+    }
+
+    @Override
+    public List<Reclamation> Search(String t) {
+        List<Reclamation> list1 = new ArrayList<>();
+        List<Reclamation> list2 = Show();
+        list1 = (list2.stream().filter(c -> c.getNom_user_reclamation().startsWith(t)).collect(Collectors.toList()));
+
+        return list1;
+    }
+    
+    
+    public List<Reclamation> triObjetReclamation() {
+
+        List<Reclamation> list1 = new ArrayList<>();
+        List<Reclamation> list2 = Show();
+
+        list1 = list2.stream().sorted((o1, o2) -> o1.getObjet_reclamation().compareTo(o2.getObjet_reclamation())).collect(Collectors.toList());
+        return list1;
+
+    }
+    public List<Reclamation> triTexteReclamation() {
+
+        List<Reclamation> list1 = new ArrayList<>();
+        List<Reclamation> list2 = Show();
+
+        list1 = list2.stream().sorted((o1, o2) -> o1.getTexte_reclamation().compareTo(o2.getTexte_reclamation())).collect(Collectors.toList());
+        return list1;
+
+    }
+    public List<Reclamation> triDateReclamation() {
+
+        List<Reclamation> list1 = new ArrayList<>();
+        List<Reclamation> list2 = Show();
+
+        list1 = list2.stream().sorted((o1, o2) -> o1.getDate_reclamation().compareTo(o2.getDate_reclamation())).collect(Collectors.toList());
+        return list1;
+
+    }
+    public List<Reclamation> triNomUserReclamation() {
+
+        List<Reclamation> list1 = new ArrayList<>();
+        List<Reclamation> list2 = Show();
+
+        list1 = list2.stream().sorted((o1, o2) -> o1.getNom_user_reclamation().compareTo(o2.getNom_user_reclamation())).collect(Collectors.toList());
+        return list1;
+
+    }
+    public List<Reclamation> triEmailUserReclamation() {
+
+        List<Reclamation> list1 = new ArrayList<>();
+        List<Reclamation> list2 = Show();
+
+        list1 = list2.stream().sorted((o1, o2) -> o1.getEmail_user_reclamation().compareTo(o2.getEmail_user_reclamation())).collect(Collectors.toList());
+        return list1;
+
     }
     
 }

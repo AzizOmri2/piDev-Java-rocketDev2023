@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import utils.MyDB;
 
 /**
@@ -100,5 +101,42 @@ public class PlanningService implements CrudPlanning<Planning>{
         }
         return list;
     }
+
+    @Override
+    public List<Planning> Search(String t) {
+        List<Planning> list1 = new ArrayList<>();
+        List<Planning> list2 = Show();
+        list1 = (list2.stream().filter(c -> c.getJour_planning().startsWith(t)).collect(Collectors.toList()));
+
+        return list1;
+    }
     
+    
+    public List<Planning> triJourPlanning() {
+
+        List<Planning> list1 = new ArrayList<>();
+        List<Planning> list2 = Show();
+
+        list1 = list2.stream().sorted((o1, o2) -> o1.getJour_planning().compareTo(o2.getJour_planning())).collect(Collectors.toList());
+        return list1;
+
+    }
+    /*public List<Planning> triHeurePlanning() {
+
+        List<Planning> list1 = new ArrayList<>();
+        List<Planning> list2 = Show();
+
+        list1 = list2.stream().sorted((o1, o2) -> o1.getHeure_planning().compareTo(o2.getHeure_planning())).collect(Collectors.toList());
+        return list1;
+
+    }*/
+    public List<Planning> triDatePlanning() {
+
+        List<Planning> list1 = new ArrayList<>();
+        List<Planning> list2 = Show();
+
+        list1 = list2.stream().sorted((o1, o2) -> o1.getDate_planning().compareTo(o2.getDate_planning())).collect(Collectors.toList());
+        return list1;
+
+    }
 }

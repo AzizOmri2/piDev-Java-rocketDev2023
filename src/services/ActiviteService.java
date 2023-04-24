@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import utils.MyDB;
 
 /**
@@ -107,6 +108,53 @@ public class ActiviteService implements CrudActivite<Activite> {
             System.err.println(e.getMessage());
 
         }
+    }
+
+    @Override
+    public List<Activite> Search(String t) {
+        List<Activite> list1 = new ArrayList<>();
+        List<Activite> list2 = Show();
+        list1 = (list2.stream().filter(c -> c.getNom_activite().startsWith(t)).collect(Collectors.toList()));
+
+        return list1;
+    }
+    
+    
+    public List<Activite> triNomActivite() {
+
+        List<Activite> list1 = new ArrayList<>();
+        List<Activite> list2 = Show();
+
+        list1 = list2.stream().sorted((o1, o2) -> o1.getNom_activite().compareTo(o2.getNom_activite())).collect(Collectors.toList());
+        return list1;
+
+    }
+    public List<Activite> triTenueActivite() {
+
+        List<Activite> list1 = new ArrayList<>();
+        List<Activite> list2 = Show();
+
+        list1 = list2.stream().sorted((o1, o2) -> o1.getTenue_activite().compareTo(o2.getTenue_activite())).collect(Collectors.toList());
+        return list1;
+
+    }
+    public List<Activite> triDiffActivite() {
+
+        List<Activite> list1 = new ArrayList<>();
+        List<Activite> list2 = Show();
+
+        list1 = list2.stream().sorted((o1, o2) -> o1.getDifficulte_activite().compareTo(o2.getDifficulte_activite())).collect(Collectors.toList());
+        return list1;
+
+    }
+    public List<Activite> triDescriptionActivite() {
+
+        List<Activite> list1 = new ArrayList<>();
+        List<Activite> list2 = Show();
+
+        list1 = list2.stream().sorted((o1, o2) -> o1.getDescription_activite().compareTo(o2.getDescription_activite())).collect(Collectors.toList());
+        return list1;
+
     }
     
 }

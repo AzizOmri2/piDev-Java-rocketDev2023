@@ -81,8 +81,7 @@ public class AjoutActiviteController implements Initializable {
     private TextField textNomAct;
     @FXML
     private TextField textTenueAct;
-    @FXML
-    private TextField textImageAct;
+    
     @FXML
     private ImageView imgActiviteInput;
     
@@ -127,7 +126,7 @@ public class AjoutActiviteController implements Initializable {
             if (textDescriptionAct.getText().isEmpty() || textDiffAct.getItems().isEmpty() || textDureeAct.getText().isEmpty() || textNomAct.getText().isEmpty() || 
                 textTenueAct.getText().isEmpty() || imageName==null) 
             {    
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Information manquante");
                 alert.setHeaderText(null);
                 alert.setContentText("Vous devez remplir tous les détails concernant votre activité.");
@@ -156,7 +155,7 @@ public class AjoutActiviteController implements Initializable {
         textDureeAct.clear();
         textNomAct.clear();
         textTenueAct.clear();
-        textImageAct.clear();
+        imgActiviteInput.setImage(null);
     }
     
     

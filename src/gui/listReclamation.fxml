@@ -3,6 +3,7 @@
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -11,12 +12,12 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="listReclamationPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="757.0" prefWidth="1233.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/19" fx:controller="gui.ListReclamationController">
+<AnchorPane id="AnchorPane" fx:id="listReclamationPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="757.0" prefWidth="1233.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ListReclamationController">
     <stylesheets>
         <URL value="@listreclamation.css" />
     </stylesheets>
    <children>
-      <Button fx:id="btnLoadReclamation" layoutX="411.0" layoutY="94.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="54.0" styleClass="btn" stylesheets="@listplanning.css" textFill="WHITE">
+      <Button fx:id="btnLoadReclamation" layoutX="384.0" layoutY="94.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="54.0" styleClass="btn" stylesheets="@listplanning.css" textFill="WHITE">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
@@ -28,7 +29,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button fx:id="bntAddReclamation" layoutX="171.0" layoutY="94.0" mnemonicParsing="false" onAction="#open_addReclamation" prefHeight="42.0" prefWidth="205.0" styleClass="btn" stylesheets="@listplanning.css" text="Ajouter Réclamation" textFill="WHITE">
+      <Button fx:id="bntAddReclamation" layoutX="144.0" layoutY="94.0" mnemonicParsing="false" onAction="#open_addReclamation" prefHeight="42.0" prefWidth="205.0" styleClass="btn" stylesheets="@listplanning.css" text="Ajouter Réclamation" textFill="WHITE">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
@@ -36,14 +37,14 @@
             <Insets left="30.0" />
          </padding>
       </Button>
-      <ImageView fitHeight="23.0" fitWidth="31.0" layoutX="781.0" layoutY="104.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="23.0" fitWidth="31.0" layoutX="754.0" layoutY="104.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/icons8_search_500px.png" />
          </image>
       </ImageView>
-      <TextField fx:id="txtSearchReclamation" layoutX="528.0" layoutY="94.0" prefHeight="40.0" prefWidth="282.0" promptText="Search..." styleClass="search" stylesheets="@listplanning.css" />
-      <Button fx:id="btnDeleteReclamation" layoutX="933.0" layoutY="94.0" mnemonicParsing="false" onAction="#supprimerReclamation" prefHeight="41.0" prefWidth="94.0" styleClass="btn" stylesheets="@listplanning.css" text="Delete" />
-      <ImageView fitHeight="31.0" fitWidth="122.0" layoutX="188.0" layoutY="99.0" pickOnBounds="true" preserveRatio="true">
+      <TextField fx:id="txtSearchRec" layoutX="501.0" layoutY="94.0" prefHeight="40.0" prefWidth="282.0" promptText="Search..." styleClass="search" stylesheets="@listplanning.css" />
+      <Button fx:id="btnDeleteReclamation" layoutX="827.0" layoutY="94.0" mnemonicParsing="false" onAction="#supprimerReclamation" prefHeight="41.0" prefWidth="94.0" styleClass="btn" stylesheets="@listplanning.css" text="Delete" />
+      <ImageView fitHeight="31.0" fitWidth="122.0" layoutX="161.0" layoutY="99.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/icons8-add-64.png" />
          </image>
@@ -58,5 +59,6 @@
             <TableColumn fx:id="TexteRecCell" prefWidth="415.20001220703125" text="Texte" />
          </columns>
       </TableView>
+      <ComboBox fx:id="comboBoxTriReclamation" layoutX="945.0" layoutY="94.0" onAction="#TriChoice" prefHeight="42.0" prefWidth="144.0" promptText="Trier Selon" styleClass="comboBox" stylesheets="@listreclamation.css" />
    </children>
 </AnchorPane>

@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import utils.MyDB;
 
 /**
@@ -101,6 +102,44 @@ public class ReponseService implements CrudReponse<Reponse>{
             System.err.println(e.getMessage());
         }
         return list;
+    }
+
+    @Override
+    public List<Reponse> Search(String t) {
+        List<Reponse> list1 = new ArrayList<>();
+        List<Reponse> list2 = Show();
+        list1 = (list2.stream().filter(c -> c.getContenu_reponse().startsWith(t)).collect(Collectors.toList()));
+
+        return list1;
+    }
+    
+    
+    public List<Reponse> triObjetReponse() {
+
+        List<Reponse> list1 = new ArrayList<>();
+        List<Reponse> list2 = Show();
+
+        list1 = list2.stream().sorted((o1, o2) -> o1.getObjet_reponse().compareTo(o2.getObjet_reponse())).collect(Collectors.toList());
+        return list1;
+
+    }
+    public List<Reponse> triContenuReponse() {
+
+        List<Reponse> list1 = new ArrayList<>();
+        List<Reponse> list2 = Show();
+
+        list1 = list2.stream().sorted((o1, o2) -> o1.getContenu_reponse().compareTo(o2.getContenu_reponse())).collect(Collectors.toList());
+        return list1;
+
+    }
+    public List<Reponse> triDateReponse() {
+
+        List<Reponse> list1 = new ArrayList<>();
+        List<Reponse> list2 = Show();
+
+        list1 = list2.stream().sorted((o1, o2) -> o1.getDate_reponse().compareTo(o2.getDate_reponse())).collect(Collectors.toList());
+        return list1;
+
     }
     
 }

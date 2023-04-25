@@ -43,7 +43,7 @@
          </image>
       </ImageView>
       <TextField fx:id="txtSearchCategRec" layoutX="539.0" layoutY="100.0" prefHeight="40.0" prefWidth="282.0" promptText="Search..." styleClass="search" stylesheets="@listplanning.css" />
-      <Button fx:id="btnDeleteCategRec" layoutX="862.0" layoutY="100.0" mnemonicParsing="false" onAction="#supprimerCategoryReclamation" prefHeight="41.0" prefWidth="94.0" styleClass="btn" stylesheets="@listplanning.css" text="Supprimer" />
+      <Button fx:id="btnDeleteCategRec" layoutX="862.0" layoutY="100.0" mnemonicParsing="false" onAction="#supprimerCategoryReclamation" prefHeight="41.0" prefWidth="94.0" styleClass="btn" stylesheets="@listplanning.css" text="Delete" />
       <ImageView fitHeight="31.0" fitWidth="122.0" layoutX="138.0" layoutY="106.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/icons8-add-64.png" />
@@ -56,6 +56,6 @@
             <TableColumn fx:id="DescriptionCategRecCell" prefWidth="569.5999145507812" text="Description Catégorie" />
          </columns>
       </TableView>
-      <ComboBox fx:id="comboBoxTriCategRec" layoutX="978.0" layoutY="99.0" onAction="#TriChoice" prefHeight="42.0" prefWidth="144.0" promptText="Trier Selon" styleClass="comboBox" stylesheets="@listactivite.css" />
+      <ComboBox fx:id="comboBoxTriCategRec" layoutX="978.0" layoutY="99.0" onAction="#TriChoice" prefHeight="42.0" prefWidth="144.0" promptText="Trier Selon" stylesheets="@listcategoryreclamation.css" />
    </children>
 </AnchorPane>

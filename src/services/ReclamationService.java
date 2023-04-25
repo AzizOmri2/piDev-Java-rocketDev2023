@@ -165,4 +165,23 @@ public class ReclamationService implements CrudReclamation<Reclamation>{
 
     }
     
+    
+    public List<Reclamation> findById(int id) throws SQLException {
+        List<Reclamation> list = new ArrayList<>();
+
+        try {
+            String req = "SELECT * from reclamation where id='"+id+"'";
+            Statement st = conx.createStatement();
+            ResultSet rs = st.executeQuery(req);
+            while (rs.next()) {
+                list.add(new Reclamation(rs.getInt("id"), rs.getInt("category_id"), 
+                        rs.getString("objet_reclamation"), rs.getString("texte_reclamation"), rs.getDate("date_reclamation"), 
+                        rs.getString("nom_user_reclamation"), rs.getString("email_user_reclamation")));
+            }
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return list;
+    }
+    
 }

@@ -24,7 +24,8 @@
             <TableColumn fx:id="TenueActCell" prefWidth="221.5999755859375" text="Tenue" />
             <TableColumn fx:id="DiffActCell" prefWidth="106.40005493164062" text="Difficulté" />
             <TableColumn fx:id="ImageActCell" prefWidth="108.00006103515625" text="Image" />
-            <TableColumn fx:id="DescriptionActCell" prefWidth="421.5999755859375" text="Description" />
+            <TableColumn fx:id="DescriptionActCell" prefWidth="296.79998779296875" text="Description" />
+            <TableColumn fx:id="actCell" prefWidth="122.40000000000009" />
          </columns>
       </TableView>
       <Button fx:id="btnLoadAct" layoutX="310.0" layoutY="72.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="54.0" styleClass="btn" stylesheets="@dashboardDesign.css" textFill="WHITE">

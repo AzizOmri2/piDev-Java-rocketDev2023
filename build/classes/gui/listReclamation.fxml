@@ -56,9 +56,10 @@
             <TableColumn fx:id="ObjetRecCell" prefWidth="112.0" text="Objet" />
             <TableColumn fx:id="CategRecCell" prefWidth="119.20001220703125" text="Catégorie" />
             <TableColumn fx:id="DateRecCell" prefWidth="131.20001220703125" text="Date" />
-            <TableColumn fx:id="TexteRecCell" prefWidth="415.20001220703125" text="Texte" />
+            <TableColumn fx:id="TexteRecCell" prefWidth="299.199951171875" text="Texte" />
+            <TableColumn fx:id="actCell" prefWidth="112.0" />
          </columns>
       </TableView>
-      <ComboBox fx:id="comboBoxTriReclamation" layoutX="945.0" layoutY="94.0" onAction="#TriChoice" prefHeight="42.0" prefWidth="144.0" promptText="Trier Selon" styleClass="comboBox" stylesheets="@listactivite.css" />
+      <ComboBox fx:id="comboBoxTriReclamation" layoutX="945.0" layoutY="94.0" onAction="#TriChoice" prefHeight="42.0" prefWidth="144.0" promptText="Trier Selon" styleClass="comboBox" stylesheets="@listreclamation.css" />
    </children>
 </AnchorPane>

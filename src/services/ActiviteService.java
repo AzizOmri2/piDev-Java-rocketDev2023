@@ -156,5 +156,27 @@ public class ActiviteService implements CrudActivite<Activite> {
         return list1;
 
     }
-    
+
+    public Activite findById(int id) throws SQLException {
+        Activite act = new Activite();
+
+        try {
+            String req = "SELECT * from activite where id='"+id+"'";
+            Statement st = conx.createStatement();
+            ResultSet rs = st.executeQuery(req);
+            while (rs.next()) {
+                act.setId(rs.getInt("id"));
+                act.setNom_activite(rs.getString("nom_activite"));
+                act.setDuree_activite(rs.getString("duree_activite"));
+                act.setTenue_activite(rs.getString("tenue_activite"));
+                act.setDifficulte_activite(rs.getString("difficulte_activite"));
+                act.setImage_activite(rs.getString("image_activite"));
+                act.setDescription_activite(rs.getString("description_activite"));
+                        
+            }
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return act;
+    }    
 }

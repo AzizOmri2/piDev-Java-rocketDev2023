@@ -52,7 +52,10 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableCell;
+import javafx.stage.Stage;
 
 
 /**
@@ -95,6 +98,8 @@ public class ListActiviteController implements Initializable {
     private TableColumn<Activite, String> NomActCell;
     @FXML
     private TableColumn<Activite, String> TenueActCell;
+    @FXML
+    private TableColumn<Activite, Void> actCell;
     @FXML
     private TableView<Activite> tableActivite;
     
@@ -182,7 +187,39 @@ public class ListActiviteController implements Initializable {
                 as.modifier(a);
             }
         });
-        
+        actCell.setCellFactory(column->{
+            return new TableCell<Activite,Void>(){
+                private final Button showBtn = new Button("Show");
+                {
+                    showBtn.setStyle("-fx-background-color: #720000; -fx-text-fill: #fff;");
+                    showBtn.setOnAction(event->{
+                        Activite act = getTableView().getItems().get(getIndex());
+                        Parent fxml;
+                        try {
+                            FXMLLoader loader=new FXMLLoader(getClass().getResource("showActivite.fxml"));
+                            Parent root=loader.load();
+                            ShowActiviteController controller = loader.getController();
+                            controller.initData(act.getId());
+                            Stage stage = new Stage();
+                            stage.setScene(new Scene(root));
+                            stage.show();
+                        } catch (IOException ex) {
+                            Logger.getLogger(ListReclamationController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    });
+                }
+                
+                @Override
+                protected void updateItem(Void item,boolean empty){
+                    super.updateItem(item,empty);
+                    if(empty){
+                        setGraphic(null);
+                    }else{
+                        setGraphic(showBtn);
+                    }
+                }
+            };
+        });
         tableActivite.setItems(data);
         comboBoxTriAct.getItems().addAll("Trier Selon",  "Nom", "Tenue", "Difficulte" , "Description");
         try {

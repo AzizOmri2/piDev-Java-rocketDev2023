@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="1041.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ListUsersController">
+    <children>
+        <TableView fx:id="TableUsers" editable="true" layoutX="17.0" layoutY="93.0" prefHeight="578.0" prefWidth="1018.0" tableMenuButtonVisible="true">
+            <columns>
+                <TableColumn fx:id="emailuser" editable="true" prefWidth="280.0000114440918" text="email" />
+                <TableColumn fx:id="usernameU" editable="true" prefWidth="215.20004272460938" text="username" />
+                <TableColumn fx:id="date_nuser" editable="true" prefWidth="203.99993896484375" text="date_n" />
+                <TableColumn fx:id="imageU" editable="true" prefWidth="212.800048828125" text="image" />
+                <TableColumn fx:id="act" prefWidth="93.59991455078125" text="Action" />
+            </columns>
+        </TableView>
+      <TextField fx:id="search" layoutX="346.0" layoutY="56.0" prefHeight="26.0" prefWidth="316.0" />
+      <ComboBox fx:id="TriChoice" layoutX="39.0" layoutY="56.0" onAction="#TriChoice" prefHeight="26.0" prefWidth="150.0" promptText="Aucun" style="-fx-background-color: #720000;" />
+    </children>
+</AnchorPane>

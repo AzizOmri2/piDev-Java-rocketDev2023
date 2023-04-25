@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="585.0" prefWidth="757.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.RegistrationAbonneeController">
+   <children>
+      <ImageView fitHeight="649.0" fitWidth="521.0" layoutX="-175.0" layoutY="-9.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Images/abonnee.jpg" />
+         </image>
+      </ImageView>
+      <TextField fx:id="usernameAb" layoutX="457.0" layoutY="91.0" promptText="entre votre nom" />
+      <TextField fx:id="emailAb" layoutX="457.0" layoutY="128.0" promptText="..@gmail.com" />
+      <TextField fx:id="num_telAb" layoutX="457.0" layoutY="164.0" promptText="22 22 22 22 " />
+      <Label layoutX="384.0" layoutY="94.0" text="Username " />
+      <Label layoutX="383.0" layoutY="132.0" text="E-mail        " />
+      <Label layoutX="383.0" layoutY="168.0" text="NumTel        " />
+      <Label layoutX="384.0" layoutY="204.0" text="DateN          " />
+      <Label layoutX="381.0" layoutY="366.0" text="Password      " />
+      <Button fx:id="RegisterAb" layoutX="483.0" layoutY="533.0" mnemonicParsing="false" onAction="#sisncrire" style="-fx-background-color: #720000;" text="Register" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <Label layoutX="422.0" layoutY="30.0" text="Register Abonnee" textFill="#720000">
+         <font>
+            <Font name="System Bold" size="19.0" />
+         </font>
+      </Label>
+      <DatePicker fx:id="date_nAb" layoutX="458.0" layoutY="200.0" prefHeight="25.0" prefWidth="149.0" promptText="yyyy/mm/dd" />
+      <PasswordField fx:id="pwdAb" layoutX="458.0" layoutY="362.0" promptText="**********" />
+      <Label layoutX="391.0" layoutY="408.0" text="Please enter the text you see in the image:" />
+      <Canvas fx:id="captchaCanvas" height="66.0" layoutX="358.0" layoutY="429.0" width="287.0" />
+      <TextField fx:id="captchaField" layoutX="441.0" layoutY="499.0" />
+      <Label layoutX="383.0" layoutY="234.0" prefHeight="18.0" prefWidth="86.0" styleClass="label-ajout" text="Image :" />
+      <Button fx:id="btnImportAct" layoutX="597.0" layoutY="235.0" mnemonicParsing="false" onAction="#ajouterImage" prefHeight="6.0" prefWidth="53.0" styleClass="import-btn" textFill="#aeabab">
+         <graphic>
+            <ImageView fitHeight="20.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../Downloads/EnergyBoxApp%20(1)/EnergyBoxApp/src/images/upload.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Label layoutX="434.0" layoutY="235.0" prefHeight="18.0" prefWidth="143.0" text="Choisir l'image de l'activité">
+         <font>
+            <Font size="11.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="imgSpsInput" fitHeight="100.0" fitWidth="216.0" layoutX="381.0" layoutY="253.0" pickOnBounds="true" preserveRatio="true" />
+   </children>
+</Pane>

@@ -48,6 +48,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
+import mail.Sendmail;
 
 /**
  * FXML Controller class
@@ -103,7 +104,8 @@ public class RegistrationAdminController implements Initializable {
         String Role = "Admin";
         String userInput = captchaField.getText();
         String email = emailA.getText();
-
+        String object = "Hello " + email + "\n thank \'s for ur registration , you can find your PRIVATE QrCode to make u authentificate with it , PLEASE KEEP IT PRIVATLY";
+        String Sub = "welcome to EnergyBox";
         if (userInput == null || userInput.isEmpty()) {
             // Afficher un message d'erreur si le champ captcha est vide
             Alert alert = new Alert(Alert.AlertType.ERROR, "Le champ captcha est vide.");
@@ -128,6 +130,8 @@ public class RegistrationAdminController implements Initializable {
                 String myQr = generateQRCodeAndSave(dataQr, email);
 
                 userS.registre(new User(usernameA.getText(), email, numTel, dateN, pic, pwdA.getText(), Role, dataQr, myQr));
+                Sendmail sn = new Sendmail();
+                sn.envoyerQr(email, Sub, object, myQr);
                 JOptionPane.showMessageDialog(null, "Personne ajoutée !");
                 Parent page2 = FXMLLoader.load(getClass().getResource("Login.fxml"));
                 Scene scene2 = new Scene(page2);
@@ -230,7 +234,7 @@ public class RegistrationAdminController implements Initializable {
 
     @FXML
     private void camera(ActionEvent event) throws IOException {
-          Random rnd = new Random();
+        Random rnd = new Random();
         int number = rnd.nextInt(999999999);
 
         Webcam webcam = Webcam.getDefault();
@@ -244,9 +248,10 @@ public class RegistrationAdminController implements Initializable {
 
         webcam.close();
     }
- @FXML
+
+    @FXML
     private void closW(ActionEvent event) {
-           Stage stage = (Stage) btnClose.getScene().getWindow();
+        Stage stage = (Stage) btnClose.getScene().getWindow();
         //System.out.println("hi");
         stage.close();
     }

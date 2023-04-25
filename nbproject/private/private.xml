@@ -5,21 +5,23 @@
             <url>src/pidesktop/PIDesktopGui.java</url>
             <bookmark id="1">
                 <name/>
-                <line>47</line>
+                <line>48</line>
                 <key/>
             </bookmark>
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/maham/Documents/NetBeansProjects/PIDesktop/src/GUI/LoginController.java</file>
-            <file>file:/C:/Users/maham/Documents/NetBeansProjects/PIDesktop/src/GUI/RegisterChoiceController.java</file>
-            <file>file:/C:/Users/maham/Documents/NetBeansProjects/PIDesktop/src/GUI/RegistrationAdminController.java</file>
+            <file>file:/C:/Users/maham/Documents/NetBeansProjects/PIDesktop/src/Services/UserService.java</file>
+            <file>file:/C:/Users/maham/Documents/NetBeansProjects/PIDesktop/src/GUI/webPackages/feed.html</file>
             <file>file:/C:/Users/maham/Documents/NetBeansProjects/PIDesktop/src/GUI/ProfilAdminController.java</file>
-            <file>file:/C:/Users/maham/Documents/NetBeansProjects/PIDesktop/src/GUI/ProfilAdmin.fxml</file>
-            <file>file:/C:/Users/maham/Documents/NetBeansProjects/PIDesktop/src/GUI/SideNavigBackController.java</file>
+            <file>file:/C:/Users/maham/Documents/NetBeansProjects/PIDesktop/src/GUI/AskChat.fxml</file>
+            <file>file:/C:/Users/maham/Documents/NetBeansProjects/PIDesktop/src/GUI/AskChatController.java</file>
+            <file>file:/C:/Users/maham/Documents/NetBeansProjects/PIDesktop/src/GUI/webPackages/index.css</file>
+            <file>file:/C:/Users/maham/Documents/NetBeansProjects/PIDesktop/src/GUI/RssController.java</file>
+            <file>file:/C:/Users/maham/Documents/NetBeansProjects/PIDesktop/src/GUI/webPackages/Chatgpt.html</file>
+            <file>file:/C:/Users/maham/Documents/NetBeansProjects/PIDesktop/src/GUI/webPackages/ChatGPT.js</file>
             <file>file:/C:/Users/maham/Documents/NetBeansProjects/PIDesktop/src/pidesktop/PIDesktopGui.java</file>
-            <file>file:/C:/Users/maham/Documents/NetBeansProjects/PIDesktop/src/GUI/ProfileAbonneController.java</file>
         </group>
     </open-files>
 </project-private>

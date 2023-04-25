@@ -6,6 +6,7 @@
 package mail;
 
 import Services.imResetPassword;
+import java.io.IOException;
 import java.net.PasswordAuthentication;
 import java.util.*;
 import javax.mail.*;
@@ -63,6 +64,56 @@ public class Sendmail extends imResetPassword {
 
         
     }
+    
+    public void envoyerQr(String toEmail, String subject, String text, String imagePath) throws IOException {
+    props.setProperty("mail.smtp.host", "smtp.gmail.com");
+    props.setProperty("mail.smtp.socketFactory.class", SSL_FACTORY);
+    props.setProperty("mail.smtp.socketFactory.fallback", "false");
+    props.put("mail.smtp.starttls.enable","true");
+    props.setProperty("mail.smtp.port", "465");
+    props.setProperty("mail.smtp.socketFactory.port", "465");
+    props.put("mail.smtp.auth", "true");
+    props.put("mail.debug", "true");
+    props.put("mail.store.protocol", "pop3");
+    props.put("mail.transport.protocol", "smtp");
+    try {
+        Session session = Session.getDefaultInstance(props, new Authenticator() {
+            @Override
+            protected javax.mail.PasswordAuthentication getPasswordAuthentication() {
+                return new javax.mail.PasswordAuthentication(username, password);
+            }
+        });
+        // Create the message
+        Message message = new MimeMessage(session);
+        message.setFrom(new InternetAddress(username));
+        message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail, false));
+        message.setSubject(subject);
+
+        // Create a multipart message
+        MimeMultipart multipart = new MimeMultipart("related");
+
+        // Create the text part of the message
+        MimeBodyPart textPart = new MimeBodyPart();
+        textPart.setText(text, "utf-8", "html");
+        multipart.addBodyPart(textPart);
+
+        // Create the image part of the message
+        MimeBodyPart imagePart = new MimeBodyPart();
+        imagePart.attachFile(imagePath);
+        imagePart.setContentID("<image>");
+        multipart.addBodyPart(imagePart);
+
+        // Set the content of the message to the multipart
+        message.setContent(multipart);
+
+        // Send the message
+        Transport.send(message);
+        System.out.println("Message sent.");
+    } catch (MessagingException | IOException e) {
+        System.out.println("Erreur d'envoi, cause: " + e);
+    }
+}
+
     
     // private static HashMap<String, String> CONF;
 

@@ -23,8 +23,8 @@ public class PIDesktopGui extends Application {
     public void start(Stage stage) throws Exception {
         //FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/ajoutSponsor.fxml"));
          // FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/listSponsor.fxml"));
-       //  FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/login.fxml"));
-       FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/rss.fxml"));
+         FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/login.fxml"));
+       //FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/rss.fxml"));
             //FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/ResetPwd.fxml"));
 
       //FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/profilAdmin.fxml"));
@@ -39,7 +39,7 @@ public class PIDesktopGui extends Application {
 
       // FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/rss.fxml"));
       //FXMLLoader loader= new FXMLLoader(getClass().getResource("/GUI/RegistrationAbonnee.fxml"));
-           // FXMLLoader loader= new FXMLLoader(getClass().getResource("/GUI/RegistrationAdmin.fxml"));
+           //FXMLLoader loader= new FXMLLoader(getClass().getResource("/GUI/RegistrationAdmin.fxml"));
 
       //FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/RegistrationCoach.fxml"));
         //FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/RegisterChoice.fxml"));

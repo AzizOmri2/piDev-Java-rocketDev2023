@@ -132,7 +132,7 @@ public class AjoutPlanningController implements Initializable {
                 alert.setHeaderText(null);
                 alert.setContentText("Votre planning a été ajoutée avec succès.");
                 Optional<ButtonType> option = alert.showAndWait();
-                
+                //send_SMS();
                 clearFieldsPlanning();
             }
         }
@@ -172,7 +172,7 @@ public class AjoutPlanningController implements Initializable {
                 coursPlanning, datePlanning, jourPlanning, heurePlanning);
         PlanningService ps = new PlanningService();
         ps.ajouter(p);
-        send_SMS();
+        
     }
     
     
@@ -180,7 +180,7 @@ public class AjoutPlanningController implements Initializable {
     void send_SMS (){
         // Initialisation de la bibliothèque Twilio avec les informations de votre compte
         String ACCOUNT_SID = "AC861631f98dc0930ce29521048a763b12";
-        String AUTH_TOKEN = "d81ec72c5b057a7c0f324c54c14ef8d3";
+        String AUTH_TOKEN = "5916f6fb31f0ce9e6af26481e600d717";
              
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
 

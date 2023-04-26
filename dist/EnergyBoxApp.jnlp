@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="EnergyBoxApp.jar" size="3720673" download="eager" />
+    <jar href="EnergyBoxApp.jar" size="3722751" download="eager" />
     <jar href="lib\SparseBitSet-1.2.jar" size="24510" download="eager" />
     <jar href="lib\accessors-smart-2.4.7.jar" size="29489" download="eager" />
     <jar href="lib\annotations-23.0.0.jar" size="29371" download="eager" />
@@ -36,7 +36,6 @@
     <jar href="lib\jackson-databind-2.14.0.jar" size="1618273" download="eager" />
     <jar href="lib\jackson-dataformat-xml-2.14.0.jar" size="130374" download="eager" />
     <jar href="lib\jackson-datatype-jsr310-2.14.0.jar" size="122014" download="eager" />
-    <jar href="lib\javax.mail.jar" size="659033" download="eager" />
     <jar href="lib\jjwt-api-0.11.2.jar" size="78784" download="eager" />
     <jar href="lib\jjwt-impl-0.11.2.jar" size="78853" download="eager" />
     <jar href="lib\jjwt-jackson-0.11.2.jar" size="8400" download="eager" />

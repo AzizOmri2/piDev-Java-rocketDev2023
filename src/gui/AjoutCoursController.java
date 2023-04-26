@@ -82,6 +82,7 @@ public class AjoutCoursController implements Initializable {
     int numberAgeTest = 0;
     int numberPrixTest = 0;
     
+    
     @FXML
     void numberPrixTypedInput(KeyEvent event) {
         String numberText = ((TextField) event.getSource()).getText();

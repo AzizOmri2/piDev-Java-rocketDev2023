@@ -26,7 +26,7 @@
             <TableColumn fx:id="DescriptionCoursCell" prefWidth="527.2000122070312" text="Description" />
          </columns>
       </TableView>
-      <Button fx:id="btnLoadCours" layoutX="317.0" layoutY="85.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="54.0" styleClass="btn" stylesheets="@dashboardDesign.css" textFill="WHITE">
+      <Button fx:id="btnLoadCours" layoutX="296.0" layoutY="85.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="54.0" styleClass="btn" stylesheets="@dashboardDesign.css" textFill="WHITE">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
@@ -46,23 +46,28 @@
             <Insets left="20.0" />
          </padding>
       </Button>
-      <ImageView fitHeight="23.0" fitWidth="31.0" layoutX="679.0" layoutY="94.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="23.0" fitWidth="31.0" layoutX="621.0" layoutY="94.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/icons8_search_500px.png" />
          </image>
       </ImageView>
-      <TextField fx:id="txtSearchCours" layoutX="426.0" layoutY="85.0" prefHeight="40.0" prefWidth="282.0" promptText="Search..." styleClass="search" stylesheets="@dashboardDesign.css" />
-      <Button fx:id="btnDeleteCours" layoutX="751.0" layoutY="84.0" mnemonicParsing="false" onAction="#supprimerCours" prefHeight="41.0" prefWidth="94.0" styleClass="btn" text="Delete" />
+      <TextField fx:id="txtSearchCours" layoutX="368.0" layoutY="85.0" prefHeight="40.0" prefWidth="282.0" promptText="Search..." styleClass="search" stylesheets="@dashboardDesign.css" />
+      <Button fx:id="btnDeleteCours" layoutX="685.0" layoutY="84.0" mnemonicParsing="false" onAction="#supprimerCours" prefHeight="42.0" prefWidth="85.0" styleClass="btn" text="Delete" />
       <ImageView fitHeight="31.0" fitWidth="122.0" layoutX="114.0" layoutY="90.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/icons8-add-64.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnExcelCours" layoutX="858.0" layoutY="85.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="119.0" styleClass="btn" stylesheets="@dashboardDesign.css" text="Export Excel" textFill="WHITE">
+      <Button fx:id="btnExcelCours" layoutX="784.0" layoutY="85.0" mnemonicParsing="false" onAction="#excelBtn" prefHeight="40.0" prefWidth="75.0" styleClass="btn" stylesheets="@dashboardDesign.css" text="Excel" textFill="WHITE">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Button>
       <ComboBox fx:id="comboBoxTriCours" layoutX="995.0" layoutY="83.0" onAction="#TriChoice" prefHeight="42.0" prefWidth="144.0" promptText="Trier Selon" styleClass="comboBox" stylesheets="@listcours.css" />
+      <Button fx:id="btnStatCours" layoutX="877.0" layoutY="86.0" mnemonicParsing="false" onAction="#open_Stat" prefHeight="40.0" prefWidth="103.0" styleClass="btn" stylesheets="@dashboardDesign.css" text="Statistiques" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

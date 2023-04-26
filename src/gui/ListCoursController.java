@@ -17,8 +17,6 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -30,6 +28,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
@@ -69,6 +68,14 @@ public class ListCoursController implements Initializable {
     @FXML
     void open_addCours(ActionEvent event) throws IOException {
         Parent fxml= FXMLLoader.load(getClass().getResource("ajoutCours.fxml"));
+        listCoursPane.getChildren().removeAll();
+        listCoursPane.getChildren().setAll(fxml);
+    }
+    
+    
+    @FXML
+    void open_Stat(ActionEvent event) throws IOException {
+        Parent fxml= FXMLLoader.load(getClass().getResource("Statistiques.fxml"));
         listCoursPane.getChildren().removeAll();
         listCoursPane.getChildren().setAll(fxml);
     }
@@ -218,7 +225,7 @@ public class ListCoursController implements Initializable {
         }
     }
     
-    /*@FXML
+    @FXML
     void excelBtn(MouseEvent event) throws FileNotFoundException, IOException {
         // Créer un nouveau classeur
         Workbook workbook = new XSSFWorkbook();
@@ -229,26 +236,35 @@ public class ListCoursController implements Initializable {
         // Récupérer la liste des produits
         CoursService cs = new CoursService();
         List<Cours> coursList = cs.Show();
+        
+        if (coursList.isEmpty()) {
+            // Aucun cours à exporter
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Export Excel");
+            alert.setHeaderText(null);
+            alert.setContentText("Aucun cours à exporter.");
+            alert.showAndWait();
+            return;
+        }
 
-         // Créer la première ligne pour les en-têtes des colonnes
+        // Créer la première ligne pour les en-têtes des colonnes
         Row headerRow = sheet.createRow(0);
-        headerRow.createCell(0).setCellValue("ID");
-        headerRow.createCell(1).setCellValue("Nom Cours");
-        headerRow.createCell(2).setCellValue("Prix Cours");
-        headerRow.createCell(3).setCellValue("Nom Coach");
-        headerRow.createCell(4).setCellValue("Age Minimale");
-        headerRow.createCell(5).setCellValue("Description Cours");
+        headerRow.createCell(0).setCellValue("Nom");
+        headerRow.createCell(1).setCellValue("Prix");
+        headerRow.createCell(2).setCellValue("NomCoach");
+        headerRow.createCell(3).setCellValue("Age");
+        headerRow.createCell(4).setCellValue("Description");
 
+        
         // Remplir les données des produits
         int rowNum = 1;
         for (Cours cour : coursList) {
             Row row = sheet.createRow(rowNum++);
-            row.createCell(0).setCellValue(cour.getId());
-            row.createCell(1).setCellValue(cour.getNom_cours());
-            row.createCell(2).setCellValue(cour.getPrix_cours());
-            row.createCell(3).setCellValue(cour.getNom_coach());
-            row.createCell(4).setCellValue(cour.getAge_min_cours());
-            row.createCell(5).setCellValue(cour.getDescription_cours());
+            row.createCell(0).setCellValue(cour.getNom_cours());
+            row.createCell(1).setCellValue(cour.getPrix_cours());
+            row.createCell(2).setCellValue(cour.getNom_coach());
+            row.createCell(3).setCellValue(cour.getAge_min_cours());
+            row.createCell(4).setCellValue(cour.getDescription_cours());
         }
 
         
@@ -265,7 +281,7 @@ public class ListCoursController implements Initializable {
                 workbook.write(outputStream);
             }
         }
-    }*/
+    }
     
     
     private void TriNomCours() {
@@ -359,5 +375,7 @@ public class ListCoursController implements Initializable {
         sortedData.comparatorProperty().bind(tableCours.comparatorProperty());
         tableCours.setItems(sortedData);
     }
+    
+    
     
 }

@@ -17,6 +17,8 @@ import javafx.stage.StageStyle;
  *
  * @author azizo
  */
+
+
 public class EnergyBoxApp extends Application {
     private double x = 0;
     private double y = 0;

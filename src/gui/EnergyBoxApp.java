@@ -25,7 +25,8 @@ public class EnergyBoxApp extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("Dashboard.fxml"));
+        //Parent root = FXMLLoader.load(getClass().getResource("Dashboard.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("listActiviteFront.fxml"));
         
         Scene scene = new Scene(root);
         

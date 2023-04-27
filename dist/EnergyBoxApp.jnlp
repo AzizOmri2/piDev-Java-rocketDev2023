@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="EnergyBoxApp.jar" size="3835502" download="eager" />
+    <jar href="EnergyBoxApp.jar" size="5169583" download="eager" />
     <jar href="lib\SparseBitSet-1.2.jar" size="24510" download="eager" />
     <jar href="lib\accessors-smart-2.4.7.jar" size="29489" download="eager" />
     <jar href="lib\annotations-23.0.0.jar" size="29371" download="eager" />

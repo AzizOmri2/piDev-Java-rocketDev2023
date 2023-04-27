@@ -94,6 +94,7 @@ public class ActiviteService implements CrudActivite<Activite> {
         }
         return list;
     }
+        
 
     @Override
     public void supprimer(int id) throws SQLException {

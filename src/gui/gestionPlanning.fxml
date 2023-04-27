@@ -3,6 +3,8 @@
 <?import java.net.URL?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -16,8 +18,13 @@
             <Font size="34.0" />
          </font>
       </Label>
-      <Button fx:id="btnActivite" layoutX="340.0" layoutY="355.0" mnemonicParsing="false" onAction="#open_listActivite" prefHeight="46.0" prefWidth="130.0" styleClass="btn" stylesheets="@gestionplanning.css" text="Activité" />
-      <Button fx:id="btnCours" layoutX="762.0" layoutY="355.0" mnemonicParsing="false" onAction="#open_listCours" prefHeight="46.0" prefWidth="130.0" styleClass="btn" stylesheets="@gestionplanning.css" text="Cours" />
-      <Button fx:id="btnPlanning" layoutX="551.0" layoutY="482.0" mnemonicParsing="false" onAction="#open_listPlanning" prefHeight="46.0" prefWidth="130.0" styleClass="btn" stylesheets="@gestionplanning.css" text="Planning" />
+      <Button fx:id="btnActivite" layoutX="340.0" layoutY="312.0" mnemonicParsing="false" onAction="#open_listActivite" prefHeight="46.0" prefWidth="130.0" styleClass="btn" stylesheets="@gestionplanning.css" text="Activité" />
+      <Button fx:id="btnCours" layoutX="762.0" layoutY="312.0" mnemonicParsing="false" onAction="#open_listCours" prefHeight="46.0" prefWidth="130.0" styleClass="btn" stylesheets="@gestionplanning.css" text="Cours" />
+      <Button fx:id="btnPlanning" layoutX="551.0" layoutY="312.0" mnemonicParsing="false" onAction="#open_listPlanning" prefHeight="46.0" prefWidth="130.0" styleClass="btn" stylesheets="@gestionplanning.css" text="Planning" />
+      <ImageView fitHeight="272.0" fitWidth="535.0" layoutX="349.0" layoutY="485.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/kisspng.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.TextFlow?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.AjouTicketController">
+   <children>
+      <BorderPane fx:id="bp" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0">
+         <left>
+            <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="245.0" style="-fx-background-color: #720000;" BorderPane.alignment="CENTER">
+               <children>
+                  <MenuButton fx:id="menu" mnemonicParsing="false" style="-fx-background-color: #720000;">
+                     <items>
+                        <MenuItem fx:id="profile" mnemonicParsing="false" onAction="#Pro" text="Profile" />
+                        <MenuItem mnemonicParsing="false" text="Log Out" />
+                     </items>
+                     <graphic>
+                        <ImageView fitHeight="15.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Images/user.png" />
+                           </image>
+                           <effect>
+                              <Glow level="0.85" />
+                           </effect>
+                        </ImageView>
+                     </graphic>
+                     <VBox.margin>
+                        <Insets left="190.0" />
+                     </VBox.margin>
+                  </MenuButton>
+                  <ImageView fitHeight="84.0" fitWidth="167.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/LogoGymWhite_1.png" />
+                     </image>
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="45.0" top="35.0" />
+                     </VBox.margin>
+                  </ImageView>
+                  <Button fx:id="btnHome" alignment="BASELINE_LEFT" graphicTextGap="12.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="39.0" prefWidth="262.0" stylesheets="@style.css" text="Home" textFill="WHITE">
+                     <graphic>
+                        <ImageView fitHeight="31.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Images/icons8-home-page-30.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <padding>
+                        <Insets left="50.0" />
+                     </padding>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="70.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button fx:id="btnUsers" alignment="BASELINE_LEFT" graphicTextGap="12.0" mnemonicParsing="false" onAction="#GoUsers" prefHeight="39.0" prefWidth="245.0" stylesheets="@style.css" text="Gestion Utilisateurs" textFill="WHITE">
+                     <graphic>
+                        <ImageView fitHeight="31.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Images/icons8-people-50.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <padding>
+                        <Insets left="50.0" />
+                     </padding>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Button>
+                  <Button fx:id="btnPlannings" alignment="BASELINE_LEFT" graphicTextGap="12.0" mnemonicParsing="false" onAction="#handleClicks" onMouseClicked="#listPlannings" prefHeight="39.0" prefWidth="262.0" stylesheets="@style.css" text="Gestion Plannings" textFill="WHITE">
+                     <graphic>
+                        <ImageView fitHeight="31.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Images/icons8-planning-67.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <padding>
+                        <Insets left="50.0" />
+                     </padding>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnAbonnements" alignment="BASELINE_LEFT" graphicTextGap="12.0" mnemonicParsing="false" onAction="#handleClicks" onMouseClicked="#ListAbonnements" prefHeight="39.0" prefWidth="262.0" stylesheets="@style.css" text="Gestion Abonnements" textFill="WHITE">
+                     <graphic>
+                        <ImageView fitHeight="31.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Images/icons8-puzzle-50.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <padding>
+                        <Insets left="50.0" />
+                     </padding>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnCompetitions" alignment="BASELINE_LEFT" graphicTextGap="12.0" mnemonicParsing="false" onAction="#handleClicks" onMouseClicked="#listCompetitions" prefHeight="39.0" prefWidth="262.0" stylesheets="@style.css" text="Gestion Competitions" textFill="WHITE">
+                     <graphic>
+                        <ImageView fitHeight="31.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Images/icons8-competition-64.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                     <padding>
+                        <Insets left="50.0" />
+                     </padding>
+                  </Button>
+                  <Button fx:id="btnMateriaux" alignment="BASELINE_LEFT" graphicTextGap="12.0" mnemonicParsing="false" onAction="#handleClicks" onMouseClicked="#listMateriaux" prefHeight="39.0" prefWidth="262.0" stylesheets="@style.css" text="Gestion Materiaux" textFill="WHITE">
+                     <graphic>
+                        <ImageView fitHeight="31.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Images/icons8-material-50.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                     <padding>
+                        <Insets left="50.0" />
+                     </padding>
+                  </Button>
+                  <Button fx:id="btnSponsors" alignment="BASELINE_LEFT" graphicTextGap="12.0" mnemonicParsing="false" onAction="#GoSponsor" prefHeight="39.0" prefWidth="262.0" stylesheets="@style.css" text="Gestion Sponsors" textFill="WHITE">
+                     <graphic>
+                        <ImageView fitHeight="31.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Images/icons8-crowdfunding-80.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <padding>
+                        <Insets left="50.0" />
+                     </padding>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnRestaurants" alignment="BASELINE_LEFT" graphicTextGap="12.0" mnemonicParsing="false" onAction="#handleClicks" onMouseClicked="#listRestau" prefHeight="39.0" prefWidth="262.0" stylesheets="@style.css" text="Gestion Restaurants" textFill="WHITE">
+                     <graphic>
+                        <ImageView fitHeight="31.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Images/icons8-restaurant-60.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <padding>
+                        <Insets left="50.0" />
+                     </padding>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnReclamation" alignment="BASELINE_LEFT" graphicTextGap="12.0" mnemonicParsing="false" onAction="#handleClicks" onMouseClicked="#listReclamation" prefHeight="39.0" prefWidth="262.0" stylesheets="@style.css" text="Gestion Reclamations" textFill="WHITE">
+                     <padding>
+                        <Insets left="50.0" />
+                     </padding>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="31.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Images/icons8-add-bookmark-64.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </VBox>
+         </left>
+         <center>
+            <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Pane layoutX="144.0" layoutY="175.0" prefHeight="600.0" prefWidth="735.0">
+                     <children>
+                        <Label layoutX="16.0" layoutY="48.0" styleClass="label-ajout" stylesheets="@ajoutcompetition.css" text="Ticket Pour La Competition: " />
+                        <ComboBox fx:id="nomCompetitionTicket" layoutX="187.0" layoutY="43.0" prefHeight="25.0" prefWidth="251.0" styleClass="textfield" stylesheets="@ajoutcompetition.css" />
+                        <Label layoutX="25.0" layoutY="125.0" styleClass="label-ajout" stylesheets="@ajoutcompetition.css" text="Description de la ticket:" />
+                        <TextFlow layoutX="148.0" layoutY="103.0" prefHeight="146.0" prefWidth="251.0" />
+                        <Button fx:id="btEnregistrer" layoutX="347.0" layoutY="248.0" mnemonicParsing="false" onAction="#ajoutTicket" styleClass="btn" stylesheets="@ajoutcompetition.css" text="Enregistrer" textFill="#740000">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="btnClear" layoutX="240.0" layoutY="248.0" mnemonicParsing="false" onAction="#effacerTout" prefHeight="21.0" prefWidth="100.0" styleClass="btn" stylesheets="@ajoutcompetition.css" text="Effacer" />
+                        <TextArea fx:id="descriptionTicket" layoutX="189.0" layoutY="113.0" prefHeight="78.0" prefWidth="252.0" styleClass="textarea" stylesheets="@ajoutcompetition.css" />
+                        <ImageView fitHeight="127.0" fitWidth="207.0" layoutX="-19.0" layoutY="219.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Images/mulher-fazendo-treino-de-crossfit_low.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Pane>
+                  <Label layoutX="223.0" layoutY="144.0" minHeight="-Infinity" minWidth="-Infinity" text="Ajout  Des Tickets:" textAlignment="CENTER" textFill="#720000">
+                     <font>
+                        <Font name="System Bold Italic" size="21.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="321.0" fitWidth="262.0" layoutX="616.0" layoutY="140.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/CoachReg.png" />
+                     </image>
+                  </ImageView>
+                  <Button fx:id="closW" layoutX="841.0" layoutY="7.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#closeW" onMouseClicked="#closeW" style="-fx-background-color: #720000;" text="X" textFill="WHITE" />
+                  <Button fx:id="btnReturn" layoutX="167.0" layoutY="87.0" mnemonicParsing="false" onAction="#voirTicket" prefHeight="34.0" prefWidth="66.0" styleClass="btn" stylesheets="@ajoutcompetition.css" textAlignment="CENTER">
+                     <graphic>
+                        <ImageView fx:id="btRetour" fitHeight="25.0" fitWidth="57.0" onDragDetected="#voirCompetition" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Images/return.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </AnchorPane>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>

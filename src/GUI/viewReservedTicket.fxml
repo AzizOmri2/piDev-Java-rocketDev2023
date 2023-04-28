@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ViewReservedTicketController">
+   <children>
+      <ImageView fitHeight="433.0" fitWidth="449.0" layoutX="355.0" layoutY="111.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Images/abonnee_low.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="btnRetour" layoutX="46.0" layoutY="103.0" mnemonicParsing="false" onAction="#viewFront" prefHeight="34.0" prefWidth="66.0" styleClass="btn" stylesheets="@ajoutcompetition.css" textAlignment="CENTER">
+         <graphic>
+            <ImageView fx:id="btRetour" fitHeight="25.0" fitWidth="57.0" onDragDetected="#voirCompetition" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/return.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Label layoutX="112.0" layoutY="180.0" stylesheets="@viewFront.css" text="Ticket Pour La Compétition:" textFill="#720000">
+         <font>
+            <Font name="System Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="112.0" layoutY="275.0" text="Déscription Du Ticket:" textFill="#720000">
+         <font>
+            <Font name="System Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnTelecharger" layoutX="258.0" layoutY="431.0" mnemonicParsing="false" onAction="#Telecharger" prefHeight="21.0" prefWidth="100.0" styleClass="btn" stylesheets="@ajoutcompetition.css" text="Télécharger" />
+      <TextField fx:id="nomT" editable="false" layoutX="159.0" layoutY="228.0" prefHeight="25.0" prefWidth="200.0" styleClass="textfield" stylesheets="@ajoutcompetition.css" />
+      <TextArea fx:id="descriptionT" editable="false" layoutX="158.0" layoutY="317.0" prefHeight="89.0" prefWidth="200.0" styleClass="textarea" stylesheets="@ajoutcompetition.css" />
+      <Button fx:id="closW" layoutX="966.0" layoutY="14.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#closeW" onMouseClicked="#closeW" style="-fx-background-color: #720000;" text="X" textFill="WHITE" />
+   </children>
+</AnchorPane>

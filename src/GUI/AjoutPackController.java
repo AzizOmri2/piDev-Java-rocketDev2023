@@ -5,7 +5,6 @@
  */
 package GUI;
 
-
 import Entities.Pack;
 
 import Services.PackService;
@@ -33,7 +32,7 @@ public class AjoutPackController implements Initializable {
     /**
      * Initializes the controller class.
      */
-      @FXML
+    @FXML
     private TextField typePack;
 
     @FXML
@@ -53,23 +52,89 @@ public class AjoutPackController implements Initializable {
 
     @FXML
     private Button btnValider;
+    @FXML
+    private Button bntReturnPack;
+    
+    @FXML
+    private Button btnHome;
+
+    @FXML
+    private Button btnUsers;
+
+    @FXML
+    private Button btnGestionPlanning;
+
+    @FXML
+    private Button btnAbonnements;
+
+    @FXML
+    private Button btnCompetitions;
+
+    @FXML
+    private Button btnRestaurants;
+
+    @FXML
+    private Button btnMateriaux;
+
+    @FXML
+    private Button btnGestionReclamation;
+
+    @FXML
+    void back_Packs() throws IOException {
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("IndexPackAdmin.fxml"));
+        Parent root = loader.load();
+        bntReturnPack.getScene().setRoot(root);
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
-      @FXML
+    }
+ @FXML
+    void back_GestionAbonnemet() throws IOException {
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("gestionAbonnement.fxml"));
+        Parent root = loader.load();
+        btnAbonnements.getScene().setRoot(root);
+    }
+    @FXML
     private void ajouterPack(ActionEvent event) throws SQLException, IOException {
-        PackService utilisateurService = new PackService();
-         
-        
-       Pack p = new Pack(typePack.getText(),Float.parseFloat( montantPack.getText()),Integer.parseInt(dureePack.getText()),descriptionPack.getText(),Integer.parseInt(placesPack.getText()), Integer.parseInt(disponibilitePack.getText()) );
-       
-     utilisateurService.create(p);
-     JOptionPane.showMessageDialog(null, "Pack ajouté avec succe");
-     FXMLLoader loader= new FXMLLoader(getClass().getResource("AjoutPack.fxml"));
-                   Parent root= loader.load();
-                 btnValider.getScene().setRoot(root);
-       
-    
-}
+        PackService packService = new PackService();
+        String type = typePack.getText();
+        String montant = montantPack.getText();
+        String duree = dureePack.getText();
+        String description = descriptionPack.getText();
+        String places = placesPack.getText();
+        String disponibilite = disponibilitePack.getText();
+        if (type.isEmpty() || montant.isEmpty() || duree.isEmpty() || description.isEmpty() || places.isEmpty() || disponibilite.isEmpty()) {
+            // Afficher un message d'erreur pour indiquer que les champs sont obligatoires
+            JOptionPane.showMessageDialog(null, "Veuillez remplir tous les champs.");
+            return;
+        }
+        try {
+            float montantValue = Float.parseFloat(montant);
+            int dureeValue = Integer.parseInt(duree);
+            int placesValue = Integer.parseInt(places);
+            int disponibiliteValue = Integer.parseInt(disponibilite);
+
+            if (montantValue <= 0 || dureeValue <= 0 || disponibiliteValue <= 0) {
+                // Afficher un message d'erreur pour indiquer que les valeurs doivent être positives
+                JOptionPane.showMessageDialog(null, "Les valeurs doivent être positives.");
+                return;
+            }
+            Pack p = new Pack(typePack.getText(), Float.parseFloat(montantPack.getText()),
+                    Integer.parseInt(dureePack.getText()), descriptionPack.getText(),
+                    Integer.parseInt(placesPack.getText()), Integer.parseInt(disponibilitePack.getText()));
+
+            packService.create(p);
+            JOptionPane.showMessageDialog(null, "Pack ajouté avec succe");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("IndexPackAdmin.fxml"));
+            Parent root = loader.load();
+            btnValider.getScene().setRoot(root);
+        } catch (NumberFormatException e) {
+            // Afficher un message d'erreur pour indiquer que les valeurs numériques doivent être des nombres
+            JOptionPane.showMessageDialog(null, "Les valeurs numériques doivent être des nombres.");
+        }
+    }
 }

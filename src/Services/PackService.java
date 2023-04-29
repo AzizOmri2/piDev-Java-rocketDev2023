@@ -7,7 +7,7 @@ package Services;
 
 import Entities.Pack;
 import Entities.PackCRUD;
-import Entities.Promotion;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -99,13 +99,14 @@ public class PackService implements PackCRUD<Pack> {
             System.out.println(e.getMessage());
         }
     }
-     public void modifier(Pack pack) {
+
+    public void modifier(Pack pack) {
         try {
             String req = "UPDATE pack \n"
-                + "SET type_pack = ?, montant_pack = ?, duree_pack = ?, description_pack = ?, places_pack = ?, disponibilite_pack = ? \n"
-                + "WHERE id = ?;";
+                    + "SET type_pack = ?, montant_pack = ?, duree_pack = ?, description_pack = ?, places_pack = ?, disponibilite_pack = ? \n"
+                    + "WHERE id = ?;";
             PreparedStatement pstmt = conx.prepareStatement(req);
-           pstmt.setString(1, pack.getTypePack());
+            pstmt.setString(1, pack.getTypePack());
             pstmt.setInt(2, (int) pack.getMontantPack());
             pstmt.setInt(3, pack.getDureePack());
             pstmt.setString(4, pack.getDescriptionPack());
@@ -113,7 +114,7 @@ public class PackService implements PackCRUD<Pack> {
             pstmt.setInt(6, pack.getDisponibilitePack());
             pstmt.setInt(7, pack.getId());
             pstmt.executeUpdate();
-          
+
             pstmt.executeUpdate();
             System.out.println("Pack " + pack.getTypePack() + " Modifiée !");
         } catch (SQLException e) {
@@ -132,7 +133,8 @@ public class PackService implements PackCRUD<Pack> {
             System.out.println(e.getMessage());
         }
     }
- public void Supprimer(Pack t) {
+
+    public void Supprimer(Pack t) {
         try {
             String req = "DELETE FROM pack WHERE id=?";
             PreparedStatement pst = conx.prepareStatement(req);
@@ -143,6 +145,7 @@ public class PackService implements PackCRUD<Pack> {
             System.out.println(e.getMessage());
         }
     }
+
     @Override
     public void deleteAll() throws SQLException {
         String sql = "DELETE FROM pack";
@@ -155,12 +158,15 @@ public class PackService implements PackCRUD<Pack> {
     }
 
     @Override
-    public List<Pack> getAll() throws SQLException {
+    public List<Pack> getAll()  {
+            List<Pack> packs = new ArrayList<Pack>();
+            try{
         String sql = "Select * From Pack";
+        
         PreparedStatement pstmt = conx.prepareStatement(sql);
 
         ResultSet rs = pstmt.executeQuery();
-        List<Pack> packs = new ArrayList<Pack>();
+    
         while (rs.next()) {
             Pack p = new Pack(rs.getInt("id"),//or rst.getInt(1)
                     rs.getString("type_pack"),
@@ -171,9 +177,30 @@ public class PackService implements PackCRUD<Pack> {
                     rs.getInt("disponibilite_pack")
             );
             packs.add(p);
-        }
+        }}
+            catch(SQLException e ){
+            System.err.println(e.getMessage());}
 
         return packs;
+    }
+
+    public void stat() throws SQLException {
+        List<Pack> packs = this.getAll();
+
+        int totalPlaces = 0;
+        int minPlaces = Integer.MAX_VALUE;
+        int maxPlaces = Integer.MIN_VALUE;
+        for (Pack pack : packs) {
+            totalPlaces += pack.getPlacesPack();
+            minPlaces = Math.min(minPlaces, pack.getPlacesPack());
+            maxPlaces = Math.max(maxPlaces, pack.getPlacesPack());
+        }
+        double averagePlaces = totalPlaces / (double) packs.size();
+
+        System.out.println("Nombre total de places disponibles : " + totalPlaces);
+        System.out.println("Moyenne de places disponibles : " + averagePlaces);
+        System.out.println("Minimum de places disponibles : " + minPlaces);
+        System.out.println("Maximum de places disponibles : " + maxPlaces);
     }
 
 }

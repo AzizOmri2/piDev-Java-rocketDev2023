@@ -55,20 +55,21 @@ public class EnergyBoxJava extends Application {
         Abonnement a1 = new Abonnement(dateAchat, dateFin, "a", "2023", 100.f, 2, 19);
        Abonnement a3 = new Abonnement(dateAchat, dateFin, "a", "2023", 10.f, 2 , 19);
         AbonnementService ab = new AbonnementService();
-        ab.create(a1);
+       // ab.create(a1);
        // ab.update(a3, 28);
         //ab.delete(2);
-        System.out.println(ab.getAll());
+      //  System.out.println(ab.getAllUserPackAbonnement());
 
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../GUI/IndexClientAbonnement.fxml"));
+      // FXMLLoader loader = new FXMLLoader(getClass().getResource("../GUI/gestionAbonnement.fxml"));
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("../GUI/IndexClientAbonnement.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
-        scene.getStylesheets().add(getClass().getResource("../GUI/FrontAbonnement.css").toExternalForm());
+       // scene.getStylesheets().add(getClass().getResource("../GUI/backAbonnement.css").toExternalForm());
         primaryStage.setScene(scene);
         primaryStage.show();
     }

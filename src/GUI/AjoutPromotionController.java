@@ -5,14 +5,11 @@
  */
 package GUI;
 
-import Entities.Pack;
 import Entities.Promotion;
-import Services.PackService;
 import Services.PromotionService;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.time.ZoneId;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -24,6 +21,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javax.swing.JOptionPane;
 import java.sql.Date;
+import java.time.LocalDate;
 
 /**
  * FXML Controller class
@@ -35,7 +33,6 @@ public class AjoutPromotionController implements Initializable {
     /**
      * Initializes the controller class.
      */
-    
     @FXML
     private TextField codePromotion;
 
@@ -47,22 +44,84 @@ public class AjoutPromotionController implements Initializable {
 
     @FXML
     private Button btnValider;
+    @FXML
+    private Button bntReturnPromotion;
+    @FXML
+    private Button btnHome;
+
+    @FXML
+    private Button btnUsers;
+
+    @FXML
+    private Button btnGestionPlanning;
+
+    @FXML
+    private Button btnAbonnements;
+
+    @FXML
+    private Button btnCompetitions;
+
+    @FXML
+    private Button btnRestaurants;
+
+    @FXML
+    private Button btnMateriaux;
+
+    @FXML
+    private Button btnGestionReclamation;
+
+  
+
+    @FXML
+    void back_Promotions() throws IOException {
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("IndexPromotionAdmin.fxml"));
+        Parent root = loader.load();
+        bntReturnPromotion.getScene().setRoot(root);
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }   
-       @FXML
+    }
+ @FXML
+    void back_GestionAbonnemet() throws IOException {
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("gestionAbonnement.fxml"));
+        Parent root = loader.load();
+        btnAbonnements.getScene().setRoot(root);
+    }
+    @FXML
     private void ajouterPromtion(ActionEvent event) throws SQLException, IOException {
-        PromotionService utilisateurService = new PromotionService();
-      Promotion p = new Promotion(codePromotion.getText(),Float.parseFloat( reductionPromotion.getText()),Date.valueOf(dateExpiration.getValue()));
-       
-    utilisateurService.create(p);
-     JOptionPane.showMessageDialog(null, "Promotion ajouté avec succe");
-     FXMLLoader loader= new FXMLLoader(getClass().getResource("AjoutPromotion.fxml"));
-                   Parent root= loader.load();
-                 btnValider.getScene().setRoot(root);
-       
-    
-}
-    
+        PromotionService promotionService = new PromotionService();
+        String code = codePromotion.getText();
+        String reduction = reductionPromotion.getText();
+        LocalDate date = dateExpiration.getValue();
+        Promotion p = new Promotion(codePromotion.getText(), Float.parseFloat(reductionPromotion.getText()), Date.valueOf(dateExpiration.getValue()));
+        if (code.isEmpty() || reduction.isEmpty() || date == null) {
+            // Afficher un message d'erreur pour indiquer que les champs sont obligatoires
+            JOptionPane.showMessageDialog(null, "Veuillez remplir tous les champs.");
+            return;
+        }
+
+        float reductionValue = Float.parseFloat(reduction);
+        if (reductionValue <= 0 || reductionValue >= 1) {
+            // Afficher un message d'erreur pour indiquer que la réduction doit être entre 0 et 100
+            JOptionPane.showMessageDialog(null, "La réduction doit être entre 0 et 1.");
+            return;
+        }
+        LocalDate now = LocalDate.now();
+        if (date.isBefore(now)) {
+
+            JOptionPane.showMessageDialog(null, "La date doit être supérieure à la date système.");
+            return;
+        }
+        promotionService.create(p);
+        JOptionPane.showMessageDialog(null, "Promotion ajouté avec succe");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("IndexPromotionAdmin.fxml"));
+        Parent root = loader.load();
+        btnValider.getScene().setRoot(root);
+
+    }
+
 }

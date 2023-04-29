@@ -5,9 +5,11 @@
  */
 package GUI;
 
+import Entities.Pack;
 import Entities.Promotion;
 
 import Services.PromotionService;
+import java.io.IOException;
 import java.net.URL;
 import java.util.Date;
 
@@ -20,13 +22,18 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.StringConverter;
@@ -44,38 +51,62 @@ public class IndexPromotionControllerController implements Initializable {
     /**
      * Initializes the controller class.
      */
-    
     @FXML
     private TableView<Promotion> promotionTable;
-     @FXML
-    private TableColumn<Promotion,Integer> id;
-
-      @FXML
-    private TableColumn<Promotion,String> code_promotion;
+    @FXML
+    private TableColumn<Promotion, Integer> id;
 
     @FXML
-    private TableColumn<Promotion,Double> reduction_promotion;
+    private TableColumn<Promotion, String> code_promotion;
 
     @FXML
-    private TableColumn<Promotion,Date> date_expiration;
-     @FXML
+    private TableColumn<Promotion, Double> reduction_promotion;
+
+    @FXML
+    private TableColumn<Promotion, Date> date_expiration;
+    @FXML
     private TableColumn<Promotion, Void> action;
-     
-     ObservableList<Promotion> obslistsp = FXCollections.observableArrayList();
+
+    ObservableList<Promotion> obslistsp = FXCollections.observableArrayList();
+    @FXML
+    private Button btnAbonnements;
+    @FXML
+    private Button bntAjouterPromotion;
+
+    @FXML
+    private TextField searchP;
+
+    @FXML
+    void open_AjoutPromotion() throws IOException {
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("ajoutPromotion.fxml"));
+        Parent root = loader.load();
+        bntAjouterPromotion.getScene().setRoot(root);
+    }
+
+    @FXML
+    void back_GestionAbonnemet() throws IOException {
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("gestionAbonnement.fxml"));
+        Parent root = loader.load();
+        btnAbonnements.getScene().setRoot(root);
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+
         try {
             Load();
         } catch (SQLException ex) {
             Logger.getLogger(IndexPromotionControllerController.class.getName()).log(Level.SEVERE, null, ex);
         }
-       
-    }    
-      @FXML
+
+    }
+
+    @FXML
     public void Load() throws SQLException {
         PromotionService Sps = new PromotionService();
-            Sps.getAll().stream().forEach((p) -> {
+        Sps.getAll().stream().forEach((p) -> {
             obslistsp.add(p);
         });
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -91,7 +122,7 @@ public class IndexPromotionControllerController implements Initializable {
             }
         });
         reduction_promotion.setCellValueFactory(new PropertyValueFactory<>("reductionPromotion"));
-  reduction_promotion.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
+        reduction_promotion.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
         reduction_promotion.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Promotion, Double>>() {
             @Override
             public void handle(TableColumn.CellEditEvent<Promotion, Double> event) {
@@ -102,8 +133,9 @@ public class IndexPromotionControllerController implements Initializable {
             }
         });
         date_expiration.setCellValueFactory(new PropertyValueFactory<>("dateExpiration"));
-         date_expiration.setCellFactory(TextFieldTableCell.forTableColumn(new StringConverter<Date>() {
-            private final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");  
+        date_expiration.setCellFactory(TextFieldTableCell.forTableColumn(new StringConverter<Date>() {
+            private final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
             @Override
             public String toString(Date object) {
                 return dateFormat.format(object);
@@ -120,7 +152,7 @@ public class IndexPromotionControllerController implements Initializable {
                     return null;
                 }
             }
-        })); 
+        }));
         date_expiration.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Promotion, Date>>() {
             @Override
             public void handle(TableColumn.CellEditEvent<Promotion, Date> event) {
@@ -155,8 +187,34 @@ public class IndexPromotionControllerController implements Initializable {
                 }
             };
         });
-
+        searchPromotion();
     }
-    
-    
+    public PromotionService se = new PromotionService();
+
+    public void searchPromotion() throws SQLException {
+        FilteredList<Promotion> filteredData = new FilteredList<>(FXCollections.observableArrayList(se.getAll()), p -> true);
+        searchP.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(promotion -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String rd = String.valueOf(promotion.getReductionPromotion());
+                String dte = String.valueOf(promotion.getDateExpiration());
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (promotion.getCodePromotion().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (rd.toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (dte.toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+        });
+        SortedList<Promotion> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(promotionTable.comparatorProperty());
+        promotionTable.setItems(sortedData);
+    }
 }

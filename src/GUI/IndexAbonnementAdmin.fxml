@@ -1,23 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.IndexAbonnementAdminController">
+<AnchorPane id="AnchorPane" prefHeight="670.0" prefWidth="1233.0" stylesheets="@backAbonnement.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.IndexAbonnementAdminController">
    <children>
-      <TableView fx:id="AbonnementTable" editable="true" layoutX="8.0" layoutY="80.0" onSort="#Load" prefHeight="233.0" prefWidth="583.0">
-        <columns>
-            <TableColumn fx:id="id" prefWidth="75.0" text="id" />
-            <TableColumn fx:id="pack" prefWidth="75.0" text="Pack" />
-            <TableColumn fx:id="user" prefWidth="75.0" text="User" />
-            <TableColumn fx:id="dateAchat" prefWidth="75.0" text="Date Achat" />
-          <TableColumn fx:id="dateFin" prefWidth="75.0" text="Date Fin" />
-          <TableColumn fx:id="etatAbonnement" prefWidth="75.0" text="Etat" />
-            <TableColumn fx:id="codePromo" prefWidth="75.0" text="Code Promo" />
-            <TableColumn fx:id="montantAbonnement" prefWidth="75.0" text="Montant" />
-            <TableColumn fx:id="action" prefWidth="75.0" text="Action" />
-        </columns>
-      </TableView>
+      <BorderPane prefHeight="670.0" prefWidth="1233.0">
+         <center>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <TableView fx:id="AbonnementTable" editable="true" layoutX="280.0" layoutY="159.0" onSort="#Load" prefHeight="262.0" prefWidth="888.0">
+                    <columns>
+                        <TableColumn fx:id="id" prefWidth="100.0" text="id" />
+                        <TableColumn fx:id="pack" text="Pack" />
+                        <TableColumn fx:id="user" prefWidth="160.0" text="User" />
+                        <TableColumn fx:id="dateAchat" prefWidth="100.0" text="Date Achat" />
+                      <TableColumn fx:id="dateFin" prefWidth="100.0" text="Date Fin" />
+                      <TableColumn fx:id="etatAbonnement" prefWidth="120.0" text="Etat Abonnement" />
+                        <TableColumn fx:id="codePromo" prefWidth="100.0" text="Code Promo" />
+                        <TableColumn fx:id="montantAbonnement" prefWidth="100.0" text="Montant" />
+                        <TableColumn fx:id="action" prefWidth="120.0" text="Action" />
+                    </columns>
+                  </TableView>
+                  <Button fx:id="bntAjouterAbonnement" layoutX="928.0" layoutY="87.0" mnemonicParsing="false" onAction="#open_AjoutAbonnement" prefHeight="47.0" prefWidth="221.0" style="-fx-background-color: transparent;" stylesheets="@backAbonnement.css" text="Ajouter un abonnement">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                     <padding>
+                        <Insets left="30.0" />
+                     </padding>
+                  </Button>
+                  <TextField fx:id="searchA" layoutX="695.0" layoutY="87.0" prefHeight="48.0" prefWidth="221.0" promptText="Rechercher sur abonnement .." />
+                  <ImageView fitHeight="27.0" fitWidth="33.0" layoutX="880.0" layoutY="97.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/icons8_search_500px_1_1.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+         </center>
+      </BorderPane>
    </children>
 </AnchorPane>

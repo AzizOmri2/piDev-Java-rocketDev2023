@@ -1,15 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package Entities;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+package Entities;
 
 import java.util.Date;
 
@@ -19,25 +9,90 @@ import java.util.Date;
  */
 public class User {
 
-    public int id;
-    public String email;
-    public String password;
-    public String username;
-    public Integer num_tel;
-    public Date date_n;
-    private String role;
+    public User() {
+    }
 
- 
-    public boolean is_blocked;
-    public boolean is_approved;
+    private int id;
+    private String email;
+    private String password;
+    private String username;
+    private Integer num_tel;
+    private Date date_n;
+    private String roles;
+    private String image;
+    private boolean is_blocked;
+    private boolean is_approved;
 
-    public User(int id, String email, String password, String username, Integer num_tel, Date date_n,String role, boolean is_blocked, boolean is_approved) {
+    public User(String email, String password, String roles) {
+        this.email = email;
+        this.password = password;
+        this.roles = roles;
+    }
+
+    public User(String username, String email, Integer num_tel, Date date_n, String image, String password, String Roles) {
+        this.email = email;
+        this.password = password;
+        this.username = username;
+        this.num_tel = num_tel;
+        this.date_n = date_n;
+        this.image = image;
+        this.roles = Roles;
+    }
+
+    public User(String email, String username, Date date_n, String image) {
+        this.email = email;
+        this.username = username;
+        this.date_n = date_n;
+        this.image = image;
+    }
+
+    public User(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
+
+    public User(int id, String email, String password, String username, Integer num_tel, Date date_n, String roles, String image, boolean is_blocked, boolean is_approved) {
         this.id = id;
         this.email = email;
         this.password = password;
         this.username = username;
         this.num_tel = num_tel;
         this.date_n = date_n;
+        this.roles = roles;
+        this.image = image;
+        this.is_blocked = is_blocked;
+        this.is_approved = is_approved;
+    }
+
+    public User(String email, String password, String roles, String username, Integer num_tel, Date date_n, String image) {
+        this.email = email;
+        this.password = password;
+        this.username = username;
+        this.num_tel = num_tel;
+        this.date_n = date_n;
+        this.roles = roles;
+        this.image = image;
+    }
+
+    public User(int id, String email, String password, String username, Integer num_tel, Date date_n, String roles, String image) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+        this.username = username;
+        this.num_tel = num_tel;
+        this.date_n = date_n;
+        this.roles = roles;
+        this.image = image;
+    }
+
+    public User(int id, String email, String username, Integer num_tel, Date date_n, String roles, String image, boolean is_blocked, boolean is_approved) {
+        this.id = id;
+        this.email = email;
+        this.username = username;
+        this.num_tel = num_tel;
+        this.date_n = date_n;
+        this.roles = roles;
+        this.image = image;
         this.is_blocked = is_blocked;
         this.is_approved = is_approved;
     }
@@ -105,20 +160,36 @@ public class User {
     public void setIs_approved(boolean is_approved) {
         this.is_approved = is_approved;
     }
-       public Integer getNum_tel() {
-        return num_tel;
+
+    public String getRoles() {
+        return roles;
     }
 
-    public void setNum_tel(Integer num_tel) {
+    public User(int id,String email, String username, Integer num_tel, Date date_n) {
+        this.id=id;
+        this.email = email;
+        this.username = username;
         this.num_tel = num_tel;
+        this.date_n = date_n;
     }
 
-    public String getRole() {
-        return role;
+   
+
+    public void setRoles(String roles) {
+        this.roles = roles;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" + "id=" + this.id + ", email=" + email + ", password=" + password + ", username=" + username + ", num_tel=" + num_tel + ", date_n=" + date_n + ", roles=" + roles + ", image=" + image + ", is_blocked=" + is_blocked + ", is_approved=" + is_approved + '}';
     }
 
 }

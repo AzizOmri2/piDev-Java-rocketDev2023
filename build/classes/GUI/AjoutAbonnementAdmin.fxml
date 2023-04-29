@@ -1,62 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.Glow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="418.0" prefWidth="604.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.AjoutAbonnementAdminController">
-    <stylesheets>
-        <URL value="@ajoutabonnementadmin.css" />
-    </stylesheets>
+<AnchorPane id="AnchorPane" prefHeight="670.0" prefWidth="1233.0" styleClass="mainFxmlClass" stylesheets="@backAbonnement.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.AjoutAbonnementAdminController">
    <children>
-      <AnchorPane id="AnchorPane" layoutX="-47.0" layoutY="-48.0" prefHeight="418.0" prefWidth="614.0" stylesheets="@backAbonnement.css">
-         <children>
-            <Label layoutX="278.0" layoutY="151.0" text="Ajouter un Abonnement" textFill="#720000">
-               <font>
-                  <Font name="System Bold" size="24.0" />
-               </font>
-            </Label>
-            <VBox layoutX="288.0" layoutY="213.0" opacity="0.96" prefHeight="95.0" prefWidth="239.0">
+      <BorderPane prefHeight="670.0" prefWidth="1233.0">
+         <center>
+            <AnchorPane id="AnchorPane" prefHeight="670.0" prefWidth="474.0" stylesheets="@backAbonnement.css" BorderPane.alignment="CENTER">
                <children>
-                  <Label text="Type Pack : ">
+                  <Label layoutX="99.0" layoutY="135.0" text="Ajouter un abonnement :" textFill="#720000">
                      <font>
-                        <Font name="System Bold" size="12.0" />
+                        <Font name="System Bold" size="36.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="typePack" />
-                  <Label text="Code promo :">
+                  <VBox layoutX="136.0" layoutY="200.0" opacity="0.96" prefHeight="265.0" prefWidth="338.0" spacing="15.0">
+                     <children>
+                        <Label text="Type Pack : ">
+                           <font>
+                              <Font name="System Bold" size="24.0" />
+                           </font>
+                        </Label>
+                        <ComboBox fx:id="textPack" prefWidth="150.0" promptText="Type pack" style="-fx-background-color: white;" />
+                        <BorderPane prefHeight="200.0" prefWidth="200.0" />
+                        <Label text="Code promo :">
+                           <font>
+                              <Font name="System Bold" size="24.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="codePromo" promptText="code promo" />
+                        <Label text="Utilisateur :">
+                           <font>
+                              <Font name="System Bold" size="24.0" />
+                           </font>
+                        </Label>
+                        <ComboBox fx:id="textUser" prefWidth="150.0" promptText="Utilisateur" style="-fx-background-color: white;" />
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <padding>
+                        <Insets bottom="30.0" left="40.0" right="40.0" />
+                     </padding>
+                  </VBox>
+                  <Button fx:id="btnValider" layoutX="174.0" layoutY="524.0" mnemonicParsing="false" onAction="#ajouterF" prefHeight="43.0" prefWidth="131.0" styleClass="btn" stylesheets="@backAbonnement.css" text="Ajouter" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" wrapText="true">
                      <font>
-                        <Font name="System Bold" size="12.0" />
+                        <Font name="System Bold" size="14.0" />
                      </font>
-                  </Label>
-                  <TextField fx:id="codePromo" />
-                  <Label text="Utilisateur :">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </Label>
-                  <ComboBox fx:id="idUser" prefWidth="150.0" />
+                     <effect>
+                        <Glow level="0.0" />
+                     </effect>
+                  </Button>
+                  <Button fx:id="bntReturnAbonnement" layoutX="33.0" layoutY="40.0" mnemonicParsing="false" onAction="#back_Abonnemets" prefHeight="52.0" prefWidth="131.0" style="-fx-background-color: transparent; -fx-text-fill: black; -fx-font-size: 16px;" />
+                  <ImageView fitHeight="36.0" fitWidth="57.0" layoutX="71.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/icons8-left-arrow-64.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="588.0" fitWidth="870.0" layoutX="240.0" layoutY="86.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/kisspng-physical-fitness-crossfit-exercise-idea-coach-aya-5b10e3bec1ec66.6869747415278335347943.png" />
+                     </image>
+                  </ImageView>
                </children>
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-            </VBox>
-            <Button fx:id="btnValider" layoutX="320.0" layoutY="353.0" mnemonicParsing="false" onAction="#ajouterF" styleClass="btn" text="Ajouter" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-               <effect>
-                  <Glow level="0.0" />
-               </effect>
-            </Button>
-         </children>
-      </AnchorPane>
+            </AnchorPane>
+         </center>
+      </BorderPane>
    </children>
 </AnchorPane>

@@ -34,6 +34,17 @@ public class Abonnement {
         this.montantAbonnement = montantAbonnement;
     }
 
+    public Abonnement(int id, Date dateAchat, Date dateFin, String etatAbonnement, String codePromo, double montantAbonnement, int packId, int userId) {
+        this.id = id;
+        this.dateAchat = dateAchat;
+        this.dateFin = dateFin;
+        this.etatAbonnement = etatAbonnement;
+        this.codePromo = codePromo;
+        this.montantAbonnement = montantAbonnement;
+        this.packId = packId;
+        this.userId = userId;
+    }
+
     public Abonnement(String codePromo, int packId, int userId) {
         this.codePromo = codePromo;
         this.packId = packId;

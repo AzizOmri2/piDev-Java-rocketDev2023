@@ -9,6 +9,8 @@ import Entities.Abonnement;
 import Entities.AbonnementCRUD;
 import Entities.Pack;
 import Entities.Promotion;
+import Entities.UserPackAbonnement;
+
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -16,11 +18,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+
 import utils.MyDB;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
+import javax.swing.JOptionPane;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -54,6 +58,13 @@ public class AbonnementService implements AbonnementCRUD<Abonnement> {
             if (rs.next()) {
                 Abonnement abonnement = new Abonnement();
                 abonnement.setId(rs.getInt("id"));
+                abonnement.setPackId(rs.getInt("pack_id"));
+                abonnement.setUserId(rs.getInt("user_id"));
+                abonnement.setMontantAbonnement(rs.getFloat("montant_abonnement"));
+                abonnement.setEtatAbonnement(rs.getString("etat_abonnement"));
+                abonnement.setDateAchat(new Date(rs.getTimestamp("date_achat").getTime()));
+                abonnement.setDateFin(new Date(rs.getTimestamp("date_fin").getTime()));
+
                 return abonnement;
             } else {
                 return null;
@@ -62,6 +73,39 @@ public class AbonnementService implements AbonnementCRUD<Abonnement> {
             System.out.println(e.getMessage());
             return null;
         }
+    }
+
+    public boolean hasActiveSubscription(int userId) throws SQLException {
+        AbonnementService abonnementService = new AbonnementService();
+
+        Abonnement abonnementExistant = this.findOneByUser(userId);
+        if (abonnementExistant != null) {
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public boolean disponible(Abonnement abonnement) throws SQLException {
+        PackService p = new PackService();
+        int packId = abonnement.getPackId();
+        List<Pack> packs = p.getAll();
+        for (int i = 0; i < packs.size(); i++) {
+            if (packId == packs.get(i).getId()) {
+                Pack pack = packs.get(i);
+                int duree = pack.getDureePack();
+                int disponibilite = pack.getDisponibilitePack();
+                int places = pack.getPlacesPack();
+                System.err.println(places);
+                if (disponibilite == places) {
+
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     @Override
@@ -81,6 +125,7 @@ public class AbonnementService implements AbonnementCRUD<Abonnement> {
                 String etat = abonnementExistant.getEtatAbonnement();
                 if (etat == "actif") {
                     System.out.println("l utilisateur a déjà un abonnement en cours. !");
+                    JOptionPane.showMessageDialog(null, "L'utilisateur a déjà un abonnement en cours !");
                 }
             } else {
                 int packId = abonnement.getPackId();
@@ -94,6 +139,8 @@ public class AbonnementService implements AbonnementCRUD<Abonnement> {
                         System.err.println(places);
                         if (disponibilite == places) {
                             System.out.println("Désolé, les places sont épuisées !");
+                            JOptionPane.showMessageDialog(null, "Désolé, les places sont épuisées !", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+
                         } else {
                             //ne9sa
                             System.err.println(places);
@@ -139,12 +186,13 @@ public class AbonnementService implements AbonnementCRUD<Abonnement> {
                                 double newMontant = pack.getMontantPack();
                                 pstmt.setDouble(5, (Double) newMontant);
                             }
-                       
+
                             pstmt.setInt(6, abonnement.getPackId());
                             pstmt.setInt(7, abonnement.getUserId());
 
                             pstmt.executeUpdate();
                             System.out.println("Abonnement ajouté");
+                            JOptionPane.showMessageDialog(null, "Abonnement ajouté avec succe");
                             PreparedStatement updateStmt = conx.prepareStatement(s);
                             updateStmt.setInt(1, packAjout);
                             updateStmt.setInt(2, pack.getId());
@@ -223,22 +271,6 @@ public class AbonnementService implements AbonnementCRUD<Abonnement> {
         }
     }
 
-    public boolean updateAbonnement(Abonnement p) {
-        try {
-            String sql = "UPDATE `abonnement` SET `date_achat` = '" + p.getDateAchat() + "', `date_fin` = '" + p.getDateFin() + "', `etat_abonnement` = '" + p.getEtatAbonnement() + "', `code_promo` = " + p.getCodePromo() + ", `montant_abonnement` = '" + p.getMontantAbonnement() + "' WHERE `abonnement`.`id` = " + p.getId();
-
-            PreparedStatement pstmt = conx.prepareStatement(sql);
-            pstmt.executeUpdate(sql);
-            System.out.print("                         *************************************************\n");
-            System.out.print("                                ********  Abonnement UPDATED SUCCEFULLY  **********\n");
-            System.out.print("                         ************************************************\n\n\n");
-            return true;
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
-        return false;
-    }
-
     @Override
     public void delete(int id) throws SQLException {
         //   PackService p = new PackService();
@@ -292,85 +324,105 @@ public class AbonnementService implements AbonnementCRUD<Abonnement> {
                     rs.getDate("date_fin"),
                     rs.getString("etat_abonnement"),
                     rs.getString("code_promo"),
-                    rs.getFloat("montant_abonnement")
+                    rs.getFloat("montant_abonnement"),
+                    rs.getInt("pack_id"),
+                    rs.getInt("user_id")
             );
             abonnements.add(p);
         }
         return abonnements;
     }
 
-    /*
-    public String newAbonnement(@ModelAttribute("abonnement") Abonnement abonnement, BindingResult result, Model model) {
-        LocalDateTime currentDate = LocalDateTime.now();
-        String formattedDate = currentDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        abonnement.setDateAchat(currentDate);
+    private List<Abonnement> getUserId() throws SQLException {
 
-        if (!result.hasErrors()) {
-            //user 
-            User user = abonnement.getUser();
-            Abonnement abonnementExistant = abonnementRepository.findByUser(user);
-            if (abonnementExistant != null) {
-                String etat = abonnementExistant.getEtatAbonnement();
-                if (etat.equals("actif")) {
-                    model.addAttribute("alertMessage", "L'utilisateur a déjà un abonnement en cours.");
-                    return "abonnement/new";
-                }
-            }
-
-            Pack pack = abonnement.getPackId();
-            int packDuree = pack.getDureePack();
-            int packDisponibilite = pack.getDisponibilitePack();
-            int packPlaces = pack.getPlacesPack();
-            if (packDisponibilite == packPlaces) {
-                model.addAttribute("alertMessage", "Désolé, les places sont épuisées !");
-                return "abonnement/new";
-            }
-
-            if (packDisponibilite > packPlaces) {
-                int packAjout = packPlaces + 1;
-                pack.setPlacesPack(packAjout);
-                float montantPack = pack.getMontantPack();
-                abonnement.setMontantAbonnement(montantPack);
-                LocalDateTime dateFin = currentDate.plus(packDuree, ChronoUnit.MONTHS);
-                abonnement.setDateFin(Date.from(dateFin.atZone(ZoneId.systemDefault()).toInstant()));
-
-                Date dateAchat = abonnement.getDateAchat();
-                Date dateFinAbonnement = abonnement.getDateFin();
-                long timeDiff = dateFinAbonnement.getTime() - dateAchat.getTime();
-                if (timeDiff >= 0) {
-                    abonnement.setEtatAbonnement("actif");
-                } else {
-                    abonnement.setEtatAbonnement("non actif");
-                }
-
-                String codePromo = abonnement.getCodePromo();
-                if (codePromo != null) {
-                    Promotion promotion = promotionRepository.findByCodePromotion(codePromo);
-                    if (promotion != null && isValid(codePromo)) {
-                        float promo = promotion.getReductionPromotion();
-                        float m = pack.getMontantPack();
-                        float promotion1 = m * promo;
-                        float newMontant = m - promotion1;
-                        abonnement.setMontantAbonnement(newMontant);
-                    }
-                } else {
-                    abonnement.setMontantAbonnement(pack.getMontantPack());
-                }
-
-                abonnementRepository.save(abonnement);
-                em.persist(abonnement);
-                em.flush();
-
-                return "redirect:/abonnement/index";
-            }
-        }
-
-        model.addAttribute("abonnement", abonnement);
-        return "abonnement/new";
+        return this.getAll(); //To change body of generated methods, choose Tools | Templates.
     }
 
-    private boolean isValid(String codePromo) {
-        // TODO: implement validation logic
-        return true;
-    }*/
+    /* public static void sendRenewalReminder(List<User> userList) throws MessagingException {
+
+        // Set mail properties
+        Properties properties = new Properties();
+        properties.put("mail.smtp.host", "smtp.gmail.com");
+        properties.put("mail.smtp.port", "587");
+        properties.put("mail.smtp.auth", "true");
+        properties.put("mail.smtp.starttls.enable", "true");
+
+        // Set up authentication
+        Authenticator authenticator = new Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication("your_email@gmail.com", "your_password");
+            }
+        };
+
+        // Create a mail session
+        //Session session = Session.getDefaultInstance(properties, authenticator);
+
+        // Create the message
+        Message message = new MimeMessage();
+        message.setFrom(new InternetAddress("your_email@gmail.com"));
+        message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("admin_email@gmail.com"));
+        message.setSubject("Renewal Reminder");
+        
+        // Build list of users with inactive subscription
+        List<String> inactiveUsers = new ArrayList<>();
+        for (User user : userList) {
+            if (user.getAbonnement().getEtatAbonnement().equals("non actif")) {
+                inactiveUsers.add(user.getEmail());
+            }
+        }
+        
+        // Build message body
+        String body = "The following users have inactive subscriptions: \n\n";
+        for (String email : inactiveUsers) {
+            body += "- " + email + "\n";
+        }
+        message.setText(body);
+
+        // Send the message
+        Transport.send(message);
+    }
+}*/
+    public List<UserPackAbonnement> getAllUserPackAbonnement() throws SQLException {
+        String sql = "SELECT * FROM `abonnement` as ab , `user` as us, `pack` as pk WHERE ab.user_id=us.id and ab.pack_id=pk.id";
+        PreparedStatement pstmt = conx.prepareStatement(sql);
+        ResultSet rs = pstmt.executeQuery();
+        List<UserPackAbonnement> uspa = new ArrayList<UserPackAbonnement>();
+        while (rs.next()) {
+            UserPackAbonnement p = new UserPackAbonnement(rs.getInt("id"),//or rst.getInt(1)
+                    rs.getString("username"),
+                    rs.getString("type_pack"),
+                    rs.getDate("date_achat"),
+                    rs.getDate("date_fin"),
+                    rs.getString("etat_abonnement"),
+                    rs.getString("code_promo"),
+                    rs.getFloat("montant_abonnement")
+            );
+            uspa.add(p);
+        }
+        return uspa;
+    }
+
+    
+    public UserPackAbonnement getUserPackAbonnementByidUser(int userId) throws SQLException {
+        String sql = "SELECT * FROM `abonnement` as ab , `user` as us, `pack` as pk WHERE ab.user_id=us.id and ab.pack_id=pk.id and us.id=?";
+        PreparedStatement pstmt = conx.prepareStatement(sql);
+        pstmt.setInt(1, userId);
+
+        ResultSet rs = pstmt.executeQuery();
+        while (rs.next()) {
+            UserPackAbonnement p = new UserPackAbonnement(rs.getInt("id"),//or rst.getInt(1)
+                    rs.getString("username"),
+                    rs.getString("type_pack"),
+                    rs.getDate("date_achat"),
+                    rs.getDate("date_fin"),
+                    rs.getString("etat_abonnement"),
+                    rs.getString("code_promo"),
+                    rs.getFloat("montant_abonnement")
+            );
+                           return p;
+
+        }
+        return null ;
+    }
+
 }

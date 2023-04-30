@@ -68,12 +68,8 @@ public class ViewReservedTicketController implements Initializable {
     
     @Override
 public void initialize(URL url, ResourceBundle rb) {
-    int idd = ViewFrontController.GlobalVars.idd;
-    try {
-        viewReservedTicket(idd);
-    } catch (SQLException ex) {
-        Logger.getLogger(ViewReservedTicketController.class.getName()).log(Level.SEVERE, null, ex);
-    }
+   
+   
 }
 
 

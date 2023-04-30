@@ -173,6 +173,10 @@ private void ajoutTicket(ActionEvent event) {
     currentStage.hide();
 }
 
+    @FXML
+    private void voirCompetition(MouseEvent event) {
+    }
+
 
     
 

@@ -15,7 +15,7 @@
    <children>
       <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="760.0" prefWidth="1234.0">
          <children>
-            <Button fx:id="btnReturn" layoutX="233.0" layoutY="93.0" mnemonicParsing="false" onAction="#voirCompetition" prefHeight="34.0" prefWidth="66.0" styleClass="btn" stylesheets="@ajoutcompetition.css" textAlignment="CENTER">
+            <Button fx:id="btnReturn" layoutX="233.0" layoutY="93.0" mnemonicParsing="false" onAction="#backCompetition" prefHeight="34.0" prefWidth="66.0" styleClass="btn" stylesheets="@ajoutcompetition.css" textAlignment="CENTER">
                <graphic>
                   <ImageView fx:id="btRetour" fitHeight="25.0" fitWidth="57.0" onDragDetected="#voirCompetition" pickOnBounds="true" preserveRatio="true">
                      <image>

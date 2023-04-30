@@ -596,16 +596,13 @@ private void voirTickets(ActionEvent event)  throws IOException {
  
     }
 
-
-    
-
     @FXML
     private void Statistique(ActionEvent event) throws IOException {
-          FXMLLoader loader = new FXMLLoader(getClass().getResource("Statistique.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Statistique.fxml"));
         Parent root = loader.load();
 
     // Obtenir le contrôleur associé à la vue FXML
-    ViewBackController controller = loader.getController();
+    StatistiqueController controller = loader.getController();
 
     // Afficher la nouvelle interface utilisateur
     Scene scene = new Scene(root);

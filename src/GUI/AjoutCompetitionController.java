@@ -208,7 +208,6 @@ try {
 
     }
 
-    @FXML
     private void voirCompetition(ActionEvent event) throws IOException {
         
         FXMLLoader loader = new FXMLLoader(getClass().getResource("ViewBack.fxml"));
@@ -252,7 +251,23 @@ try {
 
     @FXML
         private void voirCompetition(MouseEvent event) throws IOException {
-                      
+
+    }
+
+    @FXML
+    private void effacerTout(ActionEvent event) {
+    btNom.clear();
+    dateChoisi.getEditor().clear(); //Type: datePeaker
+    btFrais.clear();
+    btMaxParticipants.clear();
+    btDisponible.setSelected(false);//Type: RadioButton
+    btNonDisponible.setSelected(false);//type: RadioButton 
+        
+    }
+
+    @FXML
+    private void backCompetition(ActionEvent event) throws IOException {
+                              
         FXMLLoader loader = new FXMLLoader(getClass().getResource("ViewBack.fxml"));
         Parent root = loader.load();
 
@@ -268,17 +283,6 @@ try {
     Node source = (Node) event.getSource();
     Stage currentStage = (Stage) source.getScene().getWindow();
     currentStage.hide();
-        
-    }
-
-    @FXML
-    private void effacerTout(ActionEvent event) {
-    btNom.clear();
-    dateChoisi.getEditor().clear(); //Type: datePeaker
-    btFrais.clear();
-    btMaxParticipants.clear();
-    btDisponible.setSelected(false);//Type: RadioButton
-    btNonDisponible.setSelected(false);//type: RadioButton 
         
     }
     

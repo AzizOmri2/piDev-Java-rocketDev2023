@@ -20,8 +20,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -75,13 +79,13 @@ public class ViewTicketsController implements Initializable {
       MyDB cnx = null;
     Statement st = null;
     @FXML
-    private TextField txtSearchPlanning;
-    @FXML
     private AnchorPane paneViewTicket;
     @FXML
     private Button btnReturn;
     @FXML
     private ImageView btRetour;
+    @FXML
+    private TextField searchField;
     
   
     /**
@@ -89,14 +93,19 @@ public class ViewTicketsController implements Initializable {
      */
  @Override
 public void initialize(URL url, ResourceBundle rb) {
-    // TODO
-    data.clear();
-    tableTickets.refresh();
-    viewBackTicket();
+         try {
+             // TODO
+             data.clear();
+             tableTickets.refresh();
+             searchBox();
+             viewBackTicket();
+         } catch (SQLException ex) {
+             Logger.getLogger(ViewTicketsController.class.getName()).log(Level.SEVERE, null, ex);
+         }
 }
 
 
-public void viewBackTicket() {
+public void viewBackTicket() throws SQLException {
     TicketServices ts=new TicketServices();
     ts.afficherListe().stream().forEach((t)->{
         data.add(t);
@@ -119,17 +128,20 @@ public void viewBackTicket() {
     
     id.setCellValueFactory(new PropertyValueFactory<>("id"));
     tableTickets.setItems(data);
+    searchBox();
 }
 
 
 
     @FXML
     private void AjouterTicket(ActionEvent event) throws IOException {
-Parent loader = FXMLLoader.load(getClass().getResource("ajouTicket.fxml"));
-    Scene scene = new Scene(loader);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("ajouTicket.fxml"));
+        Parent root = loader.load();
+    Scene scene = new Scene(root);
     Stage stage = new Stage();
     stage.setScene(scene);
     stage.show();
+        // Cacher la fenêtre actuelle
     Node source = (Node) event.getSource();
     Stage currentStage = (Stage) source.getScene().getWindow();
     currentStage.hide();
@@ -138,7 +150,7 @@ Parent loader = FXMLLoader.load(getClass().getResource("ajouTicket.fxml"));
 
 
     @FXML
-    private void deleteTicket(ActionEvent event) {
+    private void deleteTicket(ActionEvent event) throws SQLException {
              if (tableTickets.getSelectionModel().getSelectedItem() == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erreur");
@@ -165,22 +177,26 @@ Parent loader = FXMLLoader.load(getClass().getResource("ajouTicket.fxml"));
             alert.setHeaderText("Le Ticket séléctioné a été supprimé avec succés ");
             alert.showAndWait();
             viewBackTicket();
+            searchBox();
         }
     }
 
-    private void refreshTab(ActionEvent event) {
+    private void refreshTab(ActionEvent event) throws SQLException {
     tableTickets.refresh();
+    searchBox();
+    }
+    
+
+
+
+    @FXML
+    private void voirCompetition(MouseEvent event) {
     }
 
     @FXML
-    private void voirCompetition(MouseEvent event) throws IOException {
-          FXMLLoader loader = new FXMLLoader(getClass().getResource("ViewBack.fxml"));
+    private void backCompetition(ActionEvent event) throws IOException {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("ViewBack.fxml"));
         Parent root = loader.load();
-
-    // Obtenir le contrôleur associé à la vue FXML
-    ViewBackController controller = loader.getController();
-
-    // Afficher la nouvelle interface utilisateur
     Scene scene = new Scene(root);
     Stage stage = new Stage();
     stage.setScene(scene);
@@ -189,10 +205,34 @@ Parent loader = FXMLLoader.load(getClass().getResource("ajouTicket.fxml"));
     Node source = (Node) event.getSource();
     Stage currentStage = (Stage) source.getScene().getWindow();
     currentStage.hide();
-        
     }
 
+        public void searchBox() throws SQLException {
+   //     Competition competition= getTableView().getItems().
+       FilteredList<Ticket> filteredData = new FilteredList<>(FXCollections.observableArrayList(ccrd.afficherListe()), p -> true);
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(ticket -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+  
 
+
+                String lowerCaseFilter = newValue.toLowerCase();
+                if (ticket.getDescription().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (ticket.getCompetition().getNomCompetition().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+        });
+        SortedList<Ticket> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(tableTickets.comparatorProperty());
+        tableTickets.setItems(sortedData);
+    
+    }
 
 } 
 

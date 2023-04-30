@@ -19,13 +19,31 @@ import javafx.scene.control.TabPane;
 import Entity.Competition;
 import Services.CompetitionServices;
 import com.sun.javafx.scene.control.skin.ColorPalette;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
+import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -45,77 +63,80 @@ import org.jfree.data.general.PieDataset;
 public class StatistiqueController implements Initializable {
 
     @FXML
-    private TabPane tabPanePieChart;
+    private BorderPane bp;
     @FXML
-    private Tab tab1;
+    private Button btnReturn;
+    @FXML
+    private ImageView btRetour;
+    @FXML
+    private LineChart<String, Integer > competitions;
+    @FXML
+    private AnchorPane paneStat;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
         try {
-            initPieChart();
-            // TODO
+            statistique();
         } catch (SQLException ex) {
             Logger.getLogger(StatistiqueController.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }    
-private ChartPanel initPieChart() throws SQLException {
-    JFreeChart chart = createChart("Statistique: compétitions selon le nombre des participants");
-    ChartPanel chartPanel = new ChartPanel(chart);
-    return chartPanel;
-}
+    }
+  public void statistique() throws SQLException {
+        CompetitionServices cs = new CompetitionServices();
 
-private static PieDataset createDataset() throws SQLException {
-    DefaultPieDataset dataset = new DefaultPieDataset();
+        List<Competition> comp = null;
+        comp = cs.afficherListe();
+        
+        
 
-    CompetitionServices cs = new CompetitionServices();
-    List<Competition> competitions = cs.afficherListe();
+        // Créer les axes pour le graphique
+        final NumberAxis yAxis = new NumberAxis();
+        final CategoryAxis xAxis = new CategoryAxis();
+        xAxis.setLabel("Nom Competition");
+        yAxis.setLabel("Nombre des participants");
 
-    // Créer une Map pour stocker le nombre de participants pour chaque compétition
-    Map<String, Integer> participantsByCompetition = new HashMap<>();
-    for (Competition c : competitions) {
-        participantsByCompetition.put(c.getNomCompetition(), c.getNbrParticipants());
+        // Créer la série de données à afficher
+        XYChart.Series series = new XYChart.Series();
+        series.setName("Statistiques des Competitions selon le nombre des participants");
+        for (Competition compe :comp) {
+            series.getData().add(new XYChart.Data<>(compe.getNomCompetition(), compe.getNbrParticipants()));
+        }
+
+        // Créer le graphique et ajouter la série de données
+        LineChart<String, Number> lineChart = new LineChart<>(xAxis, yAxis);
+        lineChart.setTitle("Statistiques des Competitions par rapport aux nombres de participants");
+        lineChart.getData().add(series);
+
+        // Afficher le graphique dans votre scène
+        competitions.setCreateSymbols(false);
+        competitions.getData().add(series);
+        
+        
+
+
+    }
+    
+
+
+    @FXML
+    private void voirCompetition(MouseEvent event) {
     }
 
-    // Créer une Map pour stocker le nombre d'utilisateurs pour chaque nombre de participants
-    Map<Integer, Integer> usersByParticipants = new HashMap<>();
-    for (int participants : participantsByCompetition.values()) {
-        int count = usersByParticipants.getOrDefault(participants, 0);
-        usersByParticipants.put(participants, count + 1);
+    @FXML
+    private void voirCompetition(ActionEvent event) throws IOException {
+    Parent fxml= FXMLLoader.load(getClass().getResource("ViewBack.fxml"));
+    Scene scene = new Scene(fxml);
+    Stage stage = new Stage();
+    stage.setScene(scene);
+    stage.show();
+    Node source = (Node) event.getSource();
+    Stage currentStage = (Stage) source.getScene().getWindow();
+    currentStage.hide();
     }
 
-    // Ajouter les valeurs au dataset
-    for (int participants : usersByParticipants.keySet()) {
-        dataset.setValue(String.valueOf(participants), usersByParticipants.get(participants));
-    }
-
-    return dataset;
-}
-
-private static JFreeChart createChart(String name) throws SQLException {
-    PieDataset dataset = createDataset();
-    JFreeChart chart = ChartFactory.createPieChart(name, dataset, false, true, false);
-    PiePlot plot = (PiePlot) chart.getPlot();
-
-    // Utiliser une palette de couleurs pour les sections du graphique
-    Random rand = new Random();
-    for (int i = 0; i < dataset.getItemCount(); i++) {
-        int r = rand.nextInt(256);
-        int g = rand.nextInt(256);
-        int b = rand.nextInt(256);
-        plot.setSectionPaint(i, new Color(r, g, b));
-    }
-
-    plot.setLabelFont(new Font(Font.SANS_SERIF, Font.BOLD, 16));
-    // Custom labels https://stackoverflow.com/a/17507061/230513
-    PieSectionLabelGenerator gen = new StandardPieSectionLabelGenerator(
-            "{0}: {2}", new DecimalFormat("0"), new DecimalFormat("0.0%"));
-    plot.setLabelGenerator(gen);
-    return chart;
-}
 
 
 }

@@ -155,24 +155,32 @@ public List<Ticket> afficherListe() {
 
 @Override
 public Ticket afficher(int id) {
-    String req="SELECT t.id, t.description_ticket, c.nom_competition FROM ticket t JOIN competition c ON t.competition_id=c.id WHERE t.competition_id=?";
-    Ticket t=new Ticket();
+    String req="SELECT t.id, t.description_ticket, c.nom_competition FROM ticket t JOIN competition c ON t.competition_id=c.id WHERE t.id=?";
+    Ticket t = null;
     try {
         PreparedStatement ps = conx.prepareStatement(req);
         ps.setInt(1, id);
         ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
+        if (rs.next()) {
+            t = new Ticket();
             t.setId(rs.getInt("id"));
             t.setDescription(rs.getString("description_ticket"));
             Competition competition = new Competition();
             competition.setNomCompetition(rs.getString("nom_competition"));
             t.setCompetition(competition);
-            System.out.println("le ticket est: "+t.toStringg());
+            
         }
     } catch (SQLException ex) {
         System.out.println(ex.getMessage());
     }
+    //System.out.println(t.toStringg());
     return t;
 }
+
+    @Override
+    public String afficherDescription(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 
 }

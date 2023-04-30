@@ -40,7 +40,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -51,24 +53,6 @@ import javafx.stage.Stage;
  */
 public class ViewTicketsController implements Initializable {
 
-    @FXML
-    private Button btnHome;
-    @FXML
-    private Button btnUsers;
-    @FXML
-    private Button btnPlannings;
-    @FXML
-    private Button btnAbonnements;
-    @FXML
-    private Button btnCompetitions;
-    @FXML
-    private Button btnMateriaux;
-    @FXML
-    private Button btnSponsors;
-    @FXML
-    private Button btnRestaurants;
-    @FXML
-    private Button btnReclamation;
 
      ObservableList<Ticket> data = FXCollections.observableArrayList();
      private TicketServices ccrd =new TicketServices();
@@ -86,20 +70,18 @@ public class ViewTicketsController implements Initializable {
     private TableColumn<Ticket, Integer> id;
     @FXML
     private BorderPane bp;
-    @FXML
-    private MenuButton menu;
-    @FXML
-    private MenuItem profile;
-    @FXML
-    private Button closW;
      public Connection conx;
      
       MyDB cnx = null;
     Statement st = null;
     @FXML
-    private Button btnLoadPlanning;
-    @FXML
     private TextField txtSearchPlanning;
+    @FXML
+    private AnchorPane paneViewTicket;
+    @FXML
+    private Button btnReturn;
+    @FXML
+    private ImageView btRetour;
     
   
     /**
@@ -140,9 +122,6 @@ public void viewBackTicket() {
 }
 
 
-    @FXML
-    private void handleClicks(ActionEvent event) {
-    }
 
     @FXML
     private void AjouterTicket(ActionEvent event) throws IOException {
@@ -157,57 +136,6 @@ Parent loader = FXMLLoader.load(getClass().getResource("ajouTicket.fxml"));
     tableTickets.refresh();
     }
 
-    @FXML
-    private void Pro(ActionEvent event) {
-    }
-
-    @FXML
-    private void GoUsers(ActionEvent event) {
-    }
-
-    @FXML
-    private void listPlannings(MouseEvent event) {
-    }
-
-    @FXML
-    private void ListAbonnements(MouseEvent event) {
-    }
-
-    @FXML
-    private void listCompetitions(MouseEvent event) {
-    }
-
-    @FXML
-    private void listMateriaux(MouseEvent event) {
-    }
-
-    @FXML
-    private void GoSponsor(ActionEvent event) {
-    }
-
-    @FXML
-    private void listRestau(MouseEvent event) {
-    }
-
-    @FXML
-    private void listReclamation(MouseEvent event) {
-    }
-
-    @FXML
-    private void closeW(MouseEvent event) {
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("EnergyBox | CrossFit Center");
-        alert.setHeaderText(null);
-        alert.setContentText("Voulez-vous quitter ?");
-        Optional<ButtonType> option = alert.showAndWait();
-        try {
-            if (option.get().equals(ButtonType.OK)) {
-                System.exit(0);
-            }
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     @FXML
     private void deleteTicket(ActionEvent event) {
@@ -240,11 +168,30 @@ Parent loader = FXMLLoader.load(getClass().getResource("ajouTicket.fxml"));
         }
     }
 
-    @FXML
     private void refreshTab(ActionEvent event) {
     tableTickets.refresh();
     }
-    
+
+    @FXML
+    private void voirCompetition(MouseEvent event) throws IOException {
+          FXMLLoader loader = new FXMLLoader(getClass().getResource("ViewBack.fxml"));
+        Parent root = loader.load();
+
+    // Obtenir le contrôleur associé à la vue FXML
+    ViewBackController controller = loader.getController();
+
+    // Afficher la nouvelle interface utilisateur
+    Scene scene = new Scene(root);
+    Stage stage = new Stage();
+    stage.setScene(scene);
+    stage.show();
+        // Cacher la fenêtre actuelle
+    Node source = (Node) event.getSource();
+    Stage currentStage = (Stage) source.getScene().getWindow();
+    currentStage.hide();
+        
+    }
+
 
 
 } 

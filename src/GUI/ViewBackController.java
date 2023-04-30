@@ -60,6 +60,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TouchEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -70,24 +71,6 @@ import javafx.stage.Stage;
  */
 public class ViewBackController implements Initializable {
 
-    @FXML
-    private Button btnHome;
-    @FXML
-    private Button btnUsers;
-    @FXML
-    private Button btnPlannings;
-    @FXML
-    private Button btnAbonnements;
-    @FXML
-    private Button btnCompetitions;
-    @FXML
-    private Button btnMateriaux;
-    @FXML
-    private Button btnSponsors;
-    @FXML
-    private Button btnRestaurants;
-    @FXML
-    private Button btnReclamation;
     @FXML
     private TableView<Competition> tableCompetition;
     @FXML
@@ -133,21 +116,15 @@ public class ViewBackController implements Initializable {
     @FXML
     private BorderPane bp;
     @FXML
-    private Button closW;
-    @FXML
-    private MenuButton menu;
-    @FXML
-    private MenuItem profile;
-    @FXML
     private TextField searchField;
     @FXML
     private Button PDF;
     @FXML
-    private Button btnLoadPlanning1;
-    @FXML
-    private Button btnTri;
-    @FXML
     private Button load;
+    @FXML
+    private AnchorPane paneViewBack;
+    @FXML
+    private Button StatBtn;
     /**
      * Initializes the controller class.
      */
@@ -200,10 +177,6 @@ public class ViewBackController implements Initializable {
 
  
 
-    @FXML
-    private void handleClicks(ActionEvent event) {
-        
-    }
 
     @FXML
     private void modifierCompetition(ActionEvent event) {
@@ -373,50 +346,12 @@ private void voirTickets(ActionEvent event)  throws IOException {
     tableCompetition.refresh();
 }
 
-    @FXML
-    private void closeW(MouseEvent event) {
-    }
 
     @FXML
     private void refreshTab(ActionEvent event) {
            tableCompetition.refresh();
     }
 
-    @FXML
-    private void Pro(ActionEvent event) {
-    }
-
-    @FXML
-    private void GoUsers(ActionEvent event) {
-    }
-
-    @FXML
-    private void listPlannings(MouseEvent event) {
-    }
-
-    @FXML
-    private void ListAbonnements(MouseEvent event) {
-    }
-
-    @FXML
-    private void listCompetitions(MouseEvent event) {
-    }
-
-    @FXML
-    private void listMateriaux(MouseEvent event) {
-    }
-
-    @FXML
-    private void GoSponsor(ActionEvent event) {
-    }
-
-    @FXML
-    private void listRestau(MouseEvent event) {
-    }
-
-    @FXML
-    private void listReclamation(MouseEvent event) {
-    }
 
 
         public void searchBox() throws SQLException {
@@ -661,22 +596,27 @@ private void voirTickets(ActionEvent event)  throws IOException {
  
     }
 
-    @FXML
-    private void trierDate(ActionEvent event) {
-        // Utiliser une liste triée pour stocker les données triées
-        ObservableList<Competition> sortedList = FXCollections.observableArrayList(data.sorted((r1, r2) -> r1.getDateCompetition().compareTo(r2.getDateCompetition())));
-        // Associer la liste triée à la TableView
-        tableCompetition.setItems(sortedList);
-        // Définir un comparateur personnalisé pour la colonne Date
-        cDate.setComparator((d1, d2) -> d1.compareTo(d2));
-        // Ajouter la colonne Date au tri
-        tableCompetition.getSortOrder().add(cDate);
-        try {
-            searchBox();
-        } catch (SQLException ex) {
-            Logger.getLogger(ViewBackController.class.getName()).log(Level.SEVERE, null, ex);
-        }
 
+    
+
+    @FXML
+    private void Statistique(ActionEvent event) throws IOException {
+          FXMLLoader loader = new FXMLLoader(getClass().getResource("Statistique.fxml"));
+        Parent root = loader.load();
+
+    // Obtenir le contrôleur associé à la vue FXML
+    ViewBackController controller = loader.getController();
+
+    // Afficher la nouvelle interface utilisateur
+    Scene scene = new Scene(root);
+    Stage stage = new Stage();
+    stage.setScene(scene);
+    stage.show();
+        // Cacher la fenêtre actuelle
+    Node source = (Node) event.getSource();
+    Stage currentStage = (Stage) source.getScene().getWindow();
+    currentStage.hide();
+        
     }
     }
 

@@ -8,6 +8,7 @@ package GUI;
 import GUI.ViewFrontController;
 import Entity.Competition;
 import Entity.Ticket;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,9 +16,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -43,24 +48,37 @@ public class ViewReservedTicketController implements Initializable {
     private TextArea descriptionT;
     @FXML
     private Button closW;
-       public Connection conx;
-       public Statement stm;
-       private Ticket ticket;
 
+    private Connection conx;
+    private Ticket ticket;
+    
     /**
      * Initializes the controller class.
      */
-       
-   public void setTicketId(int id) {
-    this.ticket.setId(id);
+        public void setConnection(Connection connection) {
+        this.conx = connection;
+    }
+
+    public void setTicketId(int id) {
+        if (this.ticket == null) {
+            this.ticket = new Ticket();
+        }
+        this.ticket.setId(id);
+    }
+    
+    @Override
+public void initialize(URL url, ResourceBundle rb) {
+    int idd = ViewFrontController.GlobalVars.idd;
+    try {
+        viewReservedTicket(idd);
+    } catch (SQLException ex) {
+        Logger.getLogger(ViewReservedTicketController.class.getName()).log(Level.SEVERE, null, ex);
+    }
 }
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-       int idd =ticket.getId();
-        // TODO
-    }    
-public void viewReservedTicket(int idd) throws SQLException {
+
+
+ public void viewReservedTicket(int idd) throws SQLException {
     String req = "SELECT t.id, t.description_ticket, c.nom_competition FROM ticket t JOIN competition c ON t.competition_id=c.id WHERE t.id=?";
     try {
         PreparedStatement ps = conx.prepareStatement(req);
@@ -75,7 +93,7 @@ public void viewReservedTicket(int idd) throws SQLException {
             return;
         }
 
-        // Si le résultat n'est pas vide, on affiche le premier enregistrement retourné par la requête
+        // Si le résultat n'est pas vide, on affiche les données du ticket
         Ticket t = new Ticket();
         t.setId(rs.getInt("id"));
         t.setDescription(rs.getString("description_ticket"));
@@ -88,6 +106,8 @@ public void viewReservedTicket(int idd) throws SQLException {
         System.out.println(ex.getMessage());
     }
 }
+
+
 
 
     @FXML

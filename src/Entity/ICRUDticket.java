@@ -17,4 +17,5 @@ public interface ICRUDticket<T> {
     public void modifierTicket(T t);
     public Ticket afficher(int id);
     public void supprimerTicket(int id);
+    public String afficherDescription(int id);
 }

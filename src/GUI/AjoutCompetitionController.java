@@ -44,24 +44,6 @@ import javafx.stage.Stage;
 public class AjoutCompetitionController implements Initializable {
 
     @FXML
-    private Button btnHome;
-    @FXML
-    private Button btnUsers;
-    @FXML
-    private Button btnPlannings;
-    @FXML
-    private Button btnAbonnements;
-    @FXML
-    private Button btnCompetitions;
-    @FXML
-    private Button btnMateriaux;
-    @FXML
-    private Button btnSponsors;
-    @FXML
-    private Button btnRestaurants;
-    @FXML
-    private Button btnReclamation;
-    @FXML
     private TextField btNom;
     @FXML
     private DatePicker dateChoisi;
@@ -78,14 +60,6 @@ public class AjoutCompetitionController implements Initializable {
     @FXML
     private RadioButton btNonDisponible;
     @FXML
-    private BorderPane bp;
-    @FXML
-    private MenuButton menu;
-    @FXML
-    private MenuItem profile;
-    @FXML
-    private Button closW;
-    @FXML
     private Button btnReturn;
     @FXML
     private Button btnClear;
@@ -98,9 +72,6 @@ public class AjoutCompetitionController implements Initializable {
         // TODO
     }    
 
-    @FXML
-    private void handleClicks(ActionEvent event) {
-    }
 
     @FXML
     private void ajouterCompetitionn(ActionEvent event) {
@@ -257,23 +228,7 @@ try {
     currentStage.hide();
     }
 
-    @FXML
-    private void Pro(ActionEvent event) {
-    }
 
-    @FXML
-    private void GoUsers(ActionEvent event) {
-    }
-
-    @FXML
-    private void listPlannings(MouseEvent event) {
-    }
-
-    @FXML
-    private void ListAbonnements(MouseEvent event) {
-    }
-
-    @FXML
     private void listCompetitions(MouseEvent event) throws IOException {
                 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("ViewBack.fxml"));
@@ -294,37 +249,6 @@ try {
         
     }
 
-    @FXML
-    private void listMateriaux(MouseEvent event) {
-    }
-
-    @FXML
-    private void GoSponsor(ActionEvent event) {
-    }
-
-    @FXML
-    private void listRestau(MouseEvent event) {
-    }
-
-    @FXML
-    private void listReclamation(MouseEvent event) {
-    }
-
-    @FXML
-    private void closeW(MouseEvent event) {
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("EnergyBox | CrossFit Center");
-        alert.setHeaderText(null);
-        alert.setContentText("Voulez-vous quitter ?");
-        Optional<ButtonType> option = alert.showAndWait();
-        try {
-            if (option.get().equals(ButtonType.OK)) {
-                System.exit(0);
-            }
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     @FXML
         private void voirCompetition(MouseEvent event) throws IOException {

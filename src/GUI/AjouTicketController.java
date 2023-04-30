@@ -34,6 +34,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -47,35 +48,11 @@ public class AjouTicketController implements Initializable {
     @FXML
     private BorderPane bp;
     @FXML
-    private MenuButton menu;
-    @FXML
-    private MenuItem profile;
-    @FXML
-    private Button btnHome;
-    @FXML
-    private Button btnUsers;
-    @FXML
-    private Button btnPlannings;
-    @FXML
-    private Button btnAbonnements;
-    @FXML
-    private Button btnCompetitions;
-    @FXML
-    private Button btnMateriaux;
-    @FXML
-    private Button btnSponsors;
-    @FXML
-    private Button btnRestaurants;
-    @FXML
-    private Button btnReclamation;
-    @FXML
     private ComboBox<String> nomCompetitionTicket;
     @FXML
     private TextArea descriptionTicket;
     @FXML
     private Button btEnregistrer;
-    @FXML
-    private Button closW;
     @FXML
     private Button btnClear;
     @FXML
@@ -83,6 +60,8 @@ public class AjouTicketController implements Initializable {
     @FXML
     private ImageView btRetour;
     List<String> nomsCompetition = new ArrayList<>();
+    @FXML
+    private AnchorPane paneAjoutTicket;
     /**
      * Initializes the controller class.
      */
@@ -149,61 +128,8 @@ private void ajoutTicket(ActionEvent event) {
     }
 }
 
-    @FXML
-    private void Pro(ActionEvent event) {
-    }
 
-    @FXML
-    private void handleClicks(ActionEvent event) {
-    }
 
-    @FXML
-    private void GoUsers(ActionEvent event) {
-    }
-
-    @FXML
-    private void listPlannings(MouseEvent event) {
-    }
-
-    @FXML
-    private void ListAbonnements(MouseEvent event) {
-    }
-
-    @FXML
-    private void listCompetitions(MouseEvent event) {
-    }
-
-    @FXML
-    private void listMateriaux(MouseEvent event) {
-    }
-
-    @FXML
-    private void GoSponsor(ActionEvent event) {
-    }
-
-    @FXML
-    private void listRestau(MouseEvent event) {
-    }
-
-    @FXML
-    private void listReclamation(MouseEvent event) {
-    }
-
-    @FXML
-    private void closeW(MouseEvent event) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("EnergyBox | CrossFit Center");
-        alert.setHeaderText(null);
-        alert.setContentText("Voulez-vous quitter ?");
-        Optional<ButtonType> option = alert.showAndWait();
-        try {
-            if (option.get().equals(ButtonType.OK)) {
-                System.exit(0);
-            }
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     @FXML
     private void effacerTout(ActionEvent event) {
@@ -211,10 +137,26 @@ private void ajoutTicket(ActionEvent event) {
     descriptionTicket.clear();
     }
 
-    @FXML
-    private void voirCompetition(MouseEvent event) {
-    }
+  /*  @FXML
+    private void voirCompetition(MouseEvent event) throws IOException {
+          FXMLLoader loader = new FXMLLoader(getClass().getResource("ViewBack.fxml"));
+        Parent root = loader.load();
 
+    // Obtenir le contrôleur associé à la vue FXML
+    ViewBackController controller = loader.getController();
+
+    // Afficher la nouvelle interface utilisateur
+    Scene scene = new Scene(root);
+    Stage stage = new Stage();
+    stage.setScene(scene);
+    stage.show();
+        // Cacher la fenêtre actuelle
+    Node source = (Node) event.getSource();
+    Stage currentStage = (Stage) source.getScene().getWindow();
+    currentStage.hide();
+        
+    }
+*/
     @FXML
     private void voirTicket(ActionEvent event) throws IOException {
                  FXMLLoader loader = new FXMLLoader(getClass().getResource("viewTickets.fxml"));
@@ -231,21 +173,7 @@ private void ajoutTicket(ActionEvent event) {
     currentStage.hide();
 }
 
-    @FXML
-    private void closeW(ActionEvent event) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("EnergyBox | CrossFit Center");
-        alert.setHeaderText(null);
-        alert.setContentText("Voulez-vous quitter ?");
-        Optional<ButtonType> option = alert.showAndWait();
-        try {
-            if (option.get().equals(ButtonType.OK)) {
-                System.exit(0);
-            }
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+
     
 
 }

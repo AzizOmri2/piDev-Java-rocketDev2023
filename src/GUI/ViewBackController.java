@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package GUI;
+
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
@@ -109,12 +110,10 @@ public class ViewBackController implements Initializable {
     private Button Enregistrer;
 
     ObservableList<Competition> data = FXCollections.observableArrayList();
-     private CompetitionServices ccrd =new CompetitionServices();
-     List <Competition> competitions= new ArrayList<>();
+    private CompetitionServices ccrd = new CompetitionServices();
+    List<Competition> competitions = new ArrayList<>();
     @FXML
     private Button VoirTicket;
-    @FXML
-    private BorderPane bp;
     @FXML
     private TextField searchField;
     @FXML
@@ -125,14 +124,15 @@ public class ViewBackController implements Initializable {
     private AnchorPane paneViewBack;
     @FXML
     private Button StatBtn;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-              data.clear();
-      tableCompetition.refresh();
+        data.clear();
+        tableCompetition.refresh();
         try {
             showBack();
             searchBox();
@@ -140,29 +140,55 @@ public class ViewBackController implements Initializable {
         } catch (SQLException ex) {
             Logger.getLogger(ViewBackController.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }    
-    
-     public void showBack() throws SQLException
-{
-    try{
-        String rq= "SELECT *FROM competition";
-        Statement st=MyDB.getInstance().getConx().createStatement();
-        ResultSet rs = st.executeQuery(rq);
+    }
+ @FXML
+    private void NouvelleCompetition(ActionEvent event) throws IOException {
+        Parent fxml = FXMLLoader.load(getClass().getResource("AjoutCompetition.fxml"));
+        paneViewBack.getChildren().removeAll();
+        paneViewBack.getChildren().setAll(fxml);
+
+    }
+     @FXML
+    private void ConsulterTicket(ActionEvent event) throws IOException {
+        Parent fxml = FXMLLoader.load(getClass().getResource("ViewTickets.fxml"));
+        paneViewBack.getChildren().removeAll();
+        paneViewBack.getChildren().setAll(fxml);
+
+    }
+     @FXML
+    private void ConsulterStat(ActionEvent event) throws IOException {
+        Parent fxml = FXMLLoader.load(getClass().getResource("Statistique.fxml"));
+        paneViewBack.getChildren().removeAll();
+        paneViewBack.getChildren().setAll(fxml);
+
+    }
+//    @FXML
+//    private void NouvelleTicket(ActionEvent event) throws IOException {
+//        Parent fxml = FXMLLoader.load(getClass().getResource("AjoutTicket.fxml"));
+//        paneViewBack.getChildren().removeAll();
+//        paneViewBack.getChildren().setAll(fxml);
+//
+//    }
+   
+    public void showBack() throws SQLException {
+        try {
+            String rq = "SELECT *FROM competition";
+            Statement st = MyDB.getInstance().getConx().createStatement();
+            ResultSet rs = st.executeQuery(rq);
 
             while (rs.next()) {
-                Competition competition = new Competition(rs.getInt("id"),rs.getString("nom_competition"),
-                                                         (int) rs.getDouble("frais_competition"),
-                                                          rs.getDate("date_competition"),
-                                                          rs.getInt("nbr_max_inscrit"),
-                                                          rs.getString("etat_competition"),
-                                                          rs.getInt("nbr_participant"));
-                  data.add(competition);
-        }
-        }
-        catch (SQLException ex) {
+                Competition competition = new Competition(rs.getInt("id"), rs.getString("nom_competition"),
+                        (int) rs.getDouble("frais_competition"),
+                        rs.getDate("date_competition"),
+                        rs.getInt("nbr_max_inscrit"),
+                        rs.getString("etat_competition"),
+                        rs.getInt("nbr_participant"));
+                data.add(competition);
+            }
+        } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-        
+
         cNom.setCellValueFactory(new PropertyValueFactory("nomCompetition"));
         cFrais.setCellValueFactory(new PropertyValueFactory("fraisCompetition"));
         cDate.setCellValueFactory(new PropertyValueFactory("dateCompetition"));
@@ -174,36 +200,32 @@ public class ViewBackController implements Initializable {
         searchBox();
     }
 
-
- 
-
-
     @FXML
     private void modifierCompetition(ActionEvent event) {
         Competition comp = tableCompetition.getSelectionModel().getSelectedItem();
-    if (comp == null) {
-        // Aucune compétition sélectionnée, afficher un message d'erreur
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Erreur de modification");
-        alert.setHeaderText(null);
-        alert.setContentText("Veuillez sélectionner une compétition à modifier et remplir tous les champs.");
-        alert.showAndWait();
-    } else {
-        btNom.setText(comp.getNomCompetition());
-        Date date = comp.getDateCompetition();
-        LocalDate localDate = Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
-        dateChoisi.setValue(localDate);
-        btMaxParticipants.setText(Integer.toString(comp.getNbrMaxInscrit()));
-        btFrais.setText(Integer.toString(comp.getFraisCompetition()));
+        if (comp == null) {
+            // Aucune compétition sélectionnée, afficher un message d'erreur
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur de modification");
+            alert.setHeaderText(null);
+            alert.setContentText("Veuillez sélectionner une compétition à modifier et remplir tous les champs.");
+            alert.showAndWait();
+        } else {
+            btNom.setText(comp.getNomCompetition());
+            Date date = comp.getDateCompetition();
+            LocalDate localDate = Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
+            dateChoisi.setValue(localDate);
+            btMaxParticipants.setText(Integer.toString(comp.getNbrMaxInscrit()));
+            btFrais.setText(Integer.toString(comp.getFraisCompetition()));
 
-        if (comp.getEtatCompetition().equals("disponible")) {
-            btDisponible.setSelected(true);
-            btNonDisponible.setSelected(false); // cocher le radioButton
-        } else if (comp.getEtatCompetition().equals("non disponible")) {
-            btNonDisponible.setSelected(true); // cocher le radioButton
-            btDisponible.setSelected(false);
+            if (comp.getEtatCompetition().equals("disponible")) {
+                btDisponible.setSelected(true);
+                btNonDisponible.setSelected(false); // cocher le radioButton
+            } else if (comp.getEtatCompetition().equals("non disponible")) {
+                btNonDisponible.setSelected(true); // cocher le radioButton
+                btDisponible.setSelected(false);
+            }
         }
-    }
     }
 
     @FXML
@@ -215,7 +237,7 @@ public class ViewBackController implements Initializable {
             alert.showAndWait();
             return;
         }
-          // Afficher une boîte de dialogue de confirmation
+        // Afficher une boîte de dialogue de confirmation
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmation");
         alert.setHeaderText("Voulez-vous vraiment supprimer cette compétition ?");
@@ -230,133 +252,124 @@ public class ViewBackController implements Initializable {
             // Rafraîchir la liste de données
             data.clear();
             showBack();
-            Alert alert2=new Alert(Alert.AlertType.INFORMATION);
+            Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("suppression validée");
             alert.setHeaderText("La compétition séléctionée a été supprimée avec succées ");
             alert.showAndWait();
-            
+
         }
-        }
+    }
 
     @FXML
     private void nouvelleCompetition(ActionEvent event) throws IOException {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("AjoutCompetition.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("AjoutCompetition.fxml"));
         Parent root = loader.load();
-    Scene scene = new Scene(root);
-    Stage stage = new Stage();
-    stage.setScene(scene);
-    stage.show();
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
         // Cacher la fenêtre actuelle
-    Node source = (Node) event.getSource();
-    Stage currentStage = (Stage) source.getScene().getWindow();
-    currentStage.hide();
-    tableCompetition.refresh();
-}
-
+        Node source = (Node) event.getSource();
+        Stage currentStage = (Stage) source.getScene().getWindow();
+        currentStage.hide();
+        tableCompetition.refresh();
+    }
 
     @FXML
     private void enregistrer(ActionEvent event) {
-         // Vérifier que tous les champs sont remplis
-    if (tableCompetition.getSelectionModel().isEmpty()
-            || btNom.getText().isEmpty()
-            || dateChoisi.getValue() == null
-            || btMaxParticipants.getText().isEmpty()
-            || btFrais.getText().isEmpty()
-            || (!btDisponible.isSelected() && !btNonDisponible.isSelected())) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Erreur de modification");
-        alert.setHeaderText(null);
-        alert.setContentText("Veuillez remplir tous les champs pour que la modification s'effectue.");
-        alert.showAndWait();
-        return;
-    } else {
-        Competition comp = tableCompetition.getSelectionModel().getSelectedItem();
-        int fraisCompetition = 0;
-        int nbrMaxParticipants = 0;
-        try {
-            fraisCompetition = Integer.parseInt(btFrais.getText());
-            nbrMaxParticipants = Integer.parseInt(btMaxParticipants.getText());
-            if((fraisCompetition<0)|| (nbrMaxParticipants>50)||(nbrMaxParticipants<0))
-            {
+        // Vérifier que tous les champs sont remplis
+        if (tableCompetition.getSelectionModel().isEmpty()
+                || btNom.getText().isEmpty()
+                || dateChoisi.getValue() == null
+                || btMaxParticipants.getText().isEmpty()
+                || btFrais.getText().isEmpty()
+                || (!btDisponible.isSelected() && !btNonDisponible.isSelected())) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur de modification");
+            alert.setHeaderText(null);
+            alert.setContentText("Veuillez remplir tous les champs pour que la modification s'effectue.");
+            alert.showAndWait();
+            return;
+        } else {
+            Competition comp = tableCompetition.getSelectionModel().getSelectedItem();
+            int fraisCompetition = 0;
+            int nbrMaxParticipants = 0;
+            try {
+                fraisCompetition = Integer.parseInt(btFrais.getText());
+                nbrMaxParticipants = Integer.parseInt(btMaxParticipants.getText());
+                if ((fraisCompetition < 0) || (nbrMaxParticipants > 50) || (nbrMaxParticipants < 0)) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erreur de modification");
-            alert.setHeaderText(null);
-            alert.setContentText("Les valeurs 'Frais' et 'Max. participants' doivent être des nombres positifs et le nombre max de participants doit être <50.");
-            alert.showAndWait();
-            return;
+                    alert.setTitle("Erreur de modification");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Les valeurs 'Frais' et 'Max. participants' doivent être des nombres positifs et le nombre max de participants doit être <50.");
+                    alert.showAndWait();
+                    return;
+                }
+            } catch (NumberFormatException e) {
+                // Afficher un message d'erreur si les valeurs ne peuvent pas être converties en entiers
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Erreur de modification");
+                alert.setHeaderText(null);
+                alert.setContentText("Les valeurs 'Frais' et 'Max. participants' doivent être des nombres entiers.");
+                alert.showAndWait();
+                return;
             }
-        }
-        
-        catch (NumberFormatException e) {
-            // Afficher un message d'erreur si les valeurs ne peuvent pas être converties en entiers
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erreur de modification");
-            alert.setHeaderText(null);
-            alert.setContentText("Les valeurs 'Frais' et 'Max. participants' doivent être des nombres entiers.");
-            alert.showAndWait();
-            return;
-        }
-        String etatCompetition = btDisponible.isSelected() ? "disponible" : "non disponible";
-        if(btDisponible.isSelected()&&btNonDisponible.isSelected())
-        {
-            
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erreur de modification");
-            alert.setHeaderText(null);
-            alert.setContentText("Vous devez séléctionner une seule etat!!!.");
-            alert.showAndWait();
-            return;
-        }
-        comp.setNomCompetition(btNom.getText());
-        comp.setDateCompetition(Date.from(dateChoisi.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()));
-        comp.setNbrMaxInscrit(nbrMaxParticipants);
-        comp.setFraisCompetition(fraisCompetition);
-        comp.setEtatCompetition(etatCompetition);
-        ccrd.modifierCompetition(comp);
+            String etatCompetition = btDisponible.isSelected() ? "disponible" : "non disponible";
+            if (btDisponible.isSelected() && btNonDisponible.isSelected()) {
 
-        // Mettre à jour la compétition dans la base de données
-        // Afficher un message de confirmation
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Modification réussie");
-        alert.setHeaderText(null);
-        alert.setContentText("La compétition a été modifiée avec succès.");
-        alert.showAndWait();
-        tableCompetition.refresh();
-        // Rafraîchir
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Erreur de modification");
+                alert.setHeaderText(null);
+                alert.setContentText("Vous devez séléctionner une seule etat!!!.");
+                alert.showAndWait();
+                return;
+            }
+            comp.setNomCompetition(btNom.getText());
+            comp.setDateCompetition(Date.from(dateChoisi.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+            comp.setNbrMaxInscrit(nbrMaxParticipants);
+            comp.setFraisCompetition(fraisCompetition);
+            comp.setEtatCompetition(etatCompetition);
+            ccrd.modifierCompetition(comp);
+
+            // Mettre à jour la compétition dans la base de données
+            // Afficher un message de confirmation
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Modification réussie");
+            alert.setHeaderText(null);
+            alert.setContentText("La compétition a été modifiée avec succès.");
+            alert.showAndWait();
+            tableCompetition.refresh();
+            // Rafraîchir
+        }
     }
-}
 
-   @FXML
-private void voirTickets(ActionEvent event)  throws IOException {
-            Parent loader = FXMLLoader.load(getClass().getResource("ViewTickets.fxml"));
+    @FXML
+    private void voirTickets(ActionEvent event) throws IOException {
+        Parent loader = FXMLLoader.load(getClass().getResource("ViewTickets.fxml"));
         //Parent root = loader.load();
 
-    // Obtenir le contrôleur associé à la vue FXML
-    //AjoutBackController controller = loader.getController();
-
-    // Afficher la nouvelle interface utilisateur
-    Scene scene = new Scene(loader);
-    Stage stage = new Stage();
-    stage.setScene(scene);
-    stage.show();
+        // Obtenir le contrôleur associé à la vue FXML
+        //AjoutBackController controller = loader.getController();
+        // Afficher la nouvelle interface utilisateur
+        Scene scene = new Scene(loader);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
         // Cacher la fenêtre actuelle
-    Node source = (Node) event.getSource();
-    Stage currentStage = (Stage) source.getScene().getWindow();
-    currentStage.hide();
-    tableCompetition.refresh();
-}
-
+        Node source = (Node) event.getSource();
+        Stage currentStage = (Stage) source.getScene().getWindow();
+        currentStage.hide();
+        tableCompetition.refresh();
+    }
 
     @FXML
     private void refreshTab(ActionEvent event) {
-           tableCompetition.refresh();
+        tableCompetition.refresh();
     }
 
-
-
-        public void searchBox() throws SQLException {
-   //     Competition competition= getTableView().getItems().
-       FilteredList<Competition> filteredData = new FilteredList<>(FXCollections.observableArrayList(ccrd.afficherListe()), p -> true);
+    public void searchBox() throws SQLException {
+        //     Competition competition= getTableView().getItems().
+        FilteredList<Competition> filteredData = new FilteredList<>(FXCollections.observableArrayList(ccrd.afficherListe()), p -> true);
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredData.setPredicate(competition -> {
                 if (newValue == null || newValue.isEmpty()) {
@@ -366,8 +379,6 @@ private void voirTickets(ActionEvent event)  throws IOException {
                 String dt = String.valueOf(competition.getDateCompetition());
                 String ins = String.valueOf(competition.getNbrMaxInscrit());
                 String nbP = String.valueOf(competition.getNbrParticipants());
-                
-
 
                 String lowerCaseFilter = newValue.toLowerCase();
                 if (competition.getEtatCompetition().toLowerCase().contains(lowerCaseFilter)) {
@@ -390,12 +401,12 @@ private void voirTickets(ActionEvent event)  throws IOException {
         SortedList<Competition> sortedData = new SortedList<>(filteredData);
         sortedData.comparatorProperty().bind(tableCompetition.comparatorProperty());
         tableCompetition.setItems(sortedData);
-    
+
     }
 
     @FXML
     private void pdfbtn(ActionEvent event) throws SQLException {
-          // Afficher la boîte de dialogue de sélection de fichier
+        // Afficher la boîte de dialogue de sélection de fichier
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Enregistrer le fichier PDF");
         fileChooser.getExtensionFilters().add(new ExtensionFilter("Fichiers PDF", "*.pdf"));
@@ -427,7 +438,7 @@ private void voirTickets(ActionEvent event)  throws IOException {
 
                 // Créer une police personnalisée pour la date
                 Font fontDate = new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.BOLD);
-                BaseColor color = new BaseColor(114,0,0); // Rouge: 50, Vert: 187, Bleu: 111
+                BaseColor color = new BaseColor(114, 0, 0); // Rouge: 50, Vert: 187, Bleu: 111
                 fontDate.setColor(color); // Définir la couleur de la police
 
                 // Créer un paragraphe avec le lieu
@@ -526,9 +537,9 @@ private void voirTickets(ActionEvent event)  throws IOException {
                 table.addCell(cell5);
                 table.addCell(cell6);
                 table.addCell(cell7);
-                
+
                 Font hdFont = new Font(Font.FontFamily.TIMES_ROMAN, 14, Font.NORMAL);
-                BaseColor hdColor = new BaseColor(114,0,0); //
+                BaseColor hdColor = new BaseColor(114, 0, 0); //
                 hrFont.setColor(hdColor);
                 // Ajouter les données des produits
                 for (Competition competition : CompetitionList) {
@@ -593,7 +604,6 @@ private void voirTickets(ActionEvent event)  throws IOException {
             }
         }
 
- 
     }
 
     @FXML
@@ -601,25 +611,18 @@ private void voirTickets(ActionEvent event)  throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Statistique.fxml"));
         Parent root = loader.load();
 
-    // Obtenir le contrôleur associé à la vue FXML
-    StatistiqueController controller = loader.getController();
+        // Obtenir le contrôleur associé à la vue FXML
+        StatistiqueController controller = loader.getController();
 
-    // Afficher la nouvelle interface utilisateur
-    Scene scene = new Scene(root);
-    Stage stage = new Stage();
-    stage.setScene(scene);
-    stage.show();
+        // Afficher la nouvelle interface utilisateur
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
         // Cacher la fenêtre actuelle
-    Node source = (Node) event.getSource();
-    Stage currentStage = (Stage) source.getScene().getWindow();
-    currentStage.hide();
-        
+        Node source = (Node) event.getSource();
+        Stage currentStage = (Stage) source.getScene().getWindow();
+        currentStage.hide();
+
     }
-    }
-
-
-    
-
-
-
-
+}

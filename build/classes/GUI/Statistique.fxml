@@ -7,39 +7,25 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
 
-<AnchorPane id="AnchorPane" fx:id="paneStat" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="760.0" prefWidth="1233.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.StatistiqueController">
+<AnchorPane id="AnchorPane" fx:id="paneStat" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="760.0" prefWidth="1233.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.StatistiqueController">
    <children>
-      <BorderPane fx:id="bp" layoutX="7.0" layoutY="9.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="760.0" prefWidth="1234.0">
-         <left>
-            <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="760.0" prefWidth="1234.0" BorderPane.alignment="CENTER">
-               <children>
-                  <Button fx:id="btnReturn" layoutX="334.0" layoutY="58.0" mnemonicParsing="false" onAction="#voirCompetition" prefHeight="34.0" prefWidth="66.0" styleClass="btn" stylesheets="@ajoutcompetition.css" textAlignment="CENTER">
-                     <graphic>
-                        <ImageView fx:id="btRetour" fitHeight="25.0" fitWidth="57.0" onDragDetected="#voirCompetition" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../Images/return.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-                  <ImageView fitHeight="591.0" fitWidth="397.0" layoutX="4.0" layoutY="216.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Images/narYaHabibi-depositphotos-bgremover.png" />
-                     </image>
-                  </ImageView>
-                  <LineChart fx:id="competitions" layoutX="334.0" layoutY="115.0" opacity="0.85" prefHeight="475.0" prefWidth="728.0">
-                    <xAxis>
-                      <CategoryAxis side="BOTTOM" />
-                    </xAxis>
-                    <yAxis>
-                      <NumberAxis side="LEFT" />
-                    </yAxis>
-                  </LineChart>
-               </children>
-            </AnchorPane>
-         </left>
-      </BorderPane>
+      <Button fx:id="btnReturn" layoutX="34.0" layoutY="34.0" mnemonicParsing="false" onAction="#back_ViewBack_Competition" prefHeight="34.0" prefWidth="66.0" styleClass="btn" stylesheets="@ajoutcompetition.css" textAlignment="CENTER">
+         <graphic>
+            <ImageView fx:id="btRetour" fitHeight="25.0" fitWidth="57.0" onDragDetected="#voirCompetition" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/return.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <LineChart fx:id="competitions" layoutX="205.0" layoutY="118.0" opacity="0.85" prefHeight="523.0" prefWidth="823.0">
+         <xAxis>
+            <CategoryAxis side="BOTTOM" />
+         </xAxis>
+         <yAxis>
+            <NumberAxis side="LEFT" />
+         </yAxis>
+      </LineChart>
    </children>
 </AnchorPane>

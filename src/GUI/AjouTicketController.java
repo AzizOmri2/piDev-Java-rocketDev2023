@@ -46,8 +46,6 @@ import javafx.stage.Stage;
 public class AjouTicketController implements Initializable {
 
     @FXML
-    private BorderPane bp;
-    @FXML
     private ComboBox<String> nomCompetitionTicket;
     @FXML
     private TextArea descriptionTicket;
@@ -62,82 +60,87 @@ public class AjouTicketController implements Initializable {
     List<String> nomsCompetition = new ArrayList<>();
     @FXML
     private AnchorPane paneAjoutTicket;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
-        String req = "SELECT nom_competition FROM competition WHERE etat_competition = 'disponible' ";
-        Statement st = MyDB.getInstance().getConx().createStatement();
-        ResultSet rs = st.executeQuery(req);
+            String req = "SELECT nom_competition FROM competition WHERE etat_competition = 'disponible' ";
+            Statement st = MyDB.getInstance().getConx().createStatement();
+            ResultSet rs = st.executeQuery(req);
 
-        while (rs.next()) {
-            String nomCompetition = rs.getString("nom_competition");
-            nomsCompetition.add(nomCompetition);
+            while (rs.next()) {
+                String nomCompetition = rs.getString("nom_competition");
+                nomsCompetition.add(nomCompetition);
+            }
+            nomCompetitionTicket.getItems().setAll(nomsCompetition);
+            nomCompetitionTicket.getSelectionModel().selectFirst();
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
         }
-        nomCompetitionTicket.getItems().setAll(nomsCompetition);
-        nomCompetitionTicket.getSelectionModel().selectFirst();
 
-    } catch (SQLException ex) {
-        System.out.println(ex.getMessage());
     }
 
-}
+    @FXML
+    void back_ViewBack_Competition() throws IOException {
 
-@FXML
-private void ajoutTicket(ActionEvent event) {
-    try {
-        String rq = "SELECT id from competition WHERE nom_competition=?";
-        PreparedStatement ps = MyDB.getInstance().getConx().prepareStatement(rq);
-        ps.setString(1, nomCompetitionTicket.getValue());
-        ResultSet rs = ps.executeQuery();
-        String desc = descriptionTicket.getText();
-        if(desc.isEmpty())
-        {           
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erreur d'ajout !");
-            alert.setHeaderText(null);
-            alert.setContentText("Vous devez mettre une description au ticket.");
-            alert.showAndWait();
-            return;
-        
-        }
-        int idCmp;
-        if (rs.next()) {
-            idCmp = rs.getInt("id");
-            Ticket tq = new Ticket(desc, idCmp);
-            TicketServices tqS = new TicketServices();
-            tqS.ajouterr(tq);
-            // si l'jout est fait affichage d'une alerte d'information
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Ticket ajouté");
-            alert.setHeaderText(null);
-            alert.setContentText("Le ticket a été ajouté avec succès.");
-            alert.showAndWait();
-        } else {
-            // si la compétition n'a pas été trouvée, affichage d'une alerte d'erreur
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erreur d'ajout !");
-            alert.setHeaderText(null);
-            alert.setContentText("La compétition n'a pas été trouvée.");
-            alert.showAndWait();
-        }
-    } catch (SQLException ex) {
-        System.out.println(ex.getMessage());
+        Parent fxml = FXMLLoader.load(getClass().getResource("ViewBack.fxml"));
+        paneAjoutTicket.getChildren().removeAll();
+        paneAjoutTicket.getChildren().setAll(fxml);
     }
-}
 
+    @FXML
+    private void ajoutTicket(ActionEvent event) {
+        try {
+            String rq = "SELECT id from competition WHERE nom_competition=?";
+            PreparedStatement ps = MyDB.getInstance().getConx().prepareStatement(rq);
+            ps.setString(1, nomCompetitionTicket.getValue());
+            ResultSet rs = ps.executeQuery();
+            String desc = descriptionTicket.getText();
+            if (desc.isEmpty()) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Erreur d'ajout !");
+                alert.setHeaderText(null);
+                alert.setContentText("Vous devez mettre une description au ticket.");
+                alert.showAndWait();
+                return;
 
-
+            }
+            int idCmp;
+            if (rs.next()) {
+                idCmp = rs.getInt("id");
+                Ticket tq = new Ticket(desc, idCmp);
+                TicketServices tqS = new TicketServices();
+                tqS.ajouterr(tq);
+                // si l'jout est fait affichage d'une alerte d'information
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Ticket ajouté");
+                alert.setHeaderText(null);
+                alert.setContentText("Le ticket a été ajouté avec succès.");
+                alert.showAndWait();
+            } else {
+                // si la compétition n'a pas été trouvée, affichage d'une alerte d'erreur
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Erreur d'ajout !");
+                alert.setHeaderText(null);
+                alert.setContentText("La compétition n'a pas été trouvée.");
+                alert.showAndWait();
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
 
     @FXML
     private void effacerTout(ActionEvent event) {
-    nomCompetitionTicket.getItems().setAll(nomsCompetition);
-    descriptionTicket.clear();
+        nomCompetitionTicket.getItems().setAll(nomsCompetition);
+        descriptionTicket.clear();
     }
 
-  /*  @FXML
+    /*  @FXML
     private void voirCompetition(MouseEvent event) throws IOException {
           FXMLLoader loader = new FXMLLoader(getClass().getResource("ViewBack.fxml"));
         Parent root = loader.load();
@@ -156,28 +159,24 @@ private void ajoutTicket(ActionEvent event) {
     currentStage.hide();
         
     }
-*/
+     */
     @FXML
     private void voirTicket(ActionEvent event) throws IOException {
-                 FXMLLoader loader = new FXMLLoader(getClass().getResource("viewTickets.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("viewTickets.fxml"));
         Parent root = loader.load();
 
-    
-    Scene scene = new Scene(root);
-    Stage stage = new Stage();
-    stage.setScene(scene);
-    stage.show();
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
         // Cacher la fenêtre actuelle
-    Node source = (Node) event.getSource();
-    Stage currentStage = (Stage) source.getScene().getWindow();
-    currentStage.hide();
-}
+        Node source = (Node) event.getSource();
+        Stage currentStage = (Stage) source.getScene().getWindow();
+        currentStage.hide();
+    }
 
     @FXML
     private void voirCompetition(MouseEvent event) {
     }
-
-
-    
 
 }

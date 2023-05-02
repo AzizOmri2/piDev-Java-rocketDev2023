@@ -72,8 +72,6 @@ public class ViewTicketsController implements Initializable {
     private TableView<Ticket> tableTickets;
     @FXML
     private TableColumn<Ticket, Integer> id;
-    @FXML
-    private BorderPane bp;
      public Connection conx;
      
       MyDB cnx = null;
@@ -103,7 +101,20 @@ public void initialize(URL url, ResourceBundle rb) {
              Logger.getLogger(ViewTicketsController.class.getName()).log(Level.SEVERE, null, ex);
          }
 }
+@FXML
+    void back_ViewBack_Competition() throws IOException {
 
+        Parent fxml = FXMLLoader.load(getClass().getResource("ViewBack.fxml"));
+        paneViewTicket.getChildren().removeAll();
+       paneViewTicket.getChildren().setAll(fxml);
+    }
+//     @FXML
+//    private void NouvelleTicket(ActionEvent event) throws IOException {
+//        Parent fxml = FXMLLoader.load(getClass().getResource("ajoutTicket.fxml"));
+//        paneViewTicket.getChildren().removeAll();
+//        paneViewTicket.getChildren().setAll(fxml);
+//
+//    }
 
 public void viewBackTicket() throws SQLException {
     TicketServices ts=new TicketServices();
@@ -135,16 +146,13 @@ public void viewBackTicket() throws SQLException {
 
     @FXML
     private void AjouterTicket(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("ajouTicket.fxml"));
-        Parent root = loader.load();
-    Scene scene = new Scene(root);
-    Stage stage = new Stage();
-    stage.setScene(scene);
-    stage.show();
+        Parent fxml = FXMLLoader.load(getClass().getResource("ajouTicket.fxml"));
+        paneViewTicket.getChildren().removeAll();
+        paneViewTicket.getChildren().setAll(fxml);
         // Cacher la fenêtre actuelle
-    Node source = (Node) event.getSource();
-    Stage currentStage = (Stage) source.getScene().getWindow();
-    currentStage.hide();
+//    Node source = (Node) event.getSource();
+//    Stage currentStage = (Stage) source.getScene().getWindow();
+//    currentStage.hide();
     tableTickets.refresh();
     }
 

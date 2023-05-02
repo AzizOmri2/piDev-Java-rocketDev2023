@@ -11,151 +11,128 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="paneViewBack" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="760.0" prefWidth="1234.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ViewBackController">
+<AnchorPane id="AnchorPane" fx:id="paneViewBack" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="760.0" prefWidth="1233.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ViewBackController">
    <children>
-      <AnchorPane id="AnchorPane" layoutX="5.0" layoutY="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="760.0" prefWidth="1234.0">
-         <children>
-            <BorderPane fx:id="bp" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="760.0" prefWidth="1234.0">
-               <center>
-                  <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="760.0" prefWidth="1234.0" BorderPane.alignment="CENTER">
-                     <children>
-                        <ImageView fitHeight="524.0" fitWidth="607.0" layoutX="284.0" layoutY="109.0" nodeOrientation="RIGHT_TO_LEFT" opacity="0.51" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../Images/girlPlaying-depositphotos-bgremover.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fitHeight="97.0" fitWidth="140.0" layoutX="209.0" layoutY="642.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../Images/mulher-fazendo-treino-de-crossfit_low.png" />
-                           </image>
-                        </ImageView>
-                        <Button fx:id="load" layoutX="759.0" layoutY="33.0" mnemonicParsing="false" onAction="#refreshTab" prefHeight="31.0" prefWidth="46.0" styleClass="btn" stylesheets="@viewFront.css" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                           <graphic>
-                              <ImageView fitHeight="20.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../Images/icons8-available-updates-50.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                        <TextField fx:id="searchField" layoutX="457.0" layoutY="34.0" prefHeight="31.0" prefWidth="277.0" promptText="Search..." styleClass="search" stylesheets="@viewFront.css" />
-                        <Button fx:id="VoirTicket" layoutX="244.0" layoutY="361.0" mnemonicParsing="false" onAction="#voirTickets" prefHeight="30.0" prefWidth="159.0" styleClass="btn" stylesheets="@viewFront.css" text="Consulter Les Tickets" textAlignment="CENTER" textFill="#720000">
-                           <font>
-                              <Font name="System Bold Italic" size="12.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="btSupprimer" layoutX="563.0" layoutY="360.0" mnemonicParsing="false" onAction="#supprimerCompetition" prefHeight="30.0" prefWidth="120.0" styleClass="btn" stylesheets="@viewFront.css" text="Supprimer" textAlignment="CENTER" textFill="#720000">
-                           <font>
-                              <Font name="System Bold Italic" size="12.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="btModifier" layoutX="414.0" layoutY="360.0" mnemonicParsing="false" onAction="#modifierCompetition" prefHeight="25.0" prefWidth="139.0" styleClass="btn" stylesheets="@viewFront.css" text="Modifier" textAlignment="CENTER" textFill="#720000">
-                           <font>
-                              <Font name="System Bold Italic" size="12.0" />
-                           </font>
-                        </Button>
-                        <ScrollPane layoutX="311.0" layoutY="441.0" prefHeight="223.0" prefWidth="563.0" styleClass="table-view" stylesheets="@viewFront.css">
-                           <content>
-                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="219.0" prefWidth="560.0" stylesheets="@ajoutcompetition.css">
-                                 <children>
-                                    <Label layoutX="88.0" layoutY="12.0" styleClass="label-ajout" stylesheets="@ajoutcompetition.css" text="Nom:">
-                                       <font>
-                                          <Font name="System Bold Italic" size="12.0" />
-                                       </font>
-                                    </Label>
-                                    <Label layoutX="89.0" layoutY="45.0" styleClass="label-ajout" stylesheets="@ajoutcompetition.css" text="Frais:">
-                                       <font>
-                                          <Font name="System Bold Italic" size="12.0" />
-                                       </font>
-                                    </Label>
-                                    <Label layoutX="89.0" layoutY="79.0" styleClass="label-ajout" stylesheets="@ajoutcompetition.css" text="Date:">
-                                       <font>
-                                          <Font name="System Bold Italic" size="12.0" />
-                                       </font>
-                                    </Label>
-                                    <Label layoutX="31.0" layoutY="109.0" styleClass="label-ajout" stylesheets="@ajoutcompetition.css" text="Maximum Des Participants:">
-                                       <font>
-                                          <Font name="System Bold Italic" size="12.0" />
-                                       </font>
-                                    </Label>
-                                    <Label layoutX="79.0" layoutY="134.0" styleClass="label-ajout" stylesheets="@ajoutcompetition.css" text="Son Etat:">
-                                       <font>
-                                          <Font name="System Bold Italic" size="12.0" />
-                                       </font>
-                                    </Label>
-                                    <TextField fx:id="btNom" layoutX="192.0" layoutY="8.0" prefHeight="25.0" prefWidth="205.0" promptText="nomCompetition" styleClass="textfield" stylesheets="@ajoutcompetition.css" />
-                                    <DatePicker fx:id="dateChoisi" layoutX="193.0" layoutY="75.0" prefHeight="25.0" prefWidth="205.0" styleClass="datePicker" stylesheets="@ajoutcompetition.css" />
-                                    <TextField fx:id="btFrais" layoutX="193.0" layoutY="41.0" prefHeight="25.0" prefWidth="205.0" promptText="En Dinar" styleClass="textfield" stylesheets="@ajoutcompetition.css" />
-                                    <TextField fx:id="btMaxParticipants" layoutX="192.0" layoutY="105.0" prefHeight="25.0" prefWidth="205.0" promptText="De 1 jusqu'à 50 participants" styleClass="textfield" stylesheets="@ajoutcompetition.css" />
-                                    <RadioButton fx:id="btDisponible" layoutX="193.0" layoutY="134.0" mnemonicParsing="false" text="Disponible">
-                                       <font>
-                                          <Font name="System Italic" size="12.0" />
-                                       </font>
-                                    </RadioButton>
-                                    <RadioButton fx:id="btNonDisponible" layoutX="293.0" layoutY="134.0" mnemonicParsing="false" text="Non Disponible">
-                                       <font>
-                                          <Font name="System Italic" size="12.0" />
-                                       </font>
-                                    </RadioButton>
-                                    <Button fx:id="Enregistrer" layoutX="320.0" layoutY="162.0" mnemonicParsing="false" onAction="#enregistrer" styleClass="btn" stylesheets="@ajoutcompetition.css" text="Modifier" textFill="#720000">
-                                       <font>
-                                          <Font name="System Bold Italic" size="12.0" />
-                                       </font>
-                                    </Button>
-                                 </children>
-                              </AnchorPane>
-                           </content>
-                        </ScrollPane>
-                        <TableView fx:id="tableCompetition" layoutX="144.0" layoutY="81.0" prefHeight="259.0" prefWidth="876.0" stylesheets="@viewFront.css">
-                           <columns>
-                              <TableColumn fx:id="cNom" minWidth="0.0" prefWidth="225.0" text="Nom" />
-                              <TableColumn fx:id="cFrais" minWidth="3.0" prefWidth="92.0" text="Frais" />
-                              <TableColumn fx:id="cDate" prefWidth="183.0" text="Date" />
-                              <TableColumn fx:id="cNbMax" prefWidth="94.0" text="Max D'inscrit" />
-                              <TableColumn fx:id="cEtat" prefWidth="185.0" text="Etat " />
-                              <TableColumn fx:id="cNbParticipants" minWidth="0.0" prefWidth="89.0" text="Participants" />
-                              <TableColumn fx:id="cId" minWidth="0.0" prefWidth="7.0" text="Id" />
-                           </columns>
-                        </TableView>
-                        <Button fx:id="PDF" layoutX="699.0" layoutY="360.0" mnemonicParsing="false" onAction="#pdfbtn" prefHeight="30.0" prefWidth="93.0" styleClass="btn" stylesheets="@viewFront.css" text="Enregistrer" />
-                        <Button fx:id="StatBtn" layoutX="810.0" layoutY="359.0" mnemonicParsing="false" onAction="#Statistique" prefHeight="32.0" prefWidth="129.0" styleClass="btn" stylesheets="@viewFront.css" text="Statistique" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                           <graphic>
-                              <ImageView fitHeight="22.0" fitWidth="43.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../Images/icons8-crowdfunding-80.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                        <Button fx:id="btNouvelleC" layoutX="716.0" layoutY="700.0" mnemonicParsing="false" onAction="#nouvelleCompetition" prefHeight="30.0" prefWidth="179.0" styleClass="btn" stylesheets="@viewFront.css" text="Nouvelle Competition" textAlignment="CENTER" textFill="#720000">
-                           <font>
-                              <Font name="System Bold Italic" size="13.0" />
-                           </font>
-                        </Button>
-                        <Label layoutX="324.0" layoutY="704.0" prefHeight="21.0" prefWidth="371.0" text="Vous souhaitez de créer une nouvelle competition ? " textFill="#720000">
-                           <font>
-                              <Font name="System Bold Italic" size="15.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </AnchorPane>
-               </center>
-            </BorderPane>
-            <Label layoutX="252.0" layoutY="29.0" prefHeight="32.0" prefWidth="227.0" text="Compétitions:" textFill="#720000">
-               <font>
-                  <Font name="Calibri Bold Italic" size="30.0" />
-               </font>
-            </Label>
-         </children>
-      </AnchorPane>
+      <Button fx:id="load" layoutX="310.0" layoutY="72.0" mnemonicParsing="false" onAction="#refreshTab" prefHeight="42.0" prefWidth="54.0" styleClass="btn" stylesheets="@viewFront.css" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="20.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/icons8-available-updates-50.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <TextField fx:id="searchField" layoutX="427.0" layoutY="73.0" prefHeight="40.0" prefWidth="282.0" promptText="Search..." styleClass="search" stylesheets="@viewFront.css" />
+      <Button fx:id="VoirTicket" layoutX="166.0" layoutY="648.0" mnemonicParsing="false" onAction="#ConsulterTicket" prefHeight="42.0" prefWidth="177.0" styleClass="btn" stylesheets="@viewFront.css" text="Consulter Les Tickets" textAlignment="CENTER" textFill="#720000">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font>
+      </Button>
+      <Button fx:id="btSupprimer" layoutX="208.0" layoutY="588.0" mnemonicParsing="false" onAction="#supprimerCompetition" prefHeight="41.0" prefWidth="94.0" styleClass="btn" stylesheets="@viewFront.css" text="Supprimer" textAlignment="CENTER" textFill="#720000">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font>
+      </Button>
+      <Button fx:id="btModifier" layoutX="208.0" layoutY="528.0" mnemonicParsing="false" onAction="#modifierCompetition" prefHeight="41.0" prefWidth="94.0" styleClass="btn" stylesheets="@viewFront.css" text="Modifier" textAlignment="CENTER" textFill="#720000">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font>
+      </Button>
+      <ScrollPane layoutX="500.0" layoutY="500.0" prefHeight="223.0" prefWidth="563.0" styleClass="table-view" stylesheets="@viewFront.css">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="219.0" prefWidth="560.0">
+               <children>
+                  <Label layoutX="88.0" layoutY="12.0" styleClass="label-ajout" stylesheets="@ajoutcompetition.css" text="Nom:">
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="89.0" layoutY="45.0" styleClass="label-ajout" stylesheets="@ajoutcompetition.css" text="Frais:">
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="89.0" layoutY="79.0" styleClass="label-ajout" stylesheets="@ajoutcompetition.css" text="Date:">
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="31.0" layoutY="109.0" styleClass="label-ajout" stylesheets="@ajoutcompetition.css" text="Maximum Des Participants:">
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="90.0" layoutY="143.0" styleClass="label-ajout" stylesheets="@ajoutcompetition.css" text="Etat:">
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="btNom" layoutX="192.0" layoutY="8.0" prefHeight="25.0" prefWidth="205.0" promptText="Nom Competition" styleClass="textfield" stylesheets="@ajoutcompetition.css" />
+                  <DatePicker fx:id="dateChoisi" layoutX="193.0" layoutY="75.0" prefHeight="25.0" prefWidth="205.0" promptText="Date Compétition" styleClass="datePicker" stylesheets="@ajoutcompetition.css" />
+                  <TextField fx:id="btFrais" layoutX="193.0" layoutY="41.0" prefHeight="25.0" prefWidth="205.0" promptText="Frais En DT" styleClass="textfield" stylesheets="@ajoutcompetition.css" />
+                  <TextField fx:id="btMaxParticipants" layoutX="192.0" layoutY="105.0" prefHeight="25.0" prefWidth="205.0" promptText="De 1 jusqu'à 50 participants" styleClass="textfield" stylesheets="@ajoutcompetition.css" />
+                  <RadioButton fx:id="btDisponible" layoutX="193.0" layoutY="143.0" mnemonicParsing="false" text="Disponible">
+                     <font>
+                        <Font name="System Italic" size="12.0" />
+                     </font>
+                  </RadioButton>
+                  <RadioButton fx:id="btNonDisponible" layoutX="293.0" layoutY="143.0" mnemonicParsing="false" text="Non Disponible">
+                     <font>
+                        <Font name="System Italic" size="12.0" />
+                     </font>
+                  </RadioButton>
+                  <Button fx:id="Enregistrer" layoutX="321.0" layoutY="181.0" mnemonicParsing="false" onAction="#enregistrer" styleClass="btn" stylesheets="@ajoutcompetition.css" text="Modifier" textFill="#720000">
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
+         </content>
+      </ScrollPane>
+      <Button fx:id="PDF" layoutX="758.0" layoutY="72.0" mnemonicParsing="false" onAction="#pdfbtn" prefHeight="42.0" prefWidth="110.0" styleClass="btn" stylesheets="@viewFront.css" text="Enregistrer" />
+      <Button fx:id="StatBtn" layoutX="901.0" layoutY="72.0" mnemonicParsing="false" onAction="#ConsulterStat" prefHeight="42.0" prefWidth="129.0" styleClass="btn" stylesheets="@viewFront.css" text="Statistique" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="22.0" fitWidth="43.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/icons8-crowdfunding-80.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="btNouvelleC" layoutX="104.0" layoutY="72.0" mnemonicParsing="false" onAction="#NouvelleCompetition" prefHeight="42.0" prefWidth="177.0" styleClass="btn" stylesheets="@viewFront.css" text="Nouvelle Competition" textAlignment="CENTER" textFill="#720000">
+         <font>
+            <Font name="System Bold Italic" size="13.0" />
+         </font>
+      </Button>
+      <Label layoutX="48.0" layoutY="38.0" prefHeight="21.0" prefWidth="371.0" text="Vous souhaitez de créer une nouvelle competition ? " textFill="#720000">
+         <font>
+            <Font name="System Bold Italic" size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="104.0" layoutY="464.0" prefHeight="32.0" prefWidth="227.0" text="Compétitions:" textFill="#720000">
+         <font>
+            <Font name="Calibri Bold Italic" size="30.0" />
+         </font>
+      </Label>
+      <TableView fx:id="tableCompetition" layoutX="67.0" layoutY="163.0" prefHeight="259.0" prefWidth="1098.0" stylesheets="@viewFront.css">
+         <columns>
+            <TableColumn fx:id="cNom" minWidth="0.0" prefWidth="225.0" text="Nom" />
+            <TableColumn fx:id="cFrais" minWidth="3.0" prefWidth="108.0" text="Frais" />
+            <TableColumn fx:id="cDate" prefWidth="199.19998168945312" text="Date" />
+            <TableColumn fx:id="cNbMax" prefWidth="140.0" text="Max D'inscrit" />
+            <TableColumn fx:id="cEtat" prefWidth="196.0" text="Etat " />
+            <TableColumn fx:id="cNbParticipants" minWidth="0.0" prefWidth="231.1998291015625" text="Participants" />
+            <TableColumn fx:id="cId" minWidth="0.0" prefWidth="0.0" text="Id" />
+         </columns>
+      </TableView>
    </children>
 </AnchorPane>

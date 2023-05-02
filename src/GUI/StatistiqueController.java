@@ -44,16 +44,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.fx.ChartViewer;
-import org.jfree.chart.labels.PieSectionLabelGenerator;
-import org.jfree.chart.labels.StandardPieSectionLabelGenerator;
-import org.jfree.chart.plot.PiePlot;
-import org.jfree.data.general.DefaultPieDataset;
-import org.jfree.data.general.PieDataset;
-
 
 /**
  * FXML Controller class
@@ -69,7 +59,7 @@ public class StatistiqueController implements Initializable {
     @FXML
     private ImageView btRetour;
     @FXML
-    private LineChart<String, Integer > competitions;
+    private LineChart<String, Integer> competitions;
     @FXML
     private AnchorPane paneStat;
 
@@ -84,13 +74,20 @@ public class StatistiqueController implements Initializable {
             Logger.getLogger(StatistiqueController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-  public void statistique() throws SQLException {
+
+    @FXML
+    void back_ViewBack_Competition() throws IOException {
+
+        Parent fxml = FXMLLoader.load(getClass().getResource("ViewBack.fxml"));
+        paneStat.getChildren().removeAll();
+        paneStat.getChildren().setAll(fxml);
+    }
+
+    public void statistique() throws SQLException {
         CompetitionServices cs = new CompetitionServices();
 
         List<Competition> comp = null;
         comp = cs.afficherListe();
-        
-        
 
         // Créer les axes pour le graphique
         final NumberAxis yAxis = new NumberAxis();
@@ -101,7 +98,7 @@ public class StatistiqueController implements Initializable {
         // Créer la série de données à afficher
         XYChart.Series series = new XYChart.Series();
         series.setName("Statistiques des Competitions selon le nombre des participants");
-        for (Competition compe :comp) {
+        for (Competition compe : comp) {
             series.getData().add(new XYChart.Data<>(compe.getNomCompetition(), compe.getNbrParticipants()));
         }
 
@@ -113,13 +110,8 @@ public class StatistiqueController implements Initializable {
         // Afficher le graphique dans votre scène
         competitions.setCreateSymbols(false);
         competitions.getData().add(series);
-        
-        
-
 
     }
-    
-
 
     @FXML
     private void voirCompetition(MouseEvent event) {
@@ -127,18 +119,16 @@ public class StatistiqueController implements Initializable {
 
     @FXML
     private void voirCompetition(ActionEvent event) throws IOException {
-FXMLLoader loader = new FXMLLoader(getClass().getResource("ViewBack.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("ViewBack.fxml"));
         Parent root = loader.load();
-    Scene scene = new Scene(root);
-    Stage stage = new Stage();
-    stage.setScene(scene);
-    stage.show();
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
         // Cacher la fenêtre actuelle
-    Node source = (Node) event.getSource();
-    Stage currentStage = (Stage) source.getScene().getWindow();
-    currentStage.hide();
+        Node source = (Node) event.getSource();
+        Stage currentStage = (Stage) source.getScene().getWindow();
+        currentStage.hide();
     }
-
-
 
 }

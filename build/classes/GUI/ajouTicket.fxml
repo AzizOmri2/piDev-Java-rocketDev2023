@@ -7,59 +7,43 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.TextFlow?>
 
-<AnchorPane id="AnchorPane" fx:id="paneAjoutTicket" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="760.0" prefWidth="1234.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.AjouTicketController">
+<AnchorPane id="AnchorPane" fx:id="paneAjoutTicket" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="760.0" prefWidth="1233.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.AjouTicketController">
    <children>
-      <BorderPane fx:id="bp" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="760.0" prefWidth="1234.0">
-         <center>
-            <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="760.0" prefWidth="1234.0" BorderPane.alignment="CENTER">
-               <children>
-                  <Pane layoutX="227.0" layoutY="195.0" prefHeight="565.0" prefWidth="780.0">
-                     <children>
-                        <Label layoutX="16.0" layoutY="48.0" styleClass="label-ajout" stylesheets="@ajoutcompetition.css" text="Ticket Pour La Competition: " />
-                        <ComboBox fx:id="nomCompetitionTicket" layoutX="187.0" layoutY="43.0" prefHeight="25.0" prefWidth="251.0" styleClass="textfield" stylesheets="@ajoutcompetition.css" />
-                        <Label layoutX="25.0" layoutY="125.0" styleClass="label-ajout" stylesheets="@ajoutcompetition.css" text="Description de la ticket:" />
-                        <TextFlow layoutX="148.0" layoutY="103.0" prefHeight="146.0" prefWidth="251.0" />
-                        <Button fx:id="btEnregistrer" layoutX="347.0" layoutY="248.0" mnemonicParsing="false" onAction="#ajoutTicket" styleClass="btn" stylesheets="@ajoutcompetition.css" text="Enregistrer" textFill="#740000">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="btnClear" layoutX="240.0" layoutY="248.0" mnemonicParsing="false" onAction="#effacerTout" prefHeight="21.0" prefWidth="100.0" styleClass="btn" stylesheets="@ajoutcompetition.css" text="Effacer" />
-                        <TextArea fx:id="descriptionTicket" layoutX="189.0" layoutY="113.0" prefHeight="78.0" prefWidth="252.0" styleClass="textarea" stylesheets="@ajoutcompetition.css" />
-                        <ImageView fitHeight="127.0" fitWidth="207.0" layoutX="-19.0" layoutY="219.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../Images/mulher-fazendo-treino-de-crossfit_low.png" />
-                           </image>
-                        </ImageView>
-                     </children>
-                  </Pane>
-                  <Label layoutX="240.0" layoutY="160.0" minHeight="-Infinity" minWidth="-Infinity" text="Ajout  Des Tickets:" textAlignment="CENTER" textFill="#720000">
-                     <font>
-                        <Font name="System Bold Italic" size="21.0" />
-                     </font>
-                  </Label>
-                  <ImageView fitHeight="420.0" fitWidth="335.0" layoutX="841.0" layoutY="175.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Images/CoachReg.png" />
-                     </image>
-                  </ImageView>
-                  <Button fx:id="btnReturn" layoutX="234.0" layoutY="108.0" mnemonicParsing="false" onAction="#voirTicket" prefHeight="34.0" prefWidth="66.0" styleClass="btn" stylesheets="@ajoutcompetition.css" textAlignment="CENTER">
-                     <graphic>
-                        <ImageView fx:id="btRetour" fitHeight="25.0" fitWidth="57.0" onDragDetected="#voirCompetition" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../Images/return.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-               </children>
-            </AnchorPane>
-         </center>
-      </BorderPane>
+      <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="760.0" prefWidth="1233.0">
+         <children>
+            <Label layoutX="171.0" layoutY="229.0" styleClass="label-ajout" stylesheets="@ajoutcompetition.css" text="Compétition : " />
+            <ComboBox fx:id="nomCompetitionTicket" layoutX="273.0" layoutY="225.0" prefHeight="26.0" prefWidth="216.0" promptText="Compétition" styleClass="textfield" stylesheets="@ajoutcompetition.css" />
+            <Label layoutX="171.0" layoutY="271.0" styleClass="label-ajout" stylesheets="@ajoutcompetition.css" text="Description :" />
+            <Button fx:id="btEnregistrer" layoutX="385.0" layoutY="394.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#ajoutTicket" prefHeight="34.0" prefWidth="100.0" styleClass="btn" stylesheets="@ajoutcompetition.css" text="Enregistrer" textFill="#740000">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnClear" layoutX="278.0" layoutY="394.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#effacerTout" prefHeight="34.0" prefWidth="100.0" styleClass="btn" stylesheets="@ajoutcompetition.css" text="Effacer" />
+            <TextArea fx:id="descriptionTicket" layoutX="273.0" layoutY="267.0" prefHeight="78.0" prefWidth="216.0" promptText="Description..." styleClass="textarea" stylesheets="@ajoutcompetition.css" />
+            <ImageView fitHeight="582.0" fitWidth="600.0" layoutX="746.0" layoutY="177.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/CoachReg.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Label layoutX="191.0" layoutY="102.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="52.0" prefWidth="216.0" text="Ajouter un Ticket :" textAlignment="CENTER" textFill="#720000">
+         <font>
+            <Font name="System Bold" size="21.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnReturn" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#back_ViewBack_Competition" prefHeight="34.0" prefWidth="66.0" styleClass="btn" stylesheets="@ajoutcompetition.css" textAlignment="CENTER">
+         <graphic>
+            <ImageView fx:id="btRetour" fitHeight="25.0" fitWidth="57.0" onDragDetected="#voirCompetition" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/return.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
    </children>
 </AnchorPane>

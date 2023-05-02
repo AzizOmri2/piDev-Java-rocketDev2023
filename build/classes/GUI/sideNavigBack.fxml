@@ -7,200 +7,224 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="bp" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="924.0" prefWidth="1579.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.SideNavigBackController">
-   <left>
-      <VBox prefHeight="657.0" prefWidth="266.0" style="-fx-background-color: #720000;" BorderPane.alignment="CENTER">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.SideNavigBackController">
+   <children>
+      <AnchorPane fx:id="main_form" prefHeight="200.0" prefWidth="200.0">
          <children>
-            <Button fx:id="profile" mnemonicParsing="false" onAction="#GoProfile" style="-fx-background-color: transparent;">
-               <graphic>
-                  <ImageView fitHeight="18.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Images/user.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <VBox.margin>
-                  <Insets left="225.0" />
-               </VBox.margin>
-            </Button>
-            <ImageView fitHeight="112.0" fitWidth="188.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Images/LogoGymWhite_1.png" />
-               </image>
-               <VBox.margin>
-                  <Insets bottom="10.0" left="45.0" top="35.0" />
-               </VBox.margin>
-            </ImageView>
-            <Button fx:id="btnHome" alignment="BASELINE_LEFT" graphicTextGap="12.0" mnemonicParsing="false" onAction="#GoHome" prefHeight="39.0" prefWidth="262.0" stylesheets="@style.css" text="Home" textFill="WHITE">
-               <graphic>
-                  <ImageView fitHeight="31.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Images/icons8-home-page-30.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <padding>
-                  <Insets left="50.0" />
-               </padding>
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-               <VBox.margin>
-                  <Insets top="70.0" />
-               </VBox.margin>
-            </Button>
-            <Button fx:id="btnUsers" alignment="BASELINE_LEFT" graphicTextGap="12.0" mnemonicParsing="false" onAction="#GoUsers" prefHeight="39.0" prefWidth="245.0" stylesheets="@style.css" text=" Utilisateurs" textFill="WHITE">
-               <graphic>
-                  <ImageView fitHeight="31.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Images/icons8-people-50.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <padding>
-                  <Insets left="50.0" />
-               </padding>
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-            </Button>
-            <Button fx:id="btnPlannings" alignment="BASELINE_LEFT" graphicTextGap="12.0" mnemonicParsing="false" onAction="#handleClicks" onMouseClicked="#listPlannings" prefHeight="39.0" prefWidth="262.0" stylesheets="@style.css" text=" Plannings" textFill="WHITE">
-               <graphic>
-                  <ImageView fitHeight="31.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Images/icons8-planning-67.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <padding>
-                  <Insets left="50.0" />
-               </padding>
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Button>
-            <Button fx:id="btnAbonnements" alignment="BASELINE_LEFT" graphicTextGap="12.0" mnemonicParsing="false" onAction="#handleClicks" onMouseClicked="#ListAbonnements" prefHeight="39.0" prefWidth="262.0" stylesheets="@style.css" text="Abonnements" textFill="WHITE">
-               <graphic>
-                  <ImageView fitHeight="31.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Images/icons8-puzzle-50.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <padding>
-                  <Insets left="50.0" />
-               </padding>
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Button>
-            <Button fx:id="btnCompetitions" alignment="BASELINE_LEFT" graphicTextGap="12.0" mnemonicParsing="false" onAction="#handleClicks" onMouseClicked="#listCompetitions" prefHeight="39.0" prefWidth="262.0" stylesheets="@style.css" text="Competitions" textFill="WHITE">
-               <graphic>
-                  <ImageView fitHeight="31.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Images/icons8-competition-64.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-               <padding>
-                  <Insets left="50.0" />
-               </padding>
-            </Button>
-            <Button fx:id="btnMateriaux" alignment="BASELINE_LEFT" graphicTextGap="12.0" mnemonicParsing="false" onAction="#handleClicks" onMouseClicked="#listMateriaux" prefHeight="39.0" prefWidth="262.0" stylesheets="@style.css" text=" Materiaux" textFill="WHITE">
-               <graphic>
-                  <ImageView fitHeight="31.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Images/icons8-material-50.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-               <padding>
-                  <Insets left="50.0" />
-               </padding>
-            </Button>
-            <Button fx:id="btnSponsors" alignment="BASELINE_LEFT" graphicTextGap="12.0" mnemonicParsing="false" onAction="#GoSponsor" prefHeight="39.0" prefWidth="262.0" stylesheets="@style.css" text="Sponsors" textFill="WHITE">
-               <graphic>
-                  <ImageView fitHeight="31.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Images/icons8-crowdfunding-80.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <padding>
-                  <Insets left="50.0" />
-               </padding>
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Button>
-            <Button fx:id="btnRestaurants" alignment="BASELINE_LEFT" graphicTextGap="12.0" mnemonicParsing="false" onAction="#handleClicks" onMouseClicked="#listRestau" prefHeight="39.0" prefWidth="262.0" stylesheets="@style.css" text="Restaurants" textFill="WHITE">
-               <graphic>
-                  <ImageView fitHeight="31.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Images/icons8-restaurant-60.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <padding>
-                  <Insets left="50.0" />
-               </padding>
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Button>
-            <Button fx:id="btnReclamation" alignment="BASELINE_LEFT" graphicTextGap="12.0" mnemonicParsing="false" onAction="#handleClicks" onMouseClicked="#listReclamation" prefHeight="39.0" prefWidth="262.0" stylesheets="@style.css" text="Reclamations" textFill="WHITE">
-               <padding>
-                  <Insets left="50.0" />
-               </padding>
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-               <graphic>
-                  <ImageView fitHeight="31.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Images/icons8-add-bookmark-64.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-         </children>
-      </VBox>
-   </left>
-   <center>
-      <AnchorPane fx:id="profile" minHeight="-Infinity" minWidth="-Infinity" prefHeight="760.0" prefWidth="1233.0" BorderPane.alignment="CENTER" />
-   </center>
-   <top>
-      <AnchorPane prefHeight="28.0" prefWidth="1579.0" BorderPane.alignment="CENTER">
-         <children>
-            <AnchorPane prefHeight="1.0" prefWidth="1099.0" styleClass="top-form" />
-            <Label layoutX="57.0" layoutY="5.0" prefHeight="30.0" prefWidth="214.0" text="EnergyBox CrossFit Center">
-               <font>
-                  <Font name="Calibri Bold" size="12.0" />
-               </font>
-            </Label>
-            <ImageView fitHeight="39.0" fitWidth="64.0" layoutX="17.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Images/LogoBlack.png" />
-               </image>
-            </ImageView>
-            <Button fx:id="btnClose" layoutX="1511.0" layoutY="6.0" mnemonicParsing="false" onAction="#closW" prefHeight="30.0" prefWidth="53.0" text="x">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Button>
+            <BorderPane prefHeight="600.0" prefWidth="1100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <top>
+                  <AnchorPane prefHeight="0.0" prefWidth="1100.0" styleClass="semi-top-form" stylesheets="@dashboardDesign.css" BorderPane.alignment="CENTER">
+                     <children>
+                        <AnchorPane layoutX="191.0" layoutY="-86.0" prefHeight="1.0" prefWidth="1099.0" styleClass="top-form" stylesheets="@dashboardDesign.css" AnchorPane.bottomAnchor="41.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="0.0" />
+                        <Label layoutX="29.0" layoutY="15.0" text="EnergyBox CrossFit Center">
+                           <font>
+                              <Font name="Calibri Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="9.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/LogoBlack.png" />
+                           </image>
+                        </ImageView>
+                        <Button fx:id="btnClose" layoutX="1033.0" layoutY="8.0" mnemonicParsing="false" onAction="#close" prefHeight="30.0" prefWidth="53.0" styleClass="close" stylesheets="@dashboardDesign.css" text="x" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="btnMinus" layoutX="971.0" layoutY="8.0" mnemonicParsing="false" onAction="#minimize" prefHeight="30.0" prefWidth="54.0" styleClass="minimize" stylesheets="@dashboardDesign.css" text="-" AnchorPane.rightAnchor="63.0" AnchorPane.topAnchor="5.0">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </AnchorPane>
+               </top>
+               <left>
+                  <AnchorPane prefHeight="657.0" prefWidth="266.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <AnchorPane layoutY="-22.0" prefHeight="560.0" prefWidth="200.0" styleClass="nav-form" stylesheets="@dashboardDesign.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <Button fx:id="profile" layoutX="222.0" layoutY="4.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="30.0" prefWidth="40.0" style="-fx-background-color: transparent;">
+                                 <graphic>
+                                    <ImageView fitHeight="26.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../Images/user_1.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                              <ImageView fitHeight="109.0" fitWidth="175.0" layoutX="50.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../Images/LogoGymWhite_1.png" />
+                                 </image>
+                              </ImageView>
+                              <Button fx:id="btnHome" layoutY="261.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="40.0" prefWidth="276.0" styleClass="nav-btn" stylesheets="@dashboardDesign.css" text="Home" textFill="WHITE">
+                                 <graphic>
+                                    <ImageView fitHeight="21.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../images/icons8-home-page-30.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <font>
+                                    <Font name="Calibri Italic" size="12.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets left="65.0" />
+                                 </padding>
+                              </Button>
+                              <Button fx:id="btnUsers" layoutY="301.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="40.0" prefWidth="276.0" styleClass="nav-btn" stylesheets="@dashboardDesign.css" text="Utilisateurs" textFill="WHITE">
+                                 <graphic>
+                                    <ImageView fitHeight="21.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../images/icons8-people-50.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets left="65.0" />
+                                 </padding>
+                              </Button>
+                              <Button fx:id="btnGestionPlanning" layoutY="341.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="40.0" prefWidth="276.0" styleClass="nav-btn" text="Plannings" textFill="WHITE">
+                                 <graphic>
+                                    <ImageView fitHeight="21.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../images/icons8-planning-67.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets left="65.0" />
+                                 </padding>
+                              </Button>
+                              <Button fx:id="btnAbonnements" layoutY="381.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="40.0" prefWidth="276.0" styleClass="nav-btn" text="Abonnements" textFill="WHITE">
+                                 <graphic>
+                                    <ImageView fitHeight="21.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../images/icons8-puzzle-50.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets left="65.0" />
+                                 </padding>
+                              </Button>
+                              <Button fx:id="btnCompetitions" layoutY="421.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="40.0" prefWidth="276.0" styleClass="nav-btn" text="Compétitions" textFill="WHITE">
+                                 <graphic>
+                                    <ImageView fitHeight="21.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../images/icons8-competition-64.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets left="65.0" />
+                                 </padding>
+                              </Button>
+                              <Button fx:id="btnRestaurants" layoutY="461.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="40.0" prefWidth="276.0" styleClass="nav-btn" text="Réstaurants" textFill="WHITE">
+                                 <graphic>
+                                    <ImageView fitHeight="21.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../images/icons8-restaurant-60.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets left="65.0" />
+                                 </padding>
+                              </Button>
+                              <Button fx:id="btnMateriaux" layoutY="501.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="40.0" prefWidth="276.0" styleClass="nav-btn" text="Matériaux" textFill="WHITE">
+                                 <graphic>
+                                    <ImageView fitHeight="21.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../images/icons8-material-50.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets left="65.0" />
+                                 </padding>
+                              </Button>
+                              <Button fx:id="btnGestionReclamation" layoutY="541.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="40.0" prefWidth="276.0" styleClass="nav-btn" text="Réclamations" textFill="WHITE">
+                                 <graphic>
+                                    <ImageView fitHeight="21.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../images/icons8-add-bookmark-64.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets left="65.0" />
+                                 </padding>
+                              </Button>
+                              <Button fx:id="btnSponsors" layoutX="-1.0" layoutY="582.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="40.0" prefWidth="276.0" styleClass="nav-btn" text="Sponsors" textFill="WHITE">
+                                 <graphic>
+                                    <ImageView fitHeight="21.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../Images/icons8-money-bag-pounds-50.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets left="65.0" />
+                                 </padding>
+                              </Button>
+                              <Button fx:id="Logout" layoutX="5.0" layoutY="700.0" mnemonicParsing="false" onAction="#Logout" prefHeight="40.0" prefWidth="270.0" styleClass="nav-btn" text="Logout" textFill="WHITE">
+                                 <graphic>
+                                    <ImageView fitHeight="21.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../Images/icons8-logout-50.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets left="65.0" />
+                                 </padding>
+                              </Button>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+               </left>
+               <center>
+                  <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="757.0" prefWidth="1233.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <AnchorPane fx:id="viewPages" layoutX="224.0" layoutY="134.0" prefHeight="760.0" prefWidth="1234.0" AnchorPane.bottomAnchor="-2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
+               </center>
+            </BorderPane>
          </children>
       </AnchorPane>
-   </top>
-</BorderPane>
+   </children>
+</StackPane>

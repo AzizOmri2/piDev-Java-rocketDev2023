@@ -49,6 +49,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
+import mail.Sendmail;
 
 /**
  * FXML Controller class
@@ -82,6 +83,8 @@ public class RegistrationCoachController implements Initializable {
     @FXML
     private Button btnImportAct;
     private File selectedImageFile;
+    @FXML
+    private Button btnClose;
 
     /**
      * Initializes the controller class.
@@ -96,50 +99,38 @@ public class RegistrationCoachController implements Initializable {
     @FXML
     private void sisncrire(ActionEvent event) throws IOException, WriterException {
         UserService userS = new UserService();
-        String Role = "Coach";
+        String Role = "[\"ROLE_COACH\"]";
         String userInput = captchaField.getText();
         String email = emailC.getText();
-
-        // Contrôle de saisie pour le champ email
-        if (email == null || email.isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "L'email n'est pas valide.");
-            alert.showAndWait();
-            return;
-        }
-
-        // Contrôle de saisie pour le champ numéro de téléphone
-        if (num_telC.getText() == null || num_telC.getText().isEmpty() || !num_telC.getText().matches("\\d+")) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Le numéro de téléphone n'est pas valide.");
-            alert.showAndWait();
-            return;
-        }
-
-        // Contrôle de saisie pour le champ date de naissance
-        if (date_nC.getValue() == null || date_nC.getValue().isAfter(LocalDate.now())) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "La date de naissance n'est pas valide.");
-            alert.showAndWait();
-            return;
-        }
+        String object = "Hello " + email + "\n thank \'s for ur registration , you can find your PRIVATE QrCode to make u authentificate with it , PLEASE KEEP IT PRIVATLY";
+        String Sub = "welcome to EnergyBox";
 
         if (userInput == null || userInput.isEmpty()) {
+            // Afficher un message d'erreur si le champ captcha est vide
             Alert alert = new Alert(Alert.AlertType.ERROR, "Le champ captcha est vide.");
             alert.showAndWait();
             return;
         }
 
         if (userInput.equals(captchaText)) {
+            // Vérifier si l'email existe déjà dans la base de données
             if (userS.emailExists(email)) {
+                // Afficher un message d'erreur si l'email existe déjà
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Cet email existe déjà dans la base de données.");
                 alert.showAndWait();
                 return;
             }
 
+            // Enregistrer l'utilisateur s'il a entré le captcha correct et l'email n'existe pas encore
             try {
                 int numTel = Integer.parseInt(num_telC.getText());
                 Date dateN = Date.valueOf(date_nC.getValue());
                 String dataQr = generateRandomString(4);
                 String myQr = generateQRCodeAndSave(dataQr, email);
-                userS.registre(new User(usernameC.getText(), email, numTel, dateN,pic, pwdC.getText(), Role, dataQr, myQr));
+
+                userS.registre(new User(usernameC.getText(), email, numTel, dateN, pic, pwdC.getText(), Role, dataQr, myQr));
+                Sendmail sn = new Sendmail();
+                sn.envoyerQr(email, Sub, object, myQr);
                 JOptionPane.showMessageDialog(null, "Coach ajoutée !");
                 Parent page2 = FXMLLoader.load(getClass().getResource("Login.fxml"));
                 Scene scene2 = new Scene(page2);
@@ -147,13 +138,16 @@ public class RegistrationCoachController implements Initializable {
                 app_stage.setScene(scene2);
                 app_stage.show();
             } catch (NumberFormatException e) {
-                Alert alert = new Alert(Alert.AlertType.ERROR, "Le numéro de téléphone doit être un entier.");
+                // Afficher un message d'erreur si le champ num_telA n'est pas un entier
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Le champ numero telephone doit être un entier.");
                 alert.showAndWait();
             }
         } else {
+            // Afficher un message d'erreur si le captcha est incorrect
             Alert alert = new Alert(Alert.AlertType.ERROR, "Captcha incorrect.");
             alert.showAndWait();
         }
+  
     }
 
     private String generateCaptchaText(int length) {
@@ -237,5 +231,13 @@ public class RegistrationCoachController implements Initializable {
         }
         return sb.toString();
     }
+    
+
+
+    @FXML
+    private void closW(ActionEvent event) {
+    Stage stage = (Stage) btnClose.getScene().getWindow();
+        //System.out.println("hi");
+        stage.close();}
 
 }

@@ -319,6 +319,7 @@ public void modifier(User t) {
                 u.setDate_n(rs.getDate("date_n"));
                 u.setEmail(rs.getString("email"));
                 u.setNumtel(rs.getInt("num_tel"));
+                u.setImage(rs.getString("image"));
 
             }
 

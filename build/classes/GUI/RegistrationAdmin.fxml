@@ -48,14 +48,7 @@
       <Button fx:id="cam" layoutX="738.0" layoutY="273.0" mnemonicParsing="false" onAction="#camera" prefHeight="21.0" prefWidth="32.0" style="-fx-background-color: transparent;">
          <font>
             <Font name="System Bold" size="10.0" />
-         </font>
-         <graphic>
-            <ImageView fitHeight="21.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Images/icons8-camera-24.png" />
-               </image>
-            </ImageView>
-         </graphic></Button>
+         </font></Button>
       <ImageView fitHeight="26.0" fitWidth="28.0" layoutX="438.0" layoutY="95.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Images/icons8-user-30.png" />

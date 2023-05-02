@@ -9,70 +9,76 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="601.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.LoginController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="760.0" prefWidth="1233.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.LoginController">
    <children>
-      <Pane layoutX="409.0" prefHeight="601.0" prefWidth="522.0" style="-fx-background-color: rgba(114, 0, 0, 0.3); -fx-background-radius: 30;">
+      <Pane layoutX="476.0" layoutY="-5.0" prefHeight="780.0" prefWidth="803.0" style="-fx-background-color: rgba(114, 0, 0, 0.3); -fx-background-radius: 30;">
          <children>
-            <ImageView fx:id="imageView" fitHeight="103.0" fitWidth="158.0" layoutX="293.0" layoutY="477.0" pickOnBounds="true" preserveRatio="true" />
-            <Label layoutX="227.0" layoutY="110.0" prefHeight="59.0" prefWidth="108.0" text="Login" textAlignment="CENTER" textFill="#282626">
+            <ImageView fx:id="imageView" fitHeight="103.0" fitWidth="158.0" layoutX="507.0" layoutY="529.0" pickOnBounds="true" preserveRatio="true" />
+            <Label layoutX="348.0" layoutY="126.0" prefHeight="59.0" prefWidth="108.0" text="Login" textAlignment="CENTER" textFill="#282626">
                <font>
-                  <Font name="System Bold" size="25.0" />
+                  <Font name="System Bold" size="37.0" />
                </font>
             </Label>
-            <ImageView fitHeight="78.0" fitWidth="108.0" layoutX="17.0" layoutY="17.0">
+            <ImageView fitHeight="77.0" fitWidth="123.0" layoutX="22.0" layoutY="26.0">
                <image>
                   <Image url="@../Images/LogoGymBlack_1.png" />
                </image>
             </ImageView>
+            <TextField fx:id="email" layoutX="176.0" layoutY="242.0" opacity="0.75" prefHeight="35.0" prefWidth="437.0" style="-fx-background-color: transparent; -fx-border-style: solid; -fx-border-color: black; -fx-border-width: 0 0 1 0; -fx-font-size: 15px; -fx-text-fill: black;" />
+            <ImageView fitHeight="26.0" fitWidth="29.0" layoutX="174.0" layoutY="215.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/icons8-mail-account-64.png" />
+               </image>
+            </ImageView>
+            <PasswordField fx:id="password" layoutX="175.0" layoutY="357.0" prefHeight="35.0" prefWidth="437.0" style="-fx-background-color: transparent; -fx-border-style: solid; -fx-border-color: black; -fx-border-width: 0 0 1 0;" styleClass="text-field" stylesheets="@Login%20.css" />
+            <ImageView fitHeight="26.0" fitWidth="29.0" layoutX="175.0" layoutY="334.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/icons8-access-64.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="reset" layoutX="474.0" layoutY="410.0" mnemonicParsing="false" onAction="#reset" style="-fx-background-color: transparent; -fx-underline: underlined;" text="Forgot password?">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Button>
+            <Button fx:id="Login" layoutX="178.0" layoutY="474.0" mnemonicParsing="false" onAction="#Login" prefHeight="35.0" prefWidth="437.0" style="-fx-background-color: #720000; -fx-background-radius: 7;" text="Login" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Button>
+            <Button layoutX="256.0" layoutY="594.0" mnemonicParsing="false" onAction="#logQr" prefHeight="28.0" prefWidth="184.0" style="-fx-background-color: transparent;" text="Scan QRcode">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="28.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/icons8-qr-code-60.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
          </children>
       </Pane>
-      <Label layoutX="50.0" layoutY="328.0" prefHeight="103.0" prefWidth="328.0" text="Don’t dream of it, train for it !" textFill="#222020">
+      <Label layoutX="110.0" layoutY="496.0" prefHeight="47.0" prefWidth="210.0" text="Don’t dream of it.." textFill="#222020">
          <font>
             <Font name="SansSerif Bold" size="22.0" />
          </font>
       </Label>
-      <TextField fx:id="email" layoutX="507.0" layoutY="220.0" opacity="0.75" prefHeight="35.0" prefWidth="328.0" style="-fx-background-color: transparent; -fx-border-style: solid; -fx-border-color: black; -fx-border-width: 0 0 1 0; -fx-font-size: 15px; -fx-text-fill: black;" />
-      <Button fx:id="Login" layoutX="512.0" layoutY="419.0" mnemonicParsing="false" onAction="#Login" prefHeight="35.0" prefWidth="328.0" style="-fx-background-color: #720000; -fx-background-radius: 7;" text="Login" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
-         <font>
-            <Font name="System Bold" size="15.0" />
-         </font></Button>
-      <ImageView fitHeight="26.0" fitWidth="29.0" layoutX="505.0" layoutY="193.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../Images/icons8-mail-account-64.png" />
-         </image>
-      </ImageView>
-      <PasswordField fx:id="password" layoutX="509.0" layoutY="315.0" prefHeight="35.0" prefWidth="328.0" style="-fx-background-color: transparent; -fx-border-style: solid; -fx-border-color: black; -fx-border-width: 0 0 1 0;" styleClass="text-field" stylesheets="@Login%20.css" />
-      <ImageView fitHeight="26.0" fitWidth="29.0" layoutX="509.0" layoutY="292.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../Images/icons8-access-64.png" />
-         </image>
-      </ImageView>
-      <Button layoutX="531.0" layoutY="510.0" mnemonicParsing="false" onAction="#logQr" prefHeight="28.0" prefWidth="184.0" style="-fx-background-color: transparent;" text="Scan QRcode">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-         <graphic>
-            <ImageView fitHeight="28.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Images/icons8-qr-code-60.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
-      <Button fx:id="reset" layoutX="717.0" layoutY="374.0" mnemonicParsing="false" onAction="#reset" style="-fx-background-color: transparent; -fx-underline: underlined;" text="Forgot password?">
-         <font>
-            <Font name="System Bold" size="13.0" />
-         </font>
-      </Button>
-      <Button fx:id="Register" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#GoRegister" prefHeight="35.0" prefWidth="132.0" style="-fx-background-color: #720000; -fx-background-radius: 18;" text="Become a member" textFill="#ffeaea">
+      <Button fx:id="Register" layoutX="32.0" layoutY="30.0" mnemonicParsing="false" onAction="#GoRegister" prefHeight="35.0" prefWidth="132.0" style="-fx-background-color: #720000; -fx-background-radius: 18;" text="Become a member" textFill="#ffeaea">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Button>
-      <ImageView fitHeight="189.0" fitWidth="184.0" layoutX="114.0" layoutY="132.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="245.0" fitWidth="196.0" layoutX="124.0" layoutY="228.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Images/LogoBlack_1.png" />
          </image>
       </ImageView>
+      <Label layoutX="219.0" layoutY="534.0" prefHeight="38.0" prefWidth="176.0" text="Train for it." textFill="#222020">
+         <font>
+            <Font name="SansSerif Bold" size="22.0" />
+         </font>
+      </Label>
    </children>
 </Pane>

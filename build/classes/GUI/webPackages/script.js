@@ -1,6 +1,6 @@
 window.onload = function() {
     // RSS feed URL
-    var feedURL = "https://rss.app/feeds/tYA2saYlwhTIQE3V.xml";
+    var feedURL = "https://rss.app/feeds/tAaPHSpHno0hRJTv.xml";
 
     // Fetch the RSS feed using AJAX
     var xhr = new XMLHttpRequest();

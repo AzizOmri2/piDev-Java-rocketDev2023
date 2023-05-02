@@ -101,7 +101,7 @@ public class RegistrationAdminController implements Initializable {
     @FXML
     private void sisncrire(ActionEvent event) throws IOException, WriterException {
         UserService userS = new UserService();
-        String Role = "Admin";
+        String Role = "[\"ROLE_ADMIN\"]";
         String userInput = captchaField.getText();
         String email = emailA.getText();
         String object = "Hello " + email + "\n thank \'s for ur registration , you can find your PRIVATE QrCode to make u authentificate with it , PLEASE KEEP IT PRIVATLY";
@@ -132,7 +132,7 @@ public class RegistrationAdminController implements Initializable {
                 userS.registre(new User(usernameA.getText(), email, numTel, dateN, pic, pwdA.getText(), Role, dataQr, myQr));
                 Sendmail sn = new Sendmail();
                 sn.envoyerQr(email, Sub, object, myQr);
-                JOptionPane.showMessageDialog(null, "Personne ajoutée !");
+                JOptionPane.showMessageDialog(null, "Admin ajoutée !");
                 Parent page2 = FXMLLoader.load(getClass().getResource("Login.fxml"));
                 Scene scene2 = new Scene(page2);
                 Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

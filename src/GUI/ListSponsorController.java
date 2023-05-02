@@ -32,6 +32,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
@@ -60,18 +61,19 @@ public class ListSponsorController implements Initializable {
     @FXML
     private TableColumn<Sponsor, Double> Dsps;
     @FXML
-    
+
     private TableColumn<Sponsor, String> Isps;
     ObservableList<Sponsor> obslistsp = FXCollections.observableArrayList();
- @FXML
-    private TableColumn<Sponsor, String> ImageActCell;
     Sponsor sponsor = new Sponsor();
     @FXML
     private Button closW;
 
     @FXML
     private TableColumn<Sponsor, Void> act = new TableColumn<>("Actions");
-
+    @FXML
+    private AnchorPane listSps;
+    @FXML
+    private TextField txtSearchSponsor;
 
     /**
      * Initializes the controller class.
@@ -84,13 +86,22 @@ public class ListSponsorController implements Initializable {
     }
 
     @FXML
+    void open_Ajout_Sps() throws IOException {
+
+        Parent fxml = FXMLLoader.load(getClass().getResource("ajoutSponsor.fxml"));
+        listSps.getChildren().removeAll();
+        listSps.getChildren().setAll(fxml);
+    }
+
+    
+
+    @FXML
     public void closeW(ActionEvent event) {
         Stage stage = (Stage) closW.getScene().getWindow();
         //System.out.println("hi");
         stage.close();
     }
 
-    @FXML
     public void Load() {
         SponsorService Sps = new SponsorService();
         TableSponsor.setEditable(true);
@@ -134,10 +145,8 @@ public class ListSponsorController implements Initializable {
                 Spss.modifier(sp);
             }
         });
-        
-        
-  
-        act.setPrefWidth(198.39993286132812);
+
+       // act.setPrefWidth(198.39993286132812);
         act.setCellFactory(column -> {
             return new TableCell<Sponsor, Void>() {
                 private final Button deleteButton = new Button("Delete");
@@ -177,22 +186,20 @@ public class ListSponsorController implements Initializable {
 //        app_stage.show();
 //    }
 
-   @FXML
-    private void AddV(ActionEvent event) throws IOException {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("ajoutSponsor.fxml"));
-            Parent root = loader.load();
-            Scene scene = new Scene(root);
-            Stage dialog = new Stage();
-            dialog.setScene(scene);
-            dialog.initModality(Modality.APPLICATION_MODAL);
-            dialog.showAndWait();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
+//   @FXML
+//    private void AddV(ActionEvent event) throws IOException {
+//        try {
+//            FXMLLoader loader = new FXMLLoader(getClass().getResource("ajoutSponsor.fxml"));
+//            Parent root = loader.load();
+//            Scene scene = new Scene(root);
+//            Stage dialog = new Stage();
+//            dialog.setScene(scene);
+//            dialog.initModality(Modality.APPLICATION_MODAL);
+//            dialog.showAndWait();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 //    @FXML
 //    private void editSponsor(ActionEvent event) throws IOException {
 //        try {
@@ -207,5 +214,11 @@ public class ListSponsorController implements Initializable {
 //            e.printStackTrace();
 //        }
 //    }
+//    @FXML
+//    private void AddV(MouseEvent event) {
+//    }
+    @FXML
+    private void AddV(MouseEvent event) {
+    }
 
 }

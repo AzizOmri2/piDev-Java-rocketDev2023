@@ -91,7 +91,7 @@ void Login(ActionEvent event) throws IOException {
             new Alert(Alert.AlertType.ERROR, "Respecter format email!!", ButtonType.CLOSE).show();
         } else {
             String loginResult = Uservice.login(new User(email.getText(), password.getText()));
-            if (loginResult.equals("Admin")) {
+            if (loginResult.equals("[\"ROLE_ADMIN\"]")) {
                 Stage stage = (Stage) Login.getScene().getWindow();
                 stage.close();
                 Parent page2 = FXMLLoader.load(getClass().getResource("SideNavigBack.fxml"));
@@ -99,15 +99,15 @@ void Login(ActionEvent event) throws IOException {
                 Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 app_stage.setScene(scene2);
                 app_stage.show();
-            } else if (loginResult.equals("Abonnee")) {
+            } else if (loginResult.equals("[\"ROLE_ABONNEE\"]")) {
                 Stage stage = (Stage) Login.getScene().getWindow();
                 stage.close();
-                Parent page2 = FXMLLoader.load(getClass().getResource("ProfileAbonne.fxml"));
+                Parent page2 = FXMLLoader.load(getClass().getResource("FrontOff.fxml"));
                 Scene scene2 = new Scene(page2);
                 Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 app_stage.setScene(scene2);
                 app_stage.show();
-            } else if (loginResult.equals("Coach")) {
+            } else if (loginResult.equals("[\"ROLE_COACH\"]")) {
                 Stage stage = (Stage) Login.getScene().getWindow();
                 stage.close();
                 Parent page2 = FXMLLoader.load(getClass().getResource("ProfilCoach.fxml"));
@@ -166,15 +166,15 @@ void Login(ActionEvent event) throws IOException {
                 if (rs.next()) {
                     System.out.println(rs.getString("email"));
                 }
-                if (Uservice.loginQr(new User(rs.getString("email"), rs.getString("password"))).equals("Abonnee")) {
+                if (Uservice.loginQr(new User(rs.getString("email"), rs.getString("password"))).equals("[\"ROLE_ABONNEE\"]")) {
                     Stage stage = (Stage) Login.getScene().getWindow();
                     stage.close();
-                    Parent page2 = FXMLLoader.load(getClass().getResource("profileAbonne.fxml"));
+                    Parent page2 = FXMLLoader.load(getClass().getResource("FrontOff.fxml"));
                     Scene scene2 = new Scene(page2);
                     Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                     app_stage.setScene(scene2);
                     app_stage.show();
-                } else if (Uservice.loginQr(new User(rs.getString("email"), rs.getString("password"))).equals("Admin")) {
+                } else if (Uservice.loginQr(new User(rs.getString("email"), rs.getString("password"))).equals("[\"ROLE_ADMIN\"]")) {
                     Stage stage = (Stage) Login.getScene().getWindow();
                     stage.close();
                     Parent page2 = FXMLLoader.load(getClass().getResource("SideNavigBack.fxml"));
@@ -183,10 +183,10 @@ void Login(ActionEvent event) throws IOException {
                     app_stage.setScene(scene2);
                     app_stage.show();
 
-                } else if (Uservice.loginQr(new User(rs.getString("email"), rs.getString("password"))).equals("Coach")) {
+                } else if (Uservice.loginQr(new User(rs.getString("email"), rs.getString("password"))).equals("[\"ROLE_COACH\"]")) {
                     Stage stage = (Stage) Login.getScene().getWindow();
                     stage.close();
-                    Parent page2 = FXMLLoader.load(getClass().getResource("DashboardFrontOffice.fxml"));
+                    Parent page2 = FXMLLoader.load(getClass().getResource("FrontOff.fxml"));
                     Scene scene2 = new Scene(page2);
                     Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                     app_stage.setScene(scene2);

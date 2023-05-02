@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="670.0" prefWidth="1233.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ListChargeController">
+   <children>
+      <BorderPane layoutX="53.0" layoutY="66.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <center>
+            <AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="1100.0" stylesheets="@navsidebar.css">
+               <children>
+                  <MenuButton mnemonicParsing="false" style="-fx-background-color: #720000;" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="20.0">
+                     <items>
+                        <MenuItem mnemonicParsing="false" text="Profile" />
+                        <MenuItem mnemonicParsing="false" text="Log Out" />
+                     </items>
+                     <graphic>
+                        <ImageView fitHeight="15.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/user.png" />
+                           </image>
+                           <effect>
+                              <Glow level="0.85" />
+                           </effect>
+                        </ImageView>
+                     </graphic>
+                  </MenuButton>
+                  <AnchorPane fx:id="rootPane" prefHeight="567.0" prefWidth="926.0" style="-fx-background-color: white; -fx-background-radius: 10;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="23.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="104.0">
+                     <effect>
+                        <DropShadow />
+                     </effect>
+                     <children>
+                        <ImageView fitHeight="31.0" fitWidth="34.0" layoutX="23.0" layoutY="101.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="23.0">
+                           <image>
+                              <Image url="@../Images/icons8-zoom-64.png" />
+                           </image>
+                        </ImageView>
+                        <TextField fx:id="searchM" layoutX="54.0" layoutY="98.0" prefHeight="38.0" prefWidth="322.0" promptText="Search" AnchorPane.leftAnchor="54.0" />
+                        <Label layoutX="310.0" layoutY="14.0" prefHeight="58.0" prefWidth="306.0" text="Liste Des Charges" textFill="#720000" underline="true" AnchorPane.leftAnchor="310.0" AnchorPane.topAnchor="14.0">
+                           <font>
+                              <Font name="Calibri Bold Italic" size="40.0" />
+                           </font>
+                        </Label>
+                        <TableView fx:id="tableCh" layoutX="23.0" layoutY="145.0" onMouseClicked="#handleTableRowSelection" prefHeight="385.0" prefWidth="742.0" stylesheets="@listactivite.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="23.0" AnchorPane.topAnchor="145.0">
+                           <columns>
+                              <TableColumn fx:id="colIdCh" prefWidth="150.0" text="ID" />
+                              <TableColumn fx:id="colFournisseurCh" prefWidth="150.0" text="Fournisseur" />
+                              <TableColumn fx:id="colMaterielCh" prefWidth="150.0" text="Matériel" />
+                              <TableColumn fx:id="colDateCh" prefWidth="150.0" text="Date Arrivage" />
+                              <TableColumn fx:id="colQttCh" prefWidth="150.0" text="Quantité" />
+                           </columns>
+                        </TableView>
+                        <Button fx:id="ajouterCh" layoutX="817.0" layoutY="98.0" mnemonicParsing="false" onAction="#versAjouterCh" prefHeight="39.0" prefWidth="48.0" styleClass="buttoButtonMenu" AnchorPane.leftAnchor="817.0">
+                           <graphic>
+                              <ImageView fitHeight="39.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" styleClass="buttoButtonMenu">
+                                 <image>
+                                    <Image url="@../Images/icons8-add-48.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="returnGestionCh" mnemonicParsing="false" onAction="#retourGestion" styleClass="buttoButtonMenu" stylesheets="@navsidebar.css" AnchorPane.leftAnchor="7.0" AnchorPane.topAnchor="7.0">
+                           <graphic>
+                              <ImageView fitHeight="35.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../Images/icons8-go-back-64_1.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
+         </center>
+         <left>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+         </left>
+         <top>
+            <AnchorPane prefHeight="0.0" prefWidth="1100.0" styleClass="semi-top-form" stylesheets="@dashboardDesign.css" BorderPane.alignment="CENTER">
+               <children>
+                  <AnchorPane layoutX="191.0" layoutY="-86.0" prefHeight="1.0" prefWidth="1099.0" styleClass="top-form" stylesheets="@dashboardDesign.css" AnchorPane.bottomAnchor="41.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="0.0" />
+                  <Label layoutX="29.0" layoutY="15.0" text="EnergyBox CrossFit Center">
+                     <font>
+                        <Font name="Calibri Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="9.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/LogoBlack.png" />
+                     </image>
+                  </ImageView>
+                  <Button fx:id="btnClose" layoutX="1033.0" layoutY="8.0" mnemonicParsing="false" onAction="#handleQuitter" prefHeight="30.0" prefWidth="53.0" styleClass="close" stylesheets="@dashboardDesign.css" text="x" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnMinus" layoutX="971.0" layoutY="8.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="54.0" styleClass="minimize" stylesheets="@dashboardDesign.css" text="-" AnchorPane.rightAnchor="63.0" AnchorPane.topAnchor="5.0">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
+         </top>
+      </BorderPane>
+   </children>
+</AnchorPane>

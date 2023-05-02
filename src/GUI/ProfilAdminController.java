@@ -43,7 +43,7 @@ import javafx.stage.Stage;
  */
 public class ProfilAdminController implements Initializable {
 
-     private int id = 0;
+    private int id = 0;
     @FXML
     private TextField usernameC;
     @FXML
@@ -62,8 +62,7 @@ public class ProfilAdminController implements Initializable {
     private Button btnClose;
     @FXML
     private ImageView profImg;
-        private Image image1;
-
+    private Image image1;
 
     /**
      * Initializes the controller class.
@@ -82,8 +81,8 @@ public class ProfilAdminController implements Initializable {
             usernameC.setText(u.getUsername());
             usernameC1.setText(u.getUsername());
             System.out.println(UserService.imageUser);
-image1 = new Image("/Images/uploads/"+UserService.imageUser);
-            System.out.println("image prog : "+image1);
+            image1 = new Image("/Images/uploads/" + UserService.imageUser);
+            System.out.println("image prog : " + image1);
             profImg.setImage(image1);
             emailC.setText(u.getEmail());
             emailC1.setText(u.getEmail());
@@ -113,7 +112,7 @@ image1 = new Image("/Images/uploads/"+UserService.imageUser);
         Instant instant = localDate.atStartOfDay(ZoneId.systemDefault()).toInstant();
         Date date = Date.from(instant);
         u.setDate_n(date);
-        System.out.println("Data user :"+u);
+        System.out.println("Data user :" + u);
         userSer.modifier(u);
         new Alert(Alert.AlertType.INFORMATION, u.getUsername() + " modifié !!", ButtonType.CLOSE).show();
         this.LoadId();
@@ -136,11 +135,11 @@ image1 = new Image("/Images/uploads/"+UserService.imageUser);
         app_stage.setScene(scene2);
         app_stage.show();
     }
+
     private void closW(ActionEvent event) {
-           Stage stage = (Stage) btnClose.getScene().getWindow();
+        Stage stage = (Stage) btnClose.getScene().getWindow();
         //System.out.println("hi");
         stage.close();
     }
 
 }
- 

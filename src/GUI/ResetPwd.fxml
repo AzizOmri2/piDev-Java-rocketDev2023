@@ -7,7 +7,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="734.0" prefWidth="1003.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ResetPwdController">
+<AnchorPane id="AnchorPane" prefHeight="760.0" prefWidth="1233.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ResetPwdController">
    <children>
       <Text layoutX="317.0" layoutY="290.0" lineSpacing="1.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" text="Entre Votre mail pour vous envoyé le code :" textAlignment="CENTER">
          <font>
@@ -25,7 +25,7 @@
             <Font size="33.0" />
          </font>
       </Text>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#720000" height="118.0" stroke="#ededed08" strokeType="INSIDE" width="1003.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#720000" height="118.0" stroke="#ededed08" strokeType="INSIDE" width="1233.0" />
       <Text fill="WHITE" layoutX="317.0" layoutY="82.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reset Mot de pass" wrappingWidth="368.27930285036564">
          <font>
             <Font name="Arial Rounded MT Bold" size="38.0" />

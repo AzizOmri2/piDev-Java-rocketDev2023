@@ -183,6 +183,11 @@ public class FrontOffController implements Initializable {
             viewPages.getChildren().removeAll();
             viewPages.getChildren().setAll(fxml);
        }
+       if (event.getSource() == btnRss) {
+            Parent fxml = FXMLLoader.load(getClass().getResource("MyGym.fxml"));
+            viewPages.getChildren().removeAll();
+            viewPages.getChildren().setAll(fxml);
+       }
 // if (event.getSource() == btnHome) {
 //            Parent fxml = FXMLLoader.load(getClass().getResource("FrontOff.fxml"));
 //            viewPages.getChildren().removeAll();

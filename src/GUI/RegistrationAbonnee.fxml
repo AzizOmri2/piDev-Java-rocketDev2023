@@ -10,8 +10,9 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="585.0" prefWidth="757.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.RegistrationAbonneeController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="585.0" prefWidth="757.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.RegistrationAbonneeController">
    <children>
       <TextField fx:id="emailAb" layoutX="418.0" layoutY="125.0" prefHeight="26.0" prefWidth="216.0" promptText="..@gmail.com" style="-fx-background-color: transparent; -fx-border-style: solid; -fx-border-width: 0 0 1 0;" />
       <TextField fx:id="usernameAb" layoutX="416.0" layoutY="88.0" prefHeight="26.0" prefWidth="216.0" promptText="entre votre nom" style="-fx-background-color: transparent; -fx-border-style: solid; -fx-border-width: 0 0 1 0;" />
@@ -76,7 +77,10 @@
             <Image url="@../Images/icons8-captcha-30.png" />
          </image>
       </ImageView>
-      <Pane layoutX="-29.0" layoutY="-4.0" prefHeight="593.0" prefWidth="350.0" style="-fx-background-color: #720000; -fx-background-radius: 40;" />
+      <Pane layoutX="-29.0" layoutY="-4.0" prefHeight="593.0" prefWidth="350.0" style="-fx-background-color: #720000; -fx-background-radius: 40;">
+         <children>
+            <Button layoutX="127.0" layoutY="390.0" mnemonicParsing="false" onAction="#VR" text="Enter" />
+         </children></Pane>
       <Label layoutX="9.0" layoutY="263.0" prefHeight="103.0" prefWidth="328.0" text="Don’t dream of it, train for it !" textFill="#222020">
          <font>
             <Font name="SansSerif Bold" size="22.0" />
@@ -92,5 +96,6 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Button>
+      <Text layoutX="60.0" layoutY="368.0" strokeType="OUTSIDE" strokeWidth="0.0" text="GYM 3D Simulation" />
    </children>
 </Pane>

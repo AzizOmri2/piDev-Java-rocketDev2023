@@ -60,7 +60,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 
-import gui.CaptureEcran;
+import GUI.CaptureEcran;
 import java.io.FileOutputStream;
 import javafx.event.EventHandler;
 import javafx.scene.layout.AnchorPane;

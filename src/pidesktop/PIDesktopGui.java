@@ -24,7 +24,7 @@ public class PIDesktopGui extends Application {
         // FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/listSponsor.fxml"));
        // FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/IndexClientAbonnement.fxml"));
       // FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/rss.fxml"));
-        //   FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/FrontOff.fxml"));
+          // FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/FrontOff.fxml"));
     FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Login.fxml")); 
          //FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/GestionRessource.fxml")); 
                 // FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/ShowPosts.fxml"));

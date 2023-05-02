@@ -28,6 +28,7 @@ public class EnergyBoxApp extends Application {
         //Parent root = FXMLLoader.load(getClass().getResource("Dashboard.fxml"));
         Parent root = FXMLLoader.load(getClass().getResource("listActiviteFront.fxml"));
         //Parent root = FXMLLoader.load(getClass().getResource("ajoutReclamationFront.fxml"));
+        //Parent root = FXMLLoader.load(getClass().getResource("listPlanningFront.fxml"));
         
         Scene scene = new Scene(root);
         

@@ -76,6 +76,13 @@ public class ListActiviteFrontController implements Initializable {
         listActiviteFront.getChildren().setAll(fxml);
     }
     
+    @FXML
+    void go_ListPlanning()throws IOException{ 
+        Parent fxml= FXMLLoader.load(getClass().getResource("listPlanningFront.fxml"));
+        listActiviteFront.getChildren().removeAll();
+        listActiviteFront.getChildren().setAll(fxml);
+    }
+    
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {

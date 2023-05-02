@@ -44,6 +44,15 @@ public class Planning {
         this.heure_planning = heure_planning;
     }
 
+    public Planning(int cours_id, int heure_planning) {
+        this.cours_id = cours_id;
+        this.heure_planning = heure_planning;
+    }
+
+    public Planning(int cours_id) {
+        this.cours_id = cours_id;
+    }
+    
     public int getId() {
         return id;
     }

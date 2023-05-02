@@ -101,6 +101,119 @@ public class PlanningService implements CrudPlanning<Planning>{
         }
         return list;
     }
+    
+    
+    public List<Planning> ShowLundi() {
+        List<Planning> list = new ArrayList<>();
+
+        try {
+            String req = "SELECT cours_id,heure_planning from planning where jour_planning='Lundi'";
+            Statement st = conx.createStatement();
+            ResultSet rs = st.executeQuery(req);
+            while (rs.next()) {
+                list.add(new Planning(rs.getInt("cours_id"),rs.getInt("heure_planning")));
+            }
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return list;
+    }
+    
+    public List<Planning> ShowMardi() {
+        List<Planning> list = new ArrayList<>();
+
+        try {
+            String req = "SELECT cours_id from planning where jour_planning='Mardi'";
+            Statement st = conx.createStatement();
+            ResultSet rs = st.executeQuery(req);
+            while (rs.next()) {
+                list.add(new Planning(rs.getInt("cours_id")));
+            }
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return list;
+    }
+    
+    public List<Planning> ShowMercredi() {
+        List<Planning> list = new ArrayList<>();
+
+        try {
+            String req = "SELECT cours_id from planning where jour_planning='Mercredi'";
+            Statement st = conx.createStatement();
+            ResultSet rs = st.executeQuery(req);
+            while (rs.next()) {
+                list.add(new Planning(rs.getInt("cours_id")));
+            }
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return list;
+    }
+    
+    public List<Planning> ShowJeudi() {
+        List<Planning> list = new ArrayList<>();
+
+        try {
+            String req = "SELECT cours_id from planning where jour_planning='Jeudi'";
+            Statement st = conx.createStatement();
+            ResultSet rs = st.executeQuery(req);
+            while (rs.next()) {
+                list.add(new Planning(rs.getInt("cours_id")));
+            }
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return list;
+    }
+    
+    public List<Planning> ShowVendredi() {
+        List<Planning> list = new ArrayList<>();
+
+        try {
+            String req = "SELECT cours_id from planning where jour_planning='Vendredi'";
+            Statement st = conx.createStatement();
+            ResultSet rs = st.executeQuery(req);
+            while (rs.next()) {
+                list.add(new Planning(rs.getInt("cours_id")));
+            }
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return list;
+    }
+    
+    public List<Planning> ShowSamedi() {
+        List<Planning> list = new ArrayList<>();
+
+        try {
+            String req = "SELECT cours_id from planning where jour_planning='Samedi'";
+            Statement st = conx.createStatement();
+            ResultSet rs = st.executeQuery(req);
+            while (rs.next()) {
+                list.add(new Planning(rs.getInt("cours_id")));
+            }
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return list;
+    }
+    
+    public List<Planning> ShowDimanche() {
+        List<Planning> list = new ArrayList<>();
+
+        try {
+            String req = "SELECT cours_id from planning where jour_planning='Dimanche'";
+            Statement st = conx.createStatement();
+            ResultSet rs = st.executeQuery(req);
+            while (rs.next()) {
+                list.add(new Planning(rs.getInt("cours_id")));
+            }
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return list;
+    }
 
     @Override
     public List<Planning> Search(String t) {

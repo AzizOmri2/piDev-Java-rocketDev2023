@@ -156,7 +156,7 @@ public class FXML_AjouterMenuController implements Initializable {
             Parent root;
             try {
             
-            root = FXMLLoader.load(getClass().getResource("FXML_Menu.fxml"));
+            root = FXMLLoader.load(getClass().getResource("Dashboard.fxml"));
             Scene c=new Scene(root);
              Stage stage=(Stage)fxajout.getScene().getWindow();
             stage.setScene(c);

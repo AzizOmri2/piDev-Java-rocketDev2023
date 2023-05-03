@@ -65,6 +65,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import java.util.Random;
+import gui.Mailing;
+import java.awt.Desktop;
+import java.net.URI;
+import java.net.URISyntaxException;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 
 /**
  * FXML Controller class
@@ -91,7 +97,13 @@ public class FXML_AjouterReservationController implements Initializable {
     private ComboBox combo;
     @FXML
     private TextField teluser;
-   
+    @FXML
+    private ImageView fb;
+    @FXML
+    private ImageView insta;
+     @FXML
+    private ImageView chat;
+     
     public Connection conx;
     public Statement stm;
     /**
@@ -140,7 +152,7 @@ combo.setItems(list);
             m.setDate(sqlDate);
 
             ajouterReservation(m);
-           // SMS();
+         //    SMS();
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erreur de saisie");
@@ -156,8 +168,7 @@ combo.setItems(list);
           fxdate.setValue(null);
           teluser.clear();
     });
-
-
+         
     }
 
 private void redirectToList(){
@@ -171,37 +182,50 @@ private void redirectToList(){
         Logger.getLogger(FXML_AjouterReservationController.class.getName()).log(Level.SEVERE, null, ex);
     }
 }
-    public void ajouterReservation(Reservation p) {
-         PlatServices ser = new PlatServices();    
+
+public void ajouterReservation(Reservation p) {
+    PlatServices ser = new PlatServices();
+    try {
+        int idplat = ser.idmenu(combo.getSelectionModel().getSelectedItem().toString());
+        int nombrePlatsActuel = ser.getNombrePlats(idplat);
+        int nombrePlatsNouveau = nombrePlatsActuel - 1;
+        ser.updateNombrePlats(idplat, nombrePlatsNouveau);
+        
+        if (nombrePlatsNouveau == 0) {
+            // Envoyer une notification à l'administrateur
+            System.out.println("Nombre de plats est 0 !");
+            Mailing m = new Mailing () ;
+            m.sendEmailNotif("Notification : Nombre de plats est 0", "Le nombre de plats est maintenant 0 pour le plat " + 
+                    combo.getSelectionModel().getSelectedItem().toString());
+        }
+
+        String req = "INSERT INTO `reservation`(`date`,`idplat_id`) "
+                + "VALUES (?,?)";
+        PreparedStatement ps = conx.prepareStatement(req);
+        ps.setDate(1, p.getDate());
+        ps.setInt(2, idplat);
+        ps.executeUpdate();
+        System.out.println("Réservation ajoutée avec succèes");
 
         try {
-            String req = "INSERT INTO `reservation`(`date`,`idplat_id`) "
-                    + "VALUES (?,?)";
-            PreparedStatement ps = conx.prepareStatement(req);
-            ps.setDate(1, p.getDate());
-            ps.setInt(2, ser.idmenu(combo.getSelectionModel().getSelectedItem().toString()));
-            ps.executeUpdate();
-            System.out.println("Réservation ajoutée avec succèes");
-            
-             try {
-                int numTable = 0;
-                 // Générer le QR code pour cette réservation
-                 generateQRCode(combo.getSelectionModel().getSelectedItem().toString(), p.getDate().toString(), "RANDOM_CODE",numTable);
-             } catch (WriterException ex) {
-                 Logger.getLogger(FXML_AjouterReservationController.class.getName()).log(Level.SEVERE, null, ex);
-             } catch (IOException ex) {
-                 Logger.getLogger(FXML_AjouterReservationController.class.getName()).log(Level.SEVERE, null, ex);
-             }
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            int numTable = 0;
+            // Générer le QR code pour cette réservation
+            generateQRCode(combo.getSelectionModel().getSelectedItem().toString(), p.getDate().toString(), "RANDOM_CODE",numTable);
+        } catch (WriterException ex) {
+            Logger.getLogger(FXML_AjouterReservationController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(FXML_AjouterReservationController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    } catch (SQLException ex) {
+        System.out.println(ex.getMessage());
     }
+}
+
     
-/*    
 //SMS
 void SMS(){
         String ACCOUNT_SID = "AC8ccdc9247ba4ead9aabef04a1ccc183b";
-        String AUTH_TOKEN = "4983c7243a884c7021934aa976559e84";
+        String AUTH_TOKEN = "259c719ee548ee4ddc7ca3b2b148cf83";
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
 
             String recipientNumber = "+216" + teluser.getText();
@@ -217,7 +241,8 @@ void SMS(){
      
      }
 //SMS    
-   */ 
+  
+
 //QrCode 
 public static void generateQRCode(String platChoisi, String date, String RANDOM_CODE ,int numTable) throws WriterException, IOException {
     String codeRandom = UUID.randomUUID().toString();
@@ -253,7 +278,41 @@ public static void generateQRCode(String platChoisi, String date, String RANDOM_
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     System.out.println("QR Code generated successfully!");
 }
+//QrCode
 
-//QrCode     
+//FB INSTA 
+@FXML
+    public void openInstagram(MouseEvent event) throws URISyntaxException {
+    String instagramUrl = "https://www.instagram.com/wemanage.tn/";
+    try {
+        Desktop.getDesktop().browse(new URI(instagramUrl));
+    } catch (IOException | URISyntaxException e) {
+        e.printStackTrace();
+    }
+}
+
+    @FXML
+    public void openFacebook(MouseEvent event) {
+    String facebookUrl = "https://www.facebook.com/Berrys.Five";
+    try {
+        Desktop.getDesktop().browse(new URI(facebookUrl));
+    } catch (IOException | URISyntaxException e) {
+        e.printStackTrace();
+    }
+}
+//FB INSTA 
+  
+//CHATBOT
+@FXML
+private void openChatBot(MouseEvent event) throws IOException {
+    Parent root = FXMLLoader.load(getClass().getResource("ChatBot.fxml"));
+    Scene scene = new Scene(root);
+    Stage stage = new Stage();
+    stage.setScene(scene);
+    stage.show();
+}
+//ChatBot
+
 }
  
+

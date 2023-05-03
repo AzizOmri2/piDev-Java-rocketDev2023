@@ -3,50 +3,42 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.effect.Glow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="671.0" prefWidth="604.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.FXML_FrontRestaurantController">
+<AnchorPane id="AnchorPane" prefHeight="670.0" prefWidth="1233.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.FXML_FrontRestaurantController">
    <children>
-      <ImageView fitHeight="153.0" fitWidth="172.0" layoutX="992.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="461.0" fitWidth="1277.0" layoutX="-9.0" layoutY="209.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/HJH.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="102.0" fitWidth="116.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@images/LogoGymBlack.png" />
          </image>
       </ImageView>
-      <Pane layoutX="252.0" layoutY="190.0" prefHeight="467.0" prefWidth="675.0" style="-fx-border-color: #720000; -fx-background-color: #720000;">
-         <effect>
-            <DropShadow />
-         </effect>
-         <children>
-            <Label fx:id="menuN" layoutX="22.0" layoutY="21.0" prefHeight="111.0" prefWidth="451.0" textFill="#fffdfd">
-               <font>
-                  <Font size="48.0" />
-               </font>
-            </Label>
-            <Button fx:id="GoToPlats" layoutX="504.0" layoutY="36.0" mnemonicParsing="false" onAction="#plat" prefHeight="46.0" prefWidth="143.0" stylesheets="@design.css" text="Ses Plats" />
-            <ImageView fitHeight="254.0" fitWidth="321.0" layoutX="171.0" layoutY="157.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@images/menu.png" />
-               </image>
-            </ImageView>
-         </children>
-      </Pane>
-      <Label layoutX="14.0" layoutY="-4.0" text="Nos menus :" textFill="#720000">
+      <Label layoutX="501.0" layoutY="14.0" text="Nos menus " textFill="#2c234d">
          <font>
-            <Font name="Comic Sans MS Bold" size="70.0" />
+            <Font name="Comic Sans MS Bold" size="40.0" />
          </font>
       </Label>
-      <Button layoutX="975.0" layoutY="437.0" mnemonicParsing="false" onAction="#next" prefHeight="31.0" prefWidth="100.0" stylesheets="@design.css" text="Suivant" />
-      <Button layoutX="90.0" layoutY="443.0" mnemonicParsing="false" onAction="#pred" prefHeight="31.0" prefWidth="111.0" stylesheets="@design.css" text="Précédent" />
-      <Button fx:id="PDF" layoutX="614.0" layoutY="95.0" mnemonicParsing="false" stylesheets="@design.css" text="PDF" />
-      <ComboBox fx:id="idPlatpdf" layoutX="689.0" layoutY="95.0" prefWidth="150.0" stylesheets="@navsidebar.css" />
-      <Text id="h" fill="#2c234d" layoutX="26.0" layoutY="119.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Imprimer un plat a votre choix sans voir toute la liste ! " wrappingWidth="588.458984375">
+      <Button layoutX="889.0" layoutY="424.0" mnemonicParsing="false" onAction="#next" prefHeight="31.0" prefWidth="100.0" styleClass="btn" stylesheets="@list.css" text="   Suivant" />
+      <Button layoutX="215.0" layoutY="424.0" mnemonicParsing="false" onAction="#pred" prefHeight="31.0" prefWidth="111.0" styleClass="btn" stylesheets="@list.css" text="   Précédent" />
+      <Button fx:id="PDF" layoutX="758.0" layoutY="91.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="42.0" styleClass="btn" stylesheets="@list.css">
+         <graphic>
+            <ImageView fitHeight="31.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/icons8-pdf-2-100.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <ComboBox fx:id="idPlatpdf" layoutX="590.0" layoutY="95.0" prefWidth="150.0" styleClass="comboBox" stylesheets="@list.css" />
+      <Text id="h" fill="#c21906" layoutX="14.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Imprimer un plat a votre choix sans voir toute la liste ! " wrappingWidth="588.458984375">
          <font>
             <Font name="Candara Bold Italic" size="25.0" />
          </font>
@@ -54,5 +46,34 @@
             <Glow />
          </effect>
       </Text>
+      <Label fx:id="menuN" alignment="CENTER" contentDisplay="CENTER" layoutX="341.0" layoutY="276.0" prefHeight="310.0" prefWidth="522.0" text="                           " textAlignment="CENTER" textFill="#fffdfd">
+         <font>
+            <Font size="48.0" />
+         </font>
+      </Label>
+      <Button fx:id="GoToPlats" layoutX="765.0" layoutY="286.0" mnemonicParsing="false" onAction="#plat" prefHeight="31.0" prefWidth="88.0" styleClass="btn" stylesheets="@list.css" text="Plats">
+         <graphic>
+            <ImageView fitHeight="31.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/icons8-invisible-100.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <ImageView fitHeight="195.0" fitWidth="308.0" layoutX="483.0" layoutY="475.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/menu.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="21.0" fitWidth="27.0" layoutX="898.0" layoutY="429.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/icons8-suivant-30.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="21.0" fitWidth="27.0" layoutX="222.0" layoutY="429.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/icons8-précédent-24.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

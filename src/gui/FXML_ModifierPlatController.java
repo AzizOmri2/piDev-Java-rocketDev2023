@@ -89,7 +89,7 @@ combo.setItems(list);
             fxprix.clear();
             fxcalories.clear();
             fxetat.clear();
-            fximage.clear();
+          //  fximage.clear();
             fxnbp.clear();
             fxcategId.clear();
         });
@@ -119,7 +119,9 @@ combo.setItems(list);
        fxcalories.setText(m.getCalories());
        fxetat.setText(m.getEtat());
        fximage.setText(m.getImage());
-      fxnbp.setText(String.valueOf(m.getNbp()));
+       fximage.setEditable(false);
+       fximage.setFocusTraversable(false);
+       fxnbp.setText(String.valueOf(m.getNbp()));
     }
    
    @FXML
@@ -133,10 +135,10 @@ combo.setItems(list);
        String prix = fxprix.getText();
        String calories = fxcalories.getText();
        String etat = fxetat.getText();
-       String image = fximage.getText();
+    //   String image = fximage.getText();
        String nbp = fxnbp.getText();
 // vérifier que toutes les informations requises sont fournies
-if (nom.isEmpty() || description.isEmpty() || prix.isEmpty() || calories.isEmpty() || etat.isEmpty() || image.isEmpty() || nbp.isEmpty()) {
+if (nom.isEmpty() || description.isEmpty() || prix.isEmpty() || calories.isEmpty() || etat.isEmpty() || nbp.isEmpty()) {
     Alert alert = new Alert(Alert.AlertType.ERROR);
     alert.setTitle("Erreur");
     alert.setHeaderText("Tous les champs doivent être remplis.");
@@ -148,7 +150,7 @@ if (nom.isEmpty() || description.isEmpty() || prix.isEmpty() || calories.isEmpty
     plat.setPrix(Double.parseDouble(prix));
     plat.setCalories(calories);
     plat.setEtat(etat);
-    plat.setImage(image);
+   // plat.setImage(image);
     plat.setNbp(Integer.parseInt(nbp));
     plat.setCategories_id(ser.idmenu(combo.getSelectionModel().getSelectedItem().toString()));
 
@@ -170,6 +172,7 @@ if (nom.isEmpty() || description.isEmpty() || prix.isEmpty() || calories.isEmpty
     }
     }
     }
+    
 }
   
    

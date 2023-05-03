@@ -5,6 +5,8 @@
  */
 package gui;
 
+import com.itextpdf.text.Document;
+import com.itextpdf.text.pdf.PdfWriter;
 import entites.Menu;
 import java.io.IOException;
 import java.net.URL;
@@ -59,6 +61,7 @@ import javax.swing.JPanel;
 
 
 import gui.CaptureEcran;
+import java.io.FileOutputStream;
 import javafx.event.EventHandler;
 import javafx.scene.layout.AnchorPane;
 
@@ -112,12 +115,13 @@ public class FXML_MenuController implements Initializable {
     @FXML
     private Button Trier;
     @FXML
+    private Button Trier1;
+    @FXML
     private Button captureEcran;
     @FXML
     private AnchorPane monAnchorPane;
      
-    
-    
+  
     /**
      * Initializes the controller class.
      */
@@ -130,7 +134,7 @@ public class FXML_MenuController implements Initializable {
         } catch (SQLException ex) {
             System.out.println("Failed to connect to database: " + ex.getMessage());
         }
-        btnHome.setOnAction((ActionEvent event) -> {
+   /*     btnHome.setOnAction((ActionEvent event) -> {
             GoToRestau();
     }); 
        btnPlats.setOnAction((ActionEvent event) -> {
@@ -139,7 +143,7 @@ public class FXML_MenuController implements Initializable {
        btnReservations.setOnAction((ActionEvent event) -> {
             GoToReservation();
     }); 
-                   
+       */            
         Afficher.setOnAction((ActionEvent event) -> {
         showActions();
     });
@@ -151,6 +155,9 @@ public class FXML_MenuController implements Initializable {
     });
         Trier.setOnAction((ActionEvent event) -> {
             trierMenuParNom();
+        });
+        Trier1.setOnAction((ActionEvent event) -> {
+            trierMenuParDescription();
         });
          
         captureEcran.setOnAction(event -> {
@@ -171,12 +178,11 @@ public class FXML_MenuController implements Initializable {
         alert.showAndWait();
     }
 });
-
+  
         
 }    
 
-
-
+/*
    private void GoToRestau(){
             Parent root;
             try {
@@ -210,7 +216,7 @@ public class FXML_MenuController implements Initializable {
             Logger.getLogger(FXML_AjouterMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-        
+  */      
     private void GoToAjout(){
             Parent root;
             try {
@@ -222,21 +228,8 @@ public class FXML_MenuController implements Initializable {
             Logger.getLogger(FXML_AjouterMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-/*
-      private void GoToModifier(){
-            Parent root;
-            try {
-            root = FXMLLoader.load(getClass().getResource("FXML_ModifierMenu.fxml"));
-            Scene c=new Scene(root);
-             Stage stage=(Stage)Modifier.getScene().getWindow();
-            stage.setScene(c);
-        } catch (IOException ex) {
-            Logger.getLogger(FXML_ModifierMenuController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-     */
+
   
-      
  @FXML
   public  ObservableList<Menu> getMenuList() {
          conx = MyDB.getInstance().getConx();
@@ -355,7 +348,7 @@ public void showActions() {
         }
         ShowListe();
     Alert alert = new Alert(Alert.AlertType.ERROR);
-    alert.setTitle("EnergyBox :: Error Message");
+    alert.setTitle("EnergyBox :: Message");
     alert.setHeaderText(null);
     alert.setContentText("Menu supprimé");
     alert.showAndWait();
@@ -387,6 +380,7 @@ public void showActions() {
 }
  //****************************************Recherche-Avancé****************************************   
 void search() {
+
     nom.setCellValueFactory(new PropertyValueFactory<>("categories"));
     description.setCellValueFactory(new PropertyValueFactory<>("descriptionmenu"));
     conx = MyDB.getInstance().getConx();
@@ -429,160 +423,21 @@ void search() {
         });
         tvMenu.setItems(dataList);
     }
+    public void trierMenuParDescription() {
+        ObservableList<Menu> dataList = getMenuList();
+        Collections.sort(dataList, new Comparator<Menu>() {
+            @Override
+            public int compare(Menu m1, Menu m2) {
+                return m1.getDescriptionmenu().compareToIgnoreCase(m2.getDescriptionmenu());
+            }
+        });
+        tvMenu.setItems(dataList);
+    }
 //****************************************TRI****************************************
 
 
 
-
 }
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- /* **************************************************************************************************************************************************************** */   
- //Modifier 
- /* @FXML
-public void showM() {
-    ObservableList<Menu> list = getMenuList();
-    nom.setCellValueFactory(new PropertyValueFactory<>("categories"));
-    description.setCellValueFactory(new PropertyValueFactory<>("descriptionmenu"));
-    
-    TableColumn<Menu, Void> colBtn = new TableColumn("Actions");
-
-    Callback<TableColumn<Menu, Void>, TableCell<Menu, Void>> cellFactory = new Callback<TableColumn<Menu, Void>, TableCell<Menu, Void>>() {
-        @Override
-        public TableCell<Menu, Void> call(final TableColumn<Menu, Void> param) {
-            final TableCell<Menu, Void> cell = new TableCell<Menu, Void>() {
-
-                private final Button btn = new Button("Modifier");
-
-                {
-                  btn.setOnAction((ActionEvent event) -> {
-                  Menu data = getTableView().getItems().get(getIndex());
-                    ModifierMenu(data);
-                     });
-                }
-
-                @Override
-                public void updateItem(Void item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if (empty) {
-                        setGraphic(null);
-                    } else {
-                        setGraphic(btn);
-                    }
-                }
-            };
-            return cell;
-        }
-    };
-
-    colBtn.setCellFactory(cellFactory);
-
-    tvMenu.setItems(list);
-    tvMenu.getColumns().addAll(colBtn);
-   
-}
-  */  
-
-      
-/*  ************************************************************************************  
-        //Afficher bl bouttons modifier kodm kol menu :
-         public void afficherMenu(){
-         try {
-            String req = "SELECT * FROM `menu`";
-            stm = conx.createStatement();
-             ResultSet rs = stm.executeQuery(req);
-             List<Menu> menus = new ArrayList<Menu>();
-            while(rs.next()){
-                Menu m = new Menu(rs.getInt("id"), //or rst.getInt(1)
-                    rs.getString("categories"),
-                    rs.getString(3));
-               menus.add(m);
-            }
-          Items.getChildren().clear();
-            for (Menu m : menus) {
-               Label label = new Label(m.getCategories() + ": " + m.getDescriptionmenu());
-            Button buttonModify = new Button("Modifier");
-            buttonModify.setId(Integer.toString(m.getId())); // set the ID of the button to the ID of the associated Menu object
-            System.out.println("Button ID: " + buttonModify.getId());
-           
-            System.out.println("Event registered for button " + m.getId()); // add this line
-            HBox hbox = new HBox(label, buttonModify);
-            Items.getChildren().add(hbox);
-            }
-
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
-    }
-  
-      //End of afficher bl buttons modifier 
-
-
-  /* 
-    public void afficherMenu(){
-         try {
-            String req = "SELECT * FROM `menu`";
-            stm = conx.createStatement();
-             ResultSet rs = stm.executeQuery(req);
-             List<Menu> menus = new ArrayList<Menu>();
-            while(rs.next()){
-                Menu m = new Menu(rs.getInt("id"), //or rst.getInt(1)
-                    rs.getString("categories"),
-                    rs.getString(3));
-               menus.add(m);
-            }
-          Items.getChildren().clear();
-            for (Menu m : menus) {
-                Label label = new Label(m.getCategories() + ": " + m.getDescriptionmenu());
-                Items.getChildren().add(label);
-            }
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
-    }
-
-        
-      
-************************************************************************************   */     
-
-
-          
-      
-   
-
-    
-   
-   

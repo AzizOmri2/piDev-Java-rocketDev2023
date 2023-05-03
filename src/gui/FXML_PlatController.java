@@ -53,6 +53,16 @@ import services.MenuServices;
 import services.PlatServices;
 import utils.MyDB;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import javax.swing.JOptionPane;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+
 /**
  * FXML Controller class
  *
@@ -127,7 +137,8 @@ public class FXML_PlatController implements Initializable {
     private Button captureEcran;
     @FXML
     private AnchorPane monAnchorPane;
-    
+    @FXML
+    private Button exportButton;
     
     
     /**
@@ -141,15 +152,15 @@ public class FXML_PlatController implements Initializable {
         } catch (SQLException ex) {
             System.out.println("Failed to connect to database: " + ex.getMessage());
         }
-         btnHome.setOnAction((ActionEvent event) -> {
+ /*       btnHome.setOnAction((ActionEvent event) -> {
             GoToRestau();
-    }); 
+        });
         btnMenus.setOnAction((ActionEvent event) -> {
             GoToMenu();
-    }); 
-         btnReservations.setOnAction((ActionEvent event) -> {
+        });
+        btnReservations.setOnAction((ActionEvent event) -> {
             GoToReservation();
-    }); 
+        });*/
         Afficher.setOnAction((ActionEvent event) -> {
             showActions();
         });
@@ -157,37 +168,44 @@ public class FXML_PlatController implements Initializable {
         Refresh.setOnAction((ActionEvent event) -> {
             ShowListe();
         });
-     Ajout.setOnAction((ActionEvent event) -> {
-           GoToAjout();
-    });
-     TriPrix.setOnAction((ActionEvent event) -> {
+        Ajout.setOnAction((ActionEvent event) -> {
+            GoToAjout();
+        });
+        TriPrix.setOnAction((ActionEvent event) -> {
             triParPrix();
-    }); 
-     TriNom.setOnAction((ActionEvent event) -> {
+        });
+        TriNom.setOnAction((ActionEvent event) -> {
             triParNom();
-    }); 
-   captureEcran.setOnAction(event -> {
-    CaptureEcran cap = new CaptureEcran();
-    try {
-        cap.capturer(monAnchorPane);
-        System.out.println("La capture d'écran a été générée avec succès !");
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Capture d'écran");
-        alert.setHeaderText("Capture d'écran générée avec succès !");
-        alert.showAndWait();
-    } catch (Exception ex) {
-        System.out.println("Erreur lors de la capture d'écran : " + ex.getMessage());
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Erreur");
-        alert.setHeaderText("Erreur lors de la capture d'écran !");
-        alert.setContentText("Une erreur est survenue lors de la capture d'écran : " + ex.getMessage());
-        alert.showAndWait();
-    }
-});
+        });
+        captureEcran.setOnAction(event -> {
+            CaptureEcran cap = new CaptureEcran();
+            try {
+                cap.capturer(monAnchorPane);
+                System.out.println("La capture d'écran a été générée avec succès !");
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Capture d'écran");
+                alert.setHeaderText("Capture d'écran générée avec succès !");
+                alert.showAndWait();
+            } catch (Exception ex) {
+                System.out.println("Erreur lors de la capture d'écran : " + ex.getMessage());
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Erreur");
+                alert.setHeaderText("Erreur lors de la capture d'écran !");
+                alert.setContentText("Une erreur est survenue lors de la capture d'écran : " + ex.getMessage());
+                alert.showAndWait();
+            }
+        });
+        exportButton.setOnAction(event -> {
+            try {
+               export(getPlatList(), "C:\\Users\\lenovo\\Desktop\\PIDEV_Desc\\src\\Excel\\plats.xlsx");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
 
     }  
     
-    private void GoToRestau(){
+  /*  private void GoToRestau(){
             Parent root;
             try {
             
@@ -221,7 +239,7 @@ public class FXML_PlatController implements Initializable {
             Logger.getLogger(FXML_AjouterMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-       
+       */
     private void GoToAjout(){
             Parent root;
             try {
@@ -502,6 +520,90 @@ public void triParNom() {
     }
 //****************************************Fin-Tri-Par-Nom****************************************
  
+ ////****************************************Exporter_EXCEL**************************************** 
+public void export(List<Plat> plats, String fileName) throws IOException {
+    // Create a workbook and a sheet
+    Workbook workbook = new XSSFWorkbook();
+    Sheet sheet = workbook.createSheet("Plats");
+    
+    // Define custom styles for the header and data cells
+    CellStyle headerStyle = workbook.createCellStyle();
+    Font headerFont = workbook.createFont();
+    headerFont.setBold(true);
+    headerStyle.setFont(headerFont);
+   // headerStyle.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
+   headerStyle.setFillForegroundColor(IndexedColors.RED.getIndex());
+    headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+    
+    CellStyle dataStyle = workbook.createCellStyle();
+    dataStyle.setAlignment(HorizontalAlignment.CENTER);
+    dataStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+    dataStyle.setWrapText(true);
+    
+    // Create a header row
+    Row headerRow = sheet.createRow(0);
+    headerRow.createCell(0).setCellValue("ID");
+    headerRow.createCell(1).setCellValue("Category ID");
+    headerRow.createCell(2).setCellValue("Nom");
+    headerRow.createCell(3).setCellValue("Prix");
+    headerRow.createCell(4).setCellValue("Description");
+    headerRow.createCell(5).setCellValue("Calories");
+    headerRow.createCell(6).setCellValue("Etat");
+    headerRow.createCell(7).setCellValue("Image");
+    headerRow.createCell(8).setCellValue("Nombre du plat");
+    
+    // Apply the custom header style to the header row cells
+    for (Cell headerCell : headerRow) {
+        headerCell.setCellStyle(headerStyle);
+    }
+    
+    // Create data rows
+    int rowNum = 1;
+    for (Plat plat : plats) {
+        Row row = sheet.createRow(rowNum++);
+        row.createCell(0).setCellValue(plat.getId());
+        row.createCell(1).setCellValue(plat.getCategories_id());
+        row.createCell(2).setCellValue(plat.getNom());
+        row.createCell(3).setCellValue(plat.getPrix());
+        row.createCell(4).setCellValue(plat.getDescription());
+        row.createCell(5).setCellValue(plat.getCalories());
+        row.createCell(6).setCellValue(plat.getEtat());
+        row.createCell(7).setCellValue(plat.getImage());
+        row.createCell(8).setCellValue(plat.getNbp());
+        
+        // Apply the custom data style to the data row cells
+        for (Cell dataCell : row) {
+            dataCell.setCellStyle(dataStyle);
+        }
+    }
+    
+    // Resize columns to fit their content
+    for (int i = 0; i < headerRow.getLastCellNum(); i++) {
+        sheet.autoSizeColumn(i);
+    }
+    
+    // Get the current date and time
+    Date currentDate = new Date();
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
+    String formattedDate = dateFormat.format(currentDate);
+    
+    // Add the formatted date to the file name
+    int extensionIndex = fileName.lastIndexOf('.');
+    String newFileName = fileName.substring(0, extensionIndex) + "_" + formattedDate + fileName.substring(extensionIndex);
+    
+    // Write the workbook to a file
+    try (FileOutputStream outputStream = new FileOutputStream(newFileName)) {
+        workbook.write(outputStream);
+        JOptionPane.showMessageDialog(null, "Export successful!");
+    }
+    catch (IOException e) {
+        JOptionPane.showMessageDialog(null, "Export failed: " + e.getMessage());
+    }
+ 
+}
+ ////****************************************Exporter_EXCEL**************************************** 
+ 
+
  
  
  
@@ -536,12 +638,7 @@ public void triParNom() {
  
  
  
- 
- 
- 
- 
- 
- 
+ }
  
  /*  
       public void afficherPlat(){
@@ -573,4 +670,4 @@ public void triParNom() {
         }
     }
     */
-}
+

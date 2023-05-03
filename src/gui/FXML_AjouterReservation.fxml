@@ -12,9 +12,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="671.0" prefWidth="1164.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.FXML_AjouterReservationController">
+<AnchorPane id="AnchorPane" prefHeight="670.0" prefWidth="1233.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.FXML_AjouterReservationController">
    <children>
-      <Text id="h" fill="#2c234d" layoutX="949.0" layoutY="147.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Réserver un plat" wrappingWidth="315.458984375">
+      <Text id="h" fill="#720000" layoutX="958.0" layoutY="158.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Réserver un plat" wrappingWidth="315.458984375">
          <font>
             <Font name="Candara Bold Italic" size="45.0" />
          </font>
@@ -22,10 +22,10 @@
             <Glow />
          </effect>
       </Text>
-      <Button fx:id="Reserver" layoutX="1046.0" layoutY="437.0" mnemonicParsing="false" prefHeight="14.0" prefWidth="82.0" style="-fx-background-color: #ff1313;" text="Réserver" textFill="WHITE" />
-      <Button fx:id="Retour" layoutX="922.0" layoutY="639.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="174.0" style="-fx-background-color: #ff1313;" text="Retour vers les menus" textFill="WHITE" />
-      <Button fx:id="Annuler" layoutX="1155.0" layoutY="435.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="82.0" style="-fx-background-color: #ff1313;" text="Annuler" textFill="WHITE" />
-      <Label layoutX="922.0" layoutY="304.0" text="Date :" textFill="#f04e3c">
+      <Button fx:id="Reserver" layoutX="1054.0" layoutY="442.0" mnemonicParsing="false" prefHeight="14.0" prefWidth="82.0" style="-fx-background-color: #c21906;" text="Réserver" textFill="WHITE" />
+      <Button fx:id="Retour" layoutX="922.0" layoutY="639.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="174.0" style="-fx-background-color: #c21906;" text="Retour vers les menus" textFill="WHITE" />
+      <Button fx:id="Annuler" layoutX="1163.0" layoutY="440.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="82.0" style="-fx-background-color: #c21906;" text="Annuler" textFill="WHITE" />
+      <Label layoutX="930.0" layoutY="309.0" text="Date :" textFill="#c21906">
          <font>
             <Font name="Candara Bold Italic" size="26.0" />
          </font></Label>
@@ -34,23 +34,43 @@
             <Image url="@images/battle-rope-resized.jpeg" />
          </image>
       </ImageView>
-      <ImageView fitHeight="90.0" fitWidth="111.0" layoutX="1195.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="102.0" fitWidth="116.0" layoutX="1195.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@images/LogoGymBlack.png" />
          </image>
       </ImageView>
-      <DatePicker fx:id="fxdate" layoutX="1046.0" layoutY="310.0" />
-      <Label layoutX="922.0" layoutY="239.0" text="plat :" textFill="#f04e3c">
+      <DatePicker fx:id="fxdate" layoutX="1054.0" layoutY="315.0" style="-fx-border-color: #c21906;" />
+      <Label layoutX="930.0" layoutY="244.0" text="plat :" textFill="#c21906">
          <font>
             <Font name="Candara Bold Italic" size="26.0" />
          </font>
       </Label>
-      <ComboBox fx:id="combo" layoutX="1046.0" layoutY="243.0" prefHeight="31.0" prefWidth="218.0" />
-      <TextField fx:id="teluser" layoutX="1047.0" layoutY="365.0" prefHeight="31.0" prefWidth="218.0" promptText="Saisir votre téléphone" />
-      <Label layoutX="912.0" layoutY="361.0" text="Téléphone:" textFill="#f04e3c">
+      <ComboBox fx:id="combo" layoutX="1054.0" layoutY="248.0" prefHeight="31.0" prefWidth="218.0" style="-fx-border-color: #c21906;" />
+      <TextField fx:id="teluser" layoutX="1055.0" layoutY="370.0" prefHeight="31.0" prefWidth="218.0" promptText="Saisir votre téléphone" style="-fx-border-color: #c21906;" />
+      <Label layoutX="920.0" layoutY="366.0" text="Téléphone:" textFill="#c21906">
          <font>
             <Font name="Candara Bold Italic" size="26.0" />
          </font>
       </Label>
+      <ImageView fx:id="fb" fitHeight="45.0" fitWidth="45.0" layoutX="7.0" layoutY="49.0" onMouseClicked="#openFacebook" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/Facebook_icon.svg.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="insta" fitHeight="45.0" fitWidth="45.0" layoutX="58.0" layoutY="49.0" onMouseClicked="#openInstagram" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/340094588_835187387962662_6498300519602814538_n.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="16.0" layoutY="14.0" text="Contact us" textFill="#c21906">
+         <font>
+            <Font name="Candara Bold Italic" size="26.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="chat" fitHeight="52.0" fitWidth="56.0" layoutX="112.0" layoutY="46.0" onMouseClicked="#openChatBot" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/icons8-chat-bot-64%20(1).png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

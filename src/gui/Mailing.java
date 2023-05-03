@@ -48,24 +48,34 @@ public static void sendEmail(String recipientEmail) throws Exception {
     }
     
         // Remplacer les informations ci-dessous avec les informations de votre compte email
-        String host = "smtp.gmail.com";
+        String host = "smtp.gmail.com";//stocker le nom du serveur SMTP(Simple Mail Transfer Protocol) de Gmail.
         String senderEmail = "chaima.benhmida@esprit.tn";
         String senderPassword = "iamaghost";
 
-        // configuration de la session
+        // configuration de la connexion SMTP utilisée
+        //activer l'authentification SMTP, activer TLS, définir le serveur SMTP 
+       // (ici,smtp.gmail.com) et définir le port SMTP (ici, 587)
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.host", host);
         props.put("mail.smtp.port", "587");
 
-        // création d'une nouvelle session avec l'authentification
-        Session session = Session.getInstance(props, new Authenticator() {
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(senderEmail, senderPassword);
-            }
-        });
-
+    // créer d'une nouvelle session avec l'authentification
+    //créer une nouvelle instance de session en utilisant les propriétés props définies précédemment. 
+    //Authenticator est passée comme deuxième paramètre pour fournir une méthode qui renvoie les informations 
+    //d'authentification pour le serveur de messagerie.
+    Session session = Session.getInstance(props, new Authenticator() {
+        protected PasswordAuthentication getPasswordAuthentication() {
+            return new PasswordAuthentication(senderEmail, senderPassword);
+        }
+        /*
+=>une instance d'authentification est créée avec une méthode getPasswordAuthentication() qui
+renvoie un objet PasswordAuthentication contenant l'adresse e-mail de l'expéditeur et son mot de passe 
+Cette méthode est protégée car elle est appelée par le framework Java Mail.
+         */
+    });
+ 
         // création d'un nouveau message
         Message message = new MimeMessage(session);
         message.setFrom(new InternetAddress(senderEmail));
@@ -75,11 +85,10 @@ public static void sendEmail(String recipientEmail) throws Exception {
 
         // envoi du message
         Transport.send(message);
-
         System.out.println("Le mail a été envoyé avec succès à " + recipientEmail);
     }
 
-    public static void main(String[] args) {
+ /*   public static void main(String[] args) {
         try {
             sendEmail("destinataire@example.com");
         } catch (Exception e) {
@@ -87,5 +96,46 @@ public static void sendEmail(String recipientEmail) throws Exception {
         }
     }
     
+ */  
+
+//Mailing de notif sur le nombre de plats : 
+public void sendEmailNotif(String sujet, String corps) {
+ 
+    String destinataire = "chaymabenhmida13@gmail.com";
+    
+    String expediteur = "chaima.benhmida@esprit.tn";
+    String motDePasse = "iamaghost";
+    
+    Properties props = new Properties();
+    props.put("mail.smtp.auth", "true");
+    props.put("mail.smtp.starttls.enable", "true");
+    props.put("mail.smtp.host", "smtp.gmail.com");
+    props.put("mail.smtp.port", "587");
+
+    Session session = Session.getInstance(props,
+      new javax.mail.Authenticator() {
+        protected PasswordAuthentication getPasswordAuthentication() {
+            return new PasswordAuthentication(expediteur, motDePasse);
+        }
+      });
+
+    try {
+        Message message = new MimeMessage(session);
+        message.setFrom(new InternetAddress(expediteur));
+        message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(destinataire));
+        //message.setSubject("EnergyBox:Alert!!!");
+       // message.setText("EnergyBox restaurant");
+        message.setSubject(sujet);
+        message.setText(corps);
+
+        // Envoi du message
+        Transport.send(message);
+
+        System.out.println("Le mail a été envoyé avec succès à " + destinataire);
+
+    } catch (MessagingException e) {
+        throw new RuntimeException(e);
+    }
+}
     
 }

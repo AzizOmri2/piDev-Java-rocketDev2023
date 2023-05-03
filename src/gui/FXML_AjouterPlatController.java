@@ -199,7 +199,7 @@ combo.setItems(list);
 private void redirectToList(){
     Parent root;
     try {
-        root = FXMLLoader.load(getClass().getResource("FXML_Plat.fxml"));
+        root = FXMLLoader.load(getClass().getResource("Dashboard.fxml"));
         Scene c = new Scene(root);
         Stage stage = (Stage)fxajout.getScene().getWindow();
         stage.setScene(c);

@@ -120,7 +120,7 @@ public class PlatServices implements Icrud<Plat> {
         return 0;
     }    }
 
-    @Override
+  /*  @Override
     public List<Plat> afficherListe1(int id) throws SQLException {
              String req = "SELECT * FROM `plat` where categories_id = ?";
             PreparedStatement pstmt = conx.prepareStatement(req);
@@ -140,9 +140,70 @@ public class PlatServices implements Icrud<Plat> {
 
         return menus;
     }
+    */
     
- //PDF 
-    
+    @Override
+public List<Plat> afficherListe1(int id) throws SQLException {
+    String req = "SELECT * FROM `plat` where categories_id = ?";
+    PreparedStatement pstmt = conx.prepareStatement(req);
+    pstmt.setInt(1, id);
+    ResultSet rs = pstmt.executeQuery();
+    List<Plat> menus = new ArrayList<Plat>();
+    int nbPlats = 0;
+    while (rs.next()) {
+        nbPlats++;
+        Plat m = new Plat(rs.getInt("id"),
+            rs.getString("nom"),
+            rs.getDouble("prix"),
+            rs.getString("calories"),
+            rs.getString("description"),
+            rs.getInt("nbp"),
+            rs.getString("image"),
+            rs.getString("etat"));
+        menus.add(m);
+    }
+    if (nbPlats == 0) {
+        // Si aucun plat n'a été retourné, mettre l'attribut etat à 0
+        String updateReq = "UPDATE `plat` SET etat = 0 WHERE id = ?";
+        PreparedStatement updatePstmt = conx.prepareStatement(updateReq);
+        updatePstmt.setInt(1, id);
+        updatePstmt.executeUpdate();
+    }
+    return menus;
+}
+
+ //Notifier nbplat pour liste de disponibilité 
+    public int getNombrePlats(int id) throws SQLException {
+    int nombrePlats = 0;
+    String req = "SELECT nbp FROM plat WHERE id = ?";
+    PreparedStatement ps = conx.prepareStatement(req);
+    ps.setInt(1, id);
+    ResultSet rs = ps.executeQuery();
+    if (rs.next()) {
+        nombrePlats = rs.getInt("nbp");
+    }
+    return nombrePlats;
+}
+   public int getidPlat(String nom) throws SQLException {
+    int id = 0;
+    String req = "SELECT id FROM plat WHERE nom = ?";
+    PreparedStatement ps = conx.prepareStatement(req);
+    ps.setString(1,nom);
+    ResultSet rs = ps.executeQuery();
+    if (rs.next()) {
+        id = rs.getInt("id");
+    }
+    return id;
+}
+   
+ public void updateNombrePlats(int id, int nbp) throws SQLException {
+    String req = "UPDATE plat SET nbp = ? WHERE id = ?";
+    PreparedStatement ps = conx.prepareStatement(req);
+    ps.setInt(1, nbp);
+    ps.setInt(2, id);
+    ps.executeUpdate();
+}
+   
    
     
     

@@ -122,6 +122,8 @@ public class MenuServices implements Icrud<Menu> {
         pst.executeUpdate();
         System.out.println("Menu modifié avec succès");
     }
+    
+ //  Staamltha bch ngeti l id ki najouti plat yjiwni les menus li fama 
     @Override
     public int idmenu(String nom) {
          String req = "SELECT id FROM menu WHERE categories = ?";
@@ -139,6 +141,8 @@ public class MenuServices implements Icrud<Menu> {
         return 0;
     }    }
 
+    
+    
     @Override
     public List<Menu> afficherListe1(int id) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

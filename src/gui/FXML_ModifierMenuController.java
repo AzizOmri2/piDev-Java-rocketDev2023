@@ -74,11 +74,11 @@ public class FXML_ModifierMenuController implements Initializable {
             champDescription.clear();
         });
         
-     //   Retour.setOnAction((ActionEvent event) -> {
-     //       redirectToList();
-     //   });
+        Retour.setOnAction((ActionEvent event) -> {
+            redirectToList();
+        });
     }   
-    /* private void redirectToList(){
+   private void redirectToList(){
             Parent root;
             try {
             
@@ -90,9 +90,8 @@ public class FXML_ModifierMenuController implements Initializable {
             Logger.getLogger(FXML_ModifierMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
- */
-     
-     
+
+       
     // méthode pour passer les détails du menu sélectionné au contrôleur
     public void setMenu(Menu m) {
         this.menu = m;

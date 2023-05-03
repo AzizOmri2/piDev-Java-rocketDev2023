@@ -15,7 +15,7 @@ import java.sql.SQLException;
  * @author lenovo
  */
 public class MyDB {
-    
+
     final String url="jdbc:mysql://localhost:3306/rocketdevdb4";
     final String username="root";
     final String pwd="";
@@ -33,7 +33,7 @@ public class MyDB {
     private MyDB(){
         
         try {
-            conx = DriverManager.getConnection(url, username, pwd);
+            conx = DriverManager.getConnection(url, username, pwd); //Établissement de la connexion à la base de données MySQL.
             System.out.println("Connexion établie");
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());

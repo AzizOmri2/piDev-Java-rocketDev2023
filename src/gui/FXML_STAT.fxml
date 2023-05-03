@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.effect.Glow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane fx:id="mainpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="671.0" prefWidth="1164.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.FXML_STATController">
+<Pane fx:id="mainpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800" prefWidth="1500" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.FXML_STATController">
    <children>
-      <PieChart fx:id="piechart" layoutX="24.0" layoutY="66.0" legendSide="RIGHT" prefHeight="597.0" prefWidth="1116.0" />
-      <Text id="h" fill="#2c234d" layoutX="208.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Statistiques des réservations par date" wrappingWidth="747.458984375">
+      <PieChart fx:id="piechart" layoutX="28.0" layoutY="91.0" legendSide="RIGHT" prefHeight="695.0" prefWidth="1448.0" />
+      <Text id="h" fill="#720000" layoutX="348.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Statistiques des réservations par date" wrappingWidth="747.458984375">
          <font>
             <Font name="Candara Bold Italic" size="45.0" />
          </font>
@@ -18,6 +21,14 @@
             <Glow />
          </effect>
       </Text>
-      <Separator layoutX="94.0" layoutY="58.0" prefHeight="0.0" prefWidth="959.0" />
+      <Separator layoutX="234.0" layoutY="58.0" prefHeight="0.0" prefWidth="959.0" />
+      <Button fx:id="retour" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="66.0" styleClass="btn" stylesheets="@list.css">
+         <graphic>
+            <ImageView fitHeight="31.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/return.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
    </children>
 </Pane>

@@ -50,93 +50,77 @@ public static int id;
   
      @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/gui/FXML_BACKRestaurant.fxml"));
-     // Parent root = FXMLLoader.load(getClass().getResource("/gui/FXML_FrontRestaurant.fxml"));
-       
-         // Jouer un son
-         //  Media sound = new Media(new File("welcome.mp3").toURI().toString());
-        //   MediaPlayer mediaPlayer = new MediaPlayer(sound);
-         //  mediaPlayer.play();
-         //fin jouer son 
-         
-        /*   ShwowVIDeo
-       String filePath = "file:///C:/Users/lenovo/Desktop/PIDEV_Desc/EnergyBoxRestaurant.mp4";
-       Media media = new Media(filePath);
-
-         // Le lecteur de media
-         MediaPlayer mediaPlayer = new MediaPlayer(media);
-
-         // L'élément qui affiche le lecteur
-         MediaView mediaView = new MediaView();
-         // Association du lecteur à cette vue
-         mediaView.setMediaPlayer(mediaPlayer);
-         // Joue la vidéo
-         mediaPlayer.play();
-
-         // L'élément racine centre la vidéo
-         VBox roott = new VBox(mediaView);
-         roott.setAlignment(Pos.CENTER);
-
-         Scene sceene = new Scene(roott, 1000, 1000);
-        
-       stage.setScene(sceene);
-        stage.show();
-        */
-         
-         
-    
-      // Afficher un message de bienvenue
-    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-    alert.setTitle("Bienvenue");
-    alert.setHeaderText("EnergyBox Restaurant");
-  //  alert.setContentText("Nous sommes ravis de vous accueillir !");
-    alert.setResizable(true); // permet le redimensionnement de la fenêtre
-    alert.getDialogPane().setPrefSize(1200, 800); // définir la taille préférée de la fenêtre
-   
-    //Fin afficher msg 
-      // Ajouter un style CSS personnalisé pour la fenêtre d'alerte
-      DialogPane dialogPane = alert.getDialogPane();
-     dialogPane.getStylesheets().add(getClass().getResource("/gui/alert.css").toExternalForm());
-  
-    alert.getDialogPane().getStyleClass().add("custom-alert");
-// Créez un objet TextFlow avec le texte souhaité
-TextFlow textFlow = new TextFlow();
-textFlow.getChildren().addAll(
-    new Text("Bienvenue "),
-    new Text("chez "),
-    new Text("EnergyBox !")
-);
+ //Chargement de l'interface graphique depuis un fichier FXML
  
+       //  Parent root = FXMLLoader.load(getClass().getResource("/gui/FXML_FrontRestaurant.fxml"));
+         Parent root = FXMLLoader.load(getClass().getResource("/gui/Dashboard.fxml"));
+      
+//Fin_Chargement de l'interface graphique depuis un fichier FXML 
+
+//Jouer un son
+       /* Media sound = new Media(new File("welcome.mp3").toURI().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(sound);
+        mediaPlayer.play();*/
+//Fin_jouer son 
+
+// Afficher un message de bienvenue
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Bienvenue");
+        alert.setHeaderText("EnergyBox Restaurant");
+        //  alert.setContentText("Nous sommes ravis de vous accueillir !");
+        alert.setResizable(true); // permet le redimensionnement de la fenêtre
+        alert.getDialogPane().setPrefSize(1200, 800); // définir la taille préférée de la fenêtre
+//Fin afficher msg 
+
+        // Ajouter un style CSS personnalisé pour la fenêtre d'alerte
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.getStylesheets().add(getClass().getResource("/gui/alert.css").toExternalForm());
+        alert.getDialogPane().getStyleClass().add("custom-alert");
+// Créez un objet TextFlow avec le texte souhaité
+        TextFlow textFlow = new TextFlow();
+        textFlow.getChildren().addAll(
+                new Text("Bienvenue "),
+                new Text("chez "),
+                new Text("EnergyBox !")
+        );
 // Changez la couleur de l'écriture en rouge
-for (Node child : textFlow.getChildren()) {
-    ((Text) child).setStyle("-fx-fill: #720000;");
-}
-textFlow.setStyle("-fx-font-weight: bold;-fx-font-size: 50px;");// définit la taille de police à 30px
+        for (Node child : textFlow.getChildren()) {
+            ((Text) child).setStyle("-fx-fill: #720000;");
+        }
+        textFlow.setStyle("-fx-font-weight: bold;-fx-font-size: 50px;");// définit la taille de police à 30px
 // Ajoutez une animation pour animer le texte
-TranslateTransition tt = new TranslateTransition(Duration.seconds(2), textFlow);
-tt.setByX(300);
-tt.setCycleCount(Animation.INDEFINITE);
-tt.setAutoReverse(true);
-tt.play();
-
+        TranslateTransition tt = new TranslateTransition(Duration.seconds(2), textFlow);
+        tt.setByX(300);
+        tt.setCycleCount(Animation.INDEFINITE);
+        tt.setAutoReverse(true);
+        tt.play();
 // Ajoutez le TextFlow à la fenêtre d'alert
-alert.getDialogPane().setContent(textFlow);
-
-     alert.showAndWait();
-    
-        Scene scene = new Scene(root);
-        
-        stage.setScene(scene);
-        stage.show();
+        alert.getDialogPane().setContent(textFlow);
+        alert.showAndWait();// Afficher la fenêtre d'alerte
+        Scene scene = new Scene(root);// Création d'une nouvelle scène avec l'interface graphique chargée depuis le fichier FXML
+        stage.setScene(scene);// Afficher la scène dans la fenêtre
+        stage.show();// Afficher la scène dans la fenêtre
     }
 
-    
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-       
+
         launch(args);
+/*
+Le code main est l'entrée principale de l'application,
+qui est exécutée lorsque le programme est lancé. 
+Elle appelle la méthode "launch" pour lancer l'application. 
+C'est une méthode standard dans toutes les applications JavaFX, 
+et elle permet d'initialiser et de lancer l'interface utilisateur de l'application.
+*/  
+       }
+   
+   
+}     
+        
+        
   /*      
  //        MyDB db = new MyDB();
 //        MyDB db1 = new MyDB();
@@ -157,11 +141,31 @@ alert.getDialogPane().setContent(textFlow);
         */
 
     
+        /*   ShwowVIDeo
+       String filePath = "file:///C:/Users/lenovo/Desktop/PIDEV_Desc/EnergyBoxRestaurant.mp4";
+        Media media = new Media(filePath);
 
-    }
-   
-   
-}
+         // Le lecteur de media
+         MediaPlayer mediaPlayer = new MediaPlayer(media);
+
+         // L'élément qui affiche le lecteur
+         MediaView mediaView = new MediaView();
+         // Association du lecteur à cette vue
+         mediaView.setMediaPlayer(mediaPlayer);
+         // Joue la vidéo
+         mediaPlayer.play();
+
+         // L'élément racine centre la vidéo
+         VBox roott = new VBox(mediaView);
+         roott.setAlignment(Pos.CENTER);
+
+         Scene sceene = new Scene(roott, 1000, 1000);
+        
+       stage.setScene(sceene);
+        stage.show();
+         */
+
+
 
 
 

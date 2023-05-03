@@ -59,6 +59,9 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.itextpdf.text.Element;
 
+import entites.Favoris;
+import services.FavorisServices;
+
 
 /**
  * FXML Controller class
@@ -86,6 +89,10 @@ public class FXML_FrontPlatController implements Initializable {
     private Label description;   
     @FXML
     private Label nbp; 
+    @FXML
+    private Label etat; 
+    @FXML
+    private Button gotofavoris;
     
     public Connection conx;
     public Statement stm;
@@ -99,12 +106,14 @@ public class FXML_FrontPlatController implements Initializable {
 List<Plat> listeee;
         try {
             listeee = ser.afficherListe1(Pidev3a52.id);
-     
+    
 ObservableList<String> list = FXCollections.observableArrayList();
 ObservableList<Double> listP = FXCollections.observableArrayList();
 ObservableList<String> listcalories = FXCollections.observableArrayList();
 ObservableList<String> listdescription  = FXCollections.observableArrayList();
 ObservableList<Integer> listNbp  = FXCollections.observableArrayList();
+ObservableList<String> listEtat  = FXCollections.observableArrayList();
+
 //ObservableList<String> listImg = FXCollections.observableArrayList();
 
 for (Plat menu : listeee) {
@@ -122,6 +131,9 @@ for (Plat menu : listeee) {
 for (Plat menu : listeee) {
     listNbp.addAll(menu.getNbp());
 }
+for (Plat menu : listeee) {
+    listEtat.addAll(menu.getEtat());
+}
 //for (Plat menu : listeee) {
   //  listImg.addAll(menu.getImage());
 //}
@@ -131,6 +143,13 @@ menuP.setText("Prix:"+Double.toString(listP.get(Pidev3a52.j)) + "Dt");
 calories.setText("Calories:"+ listcalories.get(Pidev3a52.j) + "kcal" );
 description.setText("Description:"+ listdescription.get(Pidev3a52.j));
 nbp.setText("Nombre de plats:"+ listNbp.get(Pidev3a52.j));
+etat.setText("Etat du plat:"+listEtat.get(Pidev3a52.j));
+if (listEtat.equals("0")) {
+    etat.setText("Etat: non disponible");
+} else {
+    etat.setText("Etat: disponible");
+}
+
 //img.setText(listImg.get(Pidev3a52.j));
 //imgg.setImage(new Image(listImg.get(Pidev3a52.j)));
 
@@ -143,13 +162,19 @@ nbp.setText("Nombre de plats:"+ listNbp.get(Pidev3a52.j));
         } catch (SQLException ex) {
             System.out.println("Failed to connect to database: " + ex.getMessage());
         }   
-      Reserver.setOnAction((ActionEvent event) -> {
+     Reserver.setOnAction((ActionEvent event) -> {
             GoToReservation();
     }); 
-      Retour.setOnAction((ActionEvent event) -> {
+    /*  Retour.setOnAction((ActionEvent event) -> {
             GoBackToMenu();
+    }); */
+     gotofavoris.setOnAction((ActionEvent event) -> {
+            GoToFavoris();
     }); 
-    
+    Retour.setOnAction((ActionEvent event) -> {
+            redirectToList();
+    }); 
+
     }   
       private void GoToReservation(){
             Parent root;
@@ -162,7 +187,7 @@ nbp.setText("Nombre de plats:"+ listNbp.get(Pidev3a52.j));
             Logger.getLogger(FXML_AjouterReservationController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }  
-     private void GoBackToMenu(){
+   /*  private void GoBackToMenu(){
             Parent root;
             try {
             root = FXMLLoader.load(getClass().getResource("FXML_FrontRestaurant.fxml"));
@@ -173,6 +198,31 @@ nbp.setText("Nombre de plats:"+ listNbp.get(Pidev3a52.j));
             Logger.getLogger(FXML_AjouterReservationController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+     */
+      private void GoToFavoris(){
+            Parent root;
+            try {
+            root = FXMLLoader.load(getClass().getResource("captcha.fxml"));
+            Scene c=new Scene(root);
+             Stage stage=(Stage)gotofavoris.getScene().getWindow();
+            stage.setScene(c);
+        } catch (IOException ex) {
+            Logger.getLogger(FXML_FrontPlatController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+      
+    private void redirectToList() {
+        Parent root;
+        try {
+            root = FXMLLoader.load(getClass().getResource("FXML_FrontRestaurant.fxml"));
+            Scene c = new Scene(root);
+            Stage stage = (Stage) Retour.getScene().getWindow();
+            stage.setScene(c);
+        } catch (IOException ex) {
+            Logger.getLogger(FXML_FrontPlatController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     @FXML
     private void next(ActionEvent event) throws SQLException {
         Pidev3a52.j ++;
@@ -187,6 +237,8 @@ nbp.setText("Nombre de plats:"+ listNbp.get(Pidev3a52.j));
             ObservableList<String> listcalories = FXCollections.observableArrayList();
             ObservableList<String> listdescription  = FXCollections.observableArrayList();
             ObservableList<Integer> listNbp  = FXCollections.observableArrayList();
+            ObservableList<String> listEtat  = FXCollections.observableArrayList();
+
           //  ObservableList<String> listImg = FXCollections.observableArrayList();
             
    for (Plat Plat : listeee) {
@@ -204,6 +256,10 @@ for (Plat menu : listeee) {
 for (Plat menu : listeee) {
     listNbp.addAll(menu.getNbp());
 }
+for (Plat menu : listeee) {
+    listEtat.addAll(menu.getEtat());
+}
+
 //for (Plat menu : listeee) {
 //    listImg.addAll(menu.getImage());
 //}
@@ -212,6 +268,13 @@ menuP.setText("Prix:"+Double.toString(listP.get(Pidev3a52.j)) + "Dt");
 calories.setText("Calories:"+ listcalories.get(Pidev3a52.j) + "kcal" );
 description.setText("Description:"+ listdescription.get(Pidev3a52.j));
 nbp.setText("Nombre de plats:"+ listNbp.get(Pidev3a52.j));
+etat.setText("Etat du plat:"+listEtat.get(Pidev3a52.j));
+if (listEtat.equals("0")) {
+    etat.setText("Etat: non disponible");
+} else {
+    etat.setText("Etat: disponible");
+}
+
 //img.setText(listImg.get(Pidev3a52.j));
 //imgg.setImage(new Image(listImg.get(Pidev3a52.j)));
 
@@ -231,6 +294,7 @@ nbp.setText("Nombre de plats:"+ listNbp.get(Pidev3a52.j));
             ObservableList<String> listcalories = FXCollections.observableArrayList();
             ObservableList<String> listdescription  = FXCollections.observableArrayList();
             ObservableList<Integer> listNbp  = FXCollections.observableArrayList();
+            ObservableList<String> listEtat  = FXCollections.observableArrayList();
          //  ObservableList<String> listImg = FXCollections.observableArrayList();
 
    for (Plat Plat : listeee) {
@@ -249,7 +313,9 @@ for (Plat menu : listeee) {
 for (Plat menu : listeee) {
     listNbp.addAll(menu.getNbp());
 }
-
+for (Plat menu : listeee) {
+    listEtat.addAll(menu.getEtat());
+}
 //for (Plat menu : listeee) {
 //    listImg.addAll(menu.getImage());
 //}
@@ -259,32 +325,34 @@ menuP.setText("Prix:"+Double.toString(listP.get(Pidev3a52.j)) + "Dt");
 calories.setText("Calories:"+ listcalories.get(Pidev3a52.j) + "kcal" );
 description.setText("Description:"+ listdescription.get(Pidev3a52.j));
 nbp.setText("Nombre de plats:"+ listNbp.get(Pidev3a52.j));
+etat.setText("Etat du plat:"+listEtat.get(Pidev3a52.j));
+if (listEtat.equals("0")) {
+    etat.setText("Etat: non disponible");
+} else {
+    etat.setText("Etat: disponible");
+}
 //img.setText(listImg.get(Pidev3a52.j));
 //imgg.setImage(new Image(listImg.get(Pidev3a52.j)));
 
     }
-  
-    /****************************************************************************************************** */ 
-  /*  private void genererQRCode(String nomPlat) throws WriterException, IOException, DocumentException, com.google.zxing.WriterException {
-    // création du contenu du QR code
-    String contenu = "Nom du plat : " + nomPlat;
-
-    // création de l'image du QR code
-    int taille = 250; // taille de l'image en pixels
-        com.google.zxing.common.BitMatrix matrice = new MultiFormatWriter().encode(contenu, BarcodeFormat.QR_CODE, taille, taille);
-    BufferedImage image = MatrixToImageWriter.toBufferedImage(matrice);
-
-    // ajout de l'image au document PDF
-    Document document = new Document();
-    PdfWriter.getInstance(document, new FileOutputStream("C:\\chemin\\vers\\le\\fichier\\pdf"));
-    document.open();
-    Image qrCode = Image.getInstance(image, null);
-    qrCode.setAlignment(Element.ALIGN_CENTER);
-    document.add(qrCode);
-    document.close();
-}
-*/
-    /********************************************************************************************************* */
+    
+    
+    
+    
+    
+    
+ }
 
 
-}
+
+
+
+
+
+
+
+
+
+
+
+

@@ -33,8 +33,7 @@ import javafx.stage.Window;
  */
 public class CaptureEcran {
 
-    public static void main(String[] args) throws Exception {
-    }
+  
     
 public static void capturer(Node node) {
         // Récupération de la scène contenant le nœud à capturer
@@ -65,44 +64,11 @@ public static void capturer(Node node) {
     }
 }
 
-   /*    public static void capturer(Scene scene) throws Exception {
-     
-
-       // Initialisation de JavaFX
-        new JFXPanel();
-        Platform.runLater(() -> {
-            // Création de la scène
-            Pane root = new Pane();
-            //Scene scene = new Scene(root, 800, 600);
-            // ...
-            // Ajout des éléments à la scène
-            // ...
-            // Capture d'écran
-            try {
-                Robot robot = new Robot();
-                Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
-                BufferedImage image = robot.createScreenCapture(
-                        new java.awt.Rectangle(0, 0, (int) dimension.getWidth(), (int) dimension.getHeight()));
-                WritableImage writableImage = new WritableImage(image.getWidth(), image.getHeight());
-                SwingFXUtils.toFXImage(image, writableImage);
-
-                // Enregistrement de la capture
-                String nomFichier = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss'.png'").format(new Date());
-                String DOSSIER_CAPTURES = "C:\\Users\\lenovo\\Desktop\\PIDEV_Desc\\src\\CapturesEcran";
-                File dossier = new File(DOSSIER_CAPTURES);
-        
-                if (!dossier.exists()) {
-                    dossier.mkdirs();
-                }
-                File fichier = new File(dossier, nomFichier);
-                ImageIO.write(SwingFXUtils.fromFXImage(writableImage, null), "png", fichier);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        });
- 
-    }*/
 
 
-    
-  
+
+
+
+
+
+

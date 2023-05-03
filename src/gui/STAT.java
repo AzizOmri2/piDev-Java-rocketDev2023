@@ -32,7 +32,7 @@ public class STAT {
         con = MyDB.getInstance().getConx();
 
     }
- 
+
     public ObservableList<PieChart.Data> Stats() {
         String requete = "SELECT date, COUNT(*) FROM reservation GROUP BY date";
         try {
@@ -75,27 +75,3 @@ public class STAT {
 
 
 
-    
-   /*  public ObservableList<PieChart.Data> Stats() {
-    String requete = "SELECT date, COUNT(*) FROM reservation GROUP BY date";
-    try {
-        Statement st2 = MyDB.getInstance().getConx().createStatement();
-
-        ResultSet rs = st2.executeQuery(requete);
-        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
-        while (rs.next()) {
-            String date = rs.getString(1);
-            int count = rs.getInt(2);
-            PieChart.Data data = new PieChart.Data(date + " (" + count + ")", count);
-            pieChartData.add(data);
-        }
-
-        return pieChartData;
-
-    } catch (SQLException ex) {
-        System.out.println(ex.getMessage());
-    }
-
-    return null;
-}
-*/

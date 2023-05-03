@@ -80,6 +80,17 @@ public class Plat {
         this.nbp = nbp;
         this.image = image;
     }
+     public Plat(int id, String nom, double prix, String calories ,String description,int nbp ,String image,String etat) {
+        this.id = id;
+        this.nom = nom;
+        this.prix = prix;
+        this.calories = calories;
+        this.description = description;
+        this.nbp = nbp;
+        this.image = image;
+        this.etat = etat;
+    }
+
     public int getId() {
         return id;
     }
